@@ -7,9 +7,9 @@ import java.util.Vector;
 
 import exception.InvalidPrimaryKeyException;
 
-public class InventoryItemType extends EntityBase {
+public class InventoryItem extends EntityBase {
 	
-	private static final String myTableName = "InventoryItemType";
+	private static final String myTableName = "InventoryItem";
 	protected Properties dependencies;
 	private String updateStatusMessage = "";
 
@@ -17,7 +17,7 @@ public class InventoryItemType extends EntityBase {
 	 * Constructor that can manually create Inventory Item Type object
 	 * @param props 
 	 */
-	public InventoryItemType(Properties props) {
+	public InventoryItem(Properties props) {
 		super(myTableName);
 		setDependencies();
 		persistentState = new Properties();
@@ -36,10 +36,10 @@ public class InventoryItemType extends EntityBase {
 	 * @param iitn
 	 * @throws InvalidPrimaryKeyException
 	 */
-	public InventoryItemType(String iitn) throws InvalidPrimaryKeyException {
-		super(iitn);
+	public InventoryItem(String barcode) throws InvalidPrimaryKeyException {
+		super(barcode);
 		setDependencies();
-		String query = "SELECT * FROM " + myTableName + " WHERE (ItemTypeName = " + iitn + ")";
+		String query = "SELECT * FROM " + myTableName + " WHERE (Barcode = " + barcode + ")";
 		Vector<Properties> allDataRetrieved = getSelectQueryResult(query);
 		// You must get one account at least
 		if (allDataRetrieved != null) {
@@ -47,7 +47,7 @@ public class InventoryItemType extends EntityBase {
 
 			// There should be EXACTLY one id of this book. More than that is an error
 			if (size != 1) {
-				throw new InvalidPrimaryKeyException("Multiple books matching id : " + iitn + " found.");
+				throw new InvalidPrimaryKeyException("Multiple InventoryItems matching Barcode : " + barcode + " found.");
 			} else {
 				// copy all the retrieved data into persistent state
 				Properties retrievedBookData = allDataRetrieved.elementAt(0);
@@ -63,7 +63,7 @@ public class InventoryItemType extends EntityBase {
 			}
 		} else {
 			// if no book is found for this book id, throw an exception
-			throw new InvalidPrimaryKeyException("No patron matching id : " + iitn + " found.");
+			throw new InvalidPrimaryKeyException("No InventoryItem with Barcode : " + barcode + " found.");
 		}
 	}
 	
@@ -103,18 +103,19 @@ public class InventoryItemType extends EntityBase {
 	
 	public void update() {
 		try {
-			if (persistentState.getProperty("ItemTypeName") != null) {
+			if (persistentState.getProperty("Barcode") != null) {
 				Properties whereClause = new Properties();
-				whereClause.setProperty("ItemTypeName", persistentState.getProperty("ItemTypeName"));
+				whereClause.setProperty("Barcode", persistentState.getProperty("Barcode"));
 				updatePersistentState(mySchema, persistentState, whereClause);
-				updateStatusMessage = "InventoryItemType matching  : " + persistentState.getProperty("ItemTypeName") + " updated successfully in database!";
+				updateStatusMessage = "Barcode for InventoryItem : " + persistentState.getProperty("Barcode") + " updated successfully in database!";
 			} else {
-				Integer itemTypeName = insertAutoIncrementalPersistentState(mySchema, persistentState);
-				persistentState.setProperty("ItemTypeName", "" + itemTypeName.intValue());
-				updateStatusMessage = "InventoryItemType matching : " +  persistentState.getProperty("ItemTypeName") + "installed successfully in database!";
+				Integer Barcode = insertAutoIncrementalPersistentState(mySchema, persistentState);
+				persistentState.setProperty("Barcode", "" + Barcode.intValue());
+				updateStatusMessage = "Barcode for InventoryItem : " +  persistentState.getProperty("Barcode") + "installed successfully in database!";
 			}
 		} catch (SQLException ex) {
-			updateStatusMessage = "Error in installing InventoryItemType data in database!";
+			updateStatusMessage = "Error in installing InventoryItem in database!";
 		}
 	}
+
 }
