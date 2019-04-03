@@ -38,7 +38,7 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button submitButton;
+	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -66,7 +66,7 @@ public class TellerView extends View
 
 		getChildren().add(container);
 
-		populateFields();
+		//populateFields();
 
 		// STEP 0: Be sure you tell your model what keys you are interested in
 		myModel.subscribe("LoginError", this);
@@ -77,7 +77,7 @@ public class TellerView extends View
 	private Node createTitle()
 	{
 		
-		Text titleText = new Text("       Brockport Bank ATM          ");
+		Text titleText = new Text("       Brockport Restauraunt Main Menu          ");
 		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		titleText.setTextAlignment(TextAlignment.CENTER);
 		titleText.setFill(Color.DARKGREEN);
@@ -97,34 +97,9 @@ public class TellerView extends View
         	grid.setPadding(new Insets(25, 25, 25, 25));
 
 		// data entry fields
-		Label userName = new Label("User ID:");
-        	grid.add(userName, 0, 0);
 
-		userid = new TextField();
-		userid.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
-            	     }
-        	});
-        	grid.add(userid, 1, 0);
-
-		Label pw = new Label("Password:");
-        	grid.add(pw, 0, 1);
-
-		password = new PasswordField();
-		password.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
-            	     }
-        	});
-        	grid.add(password, 1, 1);
-
-		submitButton = new Button("Submit");
- 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+		addInventoryItem = new Button("Add Inventory Item");
+ 		addInventoryItem.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
        		     public void handle(ActionEvent e) {
@@ -132,10 +107,53 @@ public class TellerView extends View
             	     }
         	});
 
-		HBox btnContainer = new HBox(10);
-		btnContainer.setAlignment(Pos.BOTTOM_RIGHT);
-		btnContainer.getChildren().add(submitButton);
-		grid.add(btnContainer, 1, 3);
+		HBox addIIBtn = new HBox(15);
+		addIIBtn.setAlignment(Pos.CENTER);
+		addIIBtn.getChildren().add(addInventoryItem);
+		grid.add(addIIBtn, 1, 0);
+		
+		updateInventoryItem = new Button("Update Inventory Item");
+		updateInventoryItem.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);    
+            	     }
+        	});
+
+		HBox updateIIBtn = new HBox(15);
+		updateIIBtn.setAlignment(Pos.CENTER);
+		updateIIBtn.getChildren().add(updateInventoryItem);
+		grid.add(updateIIBtn, 1, 1);
+
+		
+		addVendor = new Button("Add Vendor");
+		addVendor.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);    
+            	     }
+        	});
+
+		HBox addVendorBtn = new HBox(15);
+		addVendorBtn.setAlignment(Pos.CENTER);
+		addVendorBtn.getChildren().add(addVendor);
+		grid.add(addVendorBtn, 1, 2);
+		
+		modifyVendor = new Button("Modify Vendor");
+		modifyVendor.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);    
+            	     }
+        	});
+
+		HBox modifyVendorBtn = new HBox(15);
+		modifyVendorBtn.setAlignment(Pos.CENTER);
+		modifyVendorBtn.getChildren().add(modifyVendor);
+		grid.add(modifyVendorBtn, 1, 3);
 
 		return grid;
 	}
@@ -153,11 +171,11 @@ public class TellerView extends View
 	}
 
 	//-------------------------------------------------------------
-	public void populateFields()
-	{
-		userid.setText("");
-		password.setText("");
-	}
+	//public void populateFields()
+	//{
+		//userid.setText("");
+		//password.setText("");
+	//}
 
 	// This method processes events generated from our GUI components.
 	// Make the ActionListeners delegate to this method
