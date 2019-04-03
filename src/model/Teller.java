@@ -118,7 +118,8 @@ public class Teller implements IView, IModel
 	{
 		// STEP 4: Write the sCR method component for the key you
 		// just set up dependencies for
-		// DEBUG System.out.println("Teller.sCR: key = " + key);
+		// DEBUG 
+		System.out.println("Teller.sCR: key = " + key);
 
 		if (key.equals("Login") == true)
 		{
@@ -132,7 +133,13 @@ public class Teller implements IView, IModel
 					createAndShowTransactionChoiceView();
 				}
 			}
-		}
+		} else
+			if(key.equals("AddVendorView") == true) {
+				createAndShowAddVendorView();
+			}
+			else if (key.equals("TellerView") == true) {
+				createAndShowTellerView();
+			}
 		else
 		if (key.equals("CancelTransaction") == true)
 		{
@@ -261,6 +268,21 @@ public class Teller implements IView, IModel
 				
 		swapToView(currentScene);
 		
+	}
+	
+	//---------------------------------------------------------
+	private void createAndShowAddVendorView() {
+		Scene currentScene = (Scene)myViews.get("AddVendorView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("AddVendorView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("AddVendorView", currentScene);
+		}
+				
+		swapToView(currentScene);
 	}
 
 
