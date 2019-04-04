@@ -67,6 +67,17 @@ public class Vendor extends EntityBase {
 		}
 	}
 	
+	public void setName(String name) {
+		persistentState.setProperty("Name", name);
+	}
+	
+	public void setPhoneNumber(String phoneNumber) {
+		persistentState.setProperty("PhoneNumber", phoneNumber);
+	}
+	
+	public void setStatus(String status) {
+		persistentState.setProperty("Status", status);
+	}
 	/**
 	 * Sets up the dependencies of the db
 	 */
@@ -87,7 +98,7 @@ public class Vendor extends EntityBase {
 		this.persistentState.getProperty(key);
 		return null;
 	}
-
+	
 	@Override
 	public void stateChangeRequest(String key, Object value) {
 		// TODO Auto-generated method stub

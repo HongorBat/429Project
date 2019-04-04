@@ -11,3 +11,5 @@
 /TransactionFactory.class
 /TransferTransaction.class
 /WithdrawTransaction.class
+/Vendor.class
+/VendorInventoryItemType.class
