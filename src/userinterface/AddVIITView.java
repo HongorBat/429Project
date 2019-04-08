@@ -102,8 +102,7 @@ public class AddVIITView extends View
 		
 		statusBox = new ComboBox();
 		statusBox.getItems().addAll(
-				"Active",
-				"Inactive");
+				"Active");
 		grid.add(statusBox, 1, 3);
 
 		HBox doneCont = new HBox(10);
