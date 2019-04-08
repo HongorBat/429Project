@@ -1,6 +1,7 @@
 package userinterface;
 
 import impresario.IModel;
+import model.InsertBook;
 
 //==============================================================================
 public class ViewFactory {
@@ -63,8 +64,20 @@ public class ViewFactory {
 		{
 			return new TransferReceipt(model);
 		}
-		else
+		else if (viewName.equals("InsertBookView") == true) 
+		{
+			return new InsertBookView(model);
+		}
+		else if (viewName.equals("InsertPatronView") == true) 
+		{
+			return new InsertPatronView(model);
+		}else if(viewName.equals("SearchPatronView") == true) 
+		{
+			return new SearchPatronView(model);
+		}
+		else {
 			return null;
+		}
 	}
 
 

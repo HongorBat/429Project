@@ -161,9 +161,7 @@ public class SQLQueryStatement extends SQLStatement
 		
 		// DEBUG System.out.println("SQL Query Statement = " + theSQLStatement);
 		
-				
 	}
-
 }
 
 

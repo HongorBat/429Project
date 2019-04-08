@@ -1,0 +1,14 @@
+[2/12/19, 5:03 PM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
+[2/12/19, 5:35 PM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
+[2/12/19, 5:42 PM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
+[2/19/19, 6:16 PM]|AccountHolder|getSelectQueryResult|Error|NOTAG|null<SQL Exception: 1146: Table 'spr19_csc429_zmaxw1.AccountHolder' doesn't exist>
+[2/21/19, 4:02 PM]|Patron|getSelectQueryResult|Error|NOTAG|null<SQL Exception: 1054: Unknown column 'bookId' in 'where clause'>
+[2/21/19, 4:05 PM]|Patron|getSelectQueryResult|Error|NOTAG|null<SQL Exception: 1054: Unknown column 'bookId' in 'where clause'>
+[2/21/19, 4:05 PM]|Patron|getSelectQueryResult|Error|NOTAG|null<SQL Exception: 1054: Unknown column 'bookId' in 'where clause'>
+[2/21/19, 4:06 PM]|Patron|getSelectQueryResult|Error|NOTAG|null<SQL Exception: 1054: Unknown column 'bookId' in 'where clause'>
+[2/21/19, 5:42 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1062: Duplicate entry '1111' for key 'PRIMARY'>
+[2/21/19, 5:42 PM]|Patron|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 0: Data truncation: Data too long for column 'zip' at row 1>
+[2/21/19, 5:42 PM]|Patron|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 0: Data truncation: Data too long for column 'zip' at row 1>
+[2/21/19, 5:53 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1062: Duplicate entry '1111' for key 'PRIMARY'>
+[2/21/19, 6:16 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1062: Duplicate entry '1' for key 'PRIMARY'>
+[2/21/19, 6:16 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1062: Duplicate entry '1' for key 'PRIMARY'>
