@@ -132,7 +132,9 @@ public class TellerView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddVendorView", props);
             	     }
         	});
 
@@ -160,7 +162,9 @@ public class TellerView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddVIITView", props);
             	     }
         	});
 
@@ -200,10 +204,6 @@ public class TellerView extends View
 
 		clearErrorMessage();
 
-		if(evt.toString().contains("Add Vendor")) {
-			Properties props = new Properties();
-			myModel.stateChangeRequest("AddVendorView", props);
-		}
 
 	}
 

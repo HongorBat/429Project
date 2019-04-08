@@ -98,22 +98,6 @@ public class AddVIITView extends View
        	grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        
-        Text prompt = new Text("VENDOR INFORMATION");
-        prompt.setWrappingWidth(400);
-        prompt.setTextAlignment(TextAlignment.CENTER);
-        prompt.setFill(Color.BLACK);
-        grid.add(prompt, 0, 0, 2, 1);
-
-		Text vendorNameLabel = new Text(" Vendor Name : ");
-		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-
-
-		Text statusLabel = new Text(" Status : ");
-		statusLabel.setFont(myFont);
-		statusLabel.setWrappingWidth(150);
-		statusLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(statusLabel, 0, 3);
 
 		
 		statusBox = new ComboBox();
