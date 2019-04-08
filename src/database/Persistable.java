@@ -590,6 +590,8 @@ abstract public class Persistable
 				System.err.println("Persistable.updatePersistentState - Could not connect to database!");
 				return null;
 			}
+			
+			System.out.println("Schema is : " + schema.toString() + " <<");
 
 	    	// construct a SQL statement from the passed parameters
 			SQLUpdateStatement theSQLStatement = new SQLUpdateStatement(schema, updateValues, whereValues);
@@ -701,7 +703,7 @@ abstract public class Persistable
 		}
 		catch (SQLException sqle)
 		{
-//			DEBUG: System.err.println( "Persistable.insertAutoIncrementalPersistentState: An SQL Error Occurred: SQL State: " + sqle.getSQLState() + "; Error Code = " + sqle.getErrorCode() + "; Message: " + sqle.getMessage() + "\n" + sqle);
+			DEBUG: System.err.println( "Persistable.insertAutoIncrementalPersistentState: An SQL Error Occurred: SQL State: " + sqle.getSQLState() + "; Error Code = " + sqle.getErrorCode() + "; Message: " + sqle.getMessage() + "\n" + sqle);
 			new Event(Event.getLeafLevelClassName(this), "insertAutoIncrementalPersistentState", "SQL Exception: " 
 			+ sqle.getErrorCode() + ": " + sqle.getMessage(), Event.ERROR); 
 			//return new Integer(28);
