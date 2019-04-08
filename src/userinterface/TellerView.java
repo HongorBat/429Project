@@ -103,7 +103,9 @@ public class TellerView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddInventoryView", props);
             	     }
         	});
 
@@ -117,7 +119,9 @@ public class TellerView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("UpdateInventoryView", props);
             	     }
         	});
 
@@ -203,19 +207,6 @@ public class TellerView extends View
 		// DEBUG: System.out.println("TellerView.actionPerformed()");
 
 		clearErrorMessage();
-
-		if(evt.toString().contains("Add Vendor")) {
-			Properties props = new Properties();
-			myModel.stateChangeRequest("AddVendorView", props);
-		}
-		else if(evt.toString().contains("Add Inventory Item")) {
-			Properties props = new Properties();
-			myModel.stateChangeRequest("AddInventoryView", props);
-		}
-		else if(evt.toString().contains("Update Inventory Item")) {
-			Properties props = new Properties();
-			myModel.stateChangeRequest("UpdateInventoryView", props);
-		}
 
 	}
 
