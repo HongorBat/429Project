@@ -190,11 +190,10 @@ public class SearchPatronView extends View
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
        		    	SearchPatron sp = (SearchPatron)myModel;
-    				sp.updateState("zip", zip.getText());
+    				sp.updateState("Zip", zip.getText());
     				myModel.stateChangeRequest(SearchPatron.SEARCH_FOR_PATRON, null); 
     				ObservableList ol = FXCollections.observableArrayList(sp.getCollectionOfPatronsForTable());
     				table.setItems(ol);
-    				System.out.print("HI");
             	  }
         	});
 		cancelB.getChildren().add(searchButton);
@@ -272,7 +271,5 @@ public class SearchPatronView extends View
 //---------------------------------------------------------------
 //	Revision History:
 //
-
-
 
 

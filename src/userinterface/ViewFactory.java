@@ -67,15 +67,16 @@ public class ViewFactory {
 		else if (viewName.equals("InsertBookView") == true) 
 		{
 			return new InsertBookView(model);
-		}
-		else if (viewName.equals("InsertPatronView") == true) 
-		{
+			
+		} else if (viewName.equals("InsertPatronView")){
 			return new InsertPatronView(model);
-		}else if(viewName.equals("SearchPatronView") == true) 
-		{
+		} else if (viewName.equals("SearchBookView")) {
+			
+			return new SearchBookView(model);
+		} else if (viewName.equals("SearchPatronView")) {
 			return new SearchPatronView(model);
-		}
-		else {
+		} else {
+			
 			return null;
 		}
 	}

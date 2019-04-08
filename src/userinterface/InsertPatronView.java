@@ -4,13 +4,17 @@ package userinterface;
 import java.util.Properties;
 
 import impresario.IModel;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -38,6 +42,7 @@ public class InsertPatronView extends View
 	protected TextField dateOfBirth;
 	protected TextField status;
 
+	protected ComboBox<String> statusComboBox;
 
 	protected Button cancelButton;
 	protected Button insertButton;
@@ -243,20 +248,14 @@ public class InsertPatronView extends View
 		statusLabel.setTextAlignment(TextAlignment.RIGHT);
 		grid.add(statusLabel, 0, 8);
 
-		
-		status.setOnAction(new EventHandler<ActionEvent>() {
-
- 		     @Override
- 		     public void handle(ActionEvent e) {
- 		    	clearErrorMessage();
- 		    	myModel.stateChangeRequest("status", status.getText());
-      	     }
-       });
-		grid.add(status, 1, 8);
+		statusComboBox = new ComboBox<String>();
+		statusComboBox.setItems(FXCollections.observableArrayList("A", "I"));
+		statusComboBox.setValue("A");
+		grid.add(statusComboBox, 1, 8);
 
 		HBox cancelB = new HBox(10);
 		cancelB.setAlignment(Pos.CENTER);
-		cancelButton = new Button("Back");
+		cancelButton = new Button("Done");
 		cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -270,13 +269,28 @@ public class InsertPatronView extends View
 		
 		HBox insertB = new HBox(10);
 		insertB.setAlignment(Pos.CENTER_RIGHT);
-		insertButton = new Button("Insert");
+		insertButton = new Button("Submit");
 		insertButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		insertButton.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	
+       		    	if (containsNoEmptyFields() == false) {
+       		    		Alert a = new Alert(AlertType.ERROR);
+    					a.setContentText("Please complete all fields");
+    					a.show();
+    					return;
+       		    	}
+       		    	String dob = dateOfBirth.getText().substring(0, 4);
+       		    	if (ensureIntegerValue(dob) == false) {
+       		    		Alert a = new Alert(AlertType.ERROR);
+    					a.setContentText("Please enter a valid year");
+    					a.show();
+    					return;
+       		    	}
+       		    	
        		    	InsertPatron ip = (InsertPatron)myModel;
     				ip.updateState("Name", name.getText());
     				ip.updateState("Address", address.getText());
@@ -285,18 +299,33 @@ public class InsertPatronView extends View
     				ip.updateState("Zip", zip.getText());
     				ip.updateState("Email",email.getText());
     				ip.updateState("DateOfBirth", dateOfBirth.getText());
-    				ip.updateState("Status", status.getText());
+    				ip.updateState("Status", statusComboBox.getValue());
     				myModel.stateChangeRequest(InsertPatron.INSERT_PATRON_INSERT, null); 
             	  }
         	});
 		cancelB.getChildren().add(insertButton);
-	
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(cancelB);
-
 		return vbox;
 	}
-
+	
+	private boolean ensureIntegerValue(String pubYear) {
+		try {
+			int val = Integer.parseInt(pubYear);
+			return val >= 1917 && val <= 2000;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+	public boolean containsNoEmptyFields() {
+		return name.getText().length() > 0 &&
+				address.getText().length() > 0 &&
+				city.getText().length() > 0 &&
+				stateCode.getText().length() > 0 &&
+				zip.getText().length() > 0 && 
+				email.getText().length() > 0 &&
+				dateOfBirth.getText().length() > 0;
+	}
 
 	// Create the status log field
 	//-------------------------------------------------------------
@@ -364,7 +393,3 @@ public class InsertPatronView extends View
 //---------------------------------------------------------------
 //	Revision History:
 //
-
-
-
-

@@ -75,7 +75,7 @@ public class Patron extends EntityBase {
 				Integer patronId = insertAutoIncrementalPersistentState(mySchema, persistentState);
 				persistentState.setProperty("patronId", "" + patronId.intValue());
 				updateStatusMessage = "Patron id for new Patron : " +  persistentState.getProperty("patronId") + "installed successfully in database!";
-			}
+			}			
 		} catch (SQLException ex) {
 			updateStatusMessage = "Error in installing patron data in database!";
 		}

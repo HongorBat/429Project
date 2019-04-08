@@ -1,3 +1,4 @@
+
 package model;
 
 import java.util.Hashtable;
@@ -153,7 +154,6 @@ public class InsertPatron implements IView, IModel {
 		patron.update();
 		System.out.print("VALUES: " + patron.toString() + " \n\n" + dependencies.getProperty("Status"));
 	}
-	
 	public void swapToView(Scene newScene)
 	{
 		if (newScene == null)

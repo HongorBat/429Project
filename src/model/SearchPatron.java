@@ -108,6 +108,7 @@ public class SearchPatron implements IView, IModel {
 		if (dependencies.containsKey(key)) {
 			String str = (String) value;
 			dependencies.setProperty(key, str);
+			myRegistry.setDependencies(dependencies);
 		}
 	}
 	
@@ -142,18 +143,18 @@ public class SearchPatron implements IView, IModel {
 	}
 	
 	private void getPatronCollection() {
-		if (dependencies.getProperty("Zip").equals("ZipError")) {
+		if (dependencies.getProperty("Zip").equals("ZipErro")) { //TODO
+			
 			return;
 		} else if (pc == null) {
 			pc = new PatronCollection("Patron");
-
+			System.out.println("SETTING");
 		}
-		
 		pc.findPatronsAtZipCode(dependencies.getProperty("Zip"));
 }
 	
 	public ArrayList<MaleablePatron> getCollectionOfPatronsForTable() {
-		return pc.toArrayList();
+		return pc.toArrayList(); // this is empty
 }
 	
 

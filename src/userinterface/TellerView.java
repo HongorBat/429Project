@@ -1,3 +1,4 @@
+
 // specify the package
 package userinterface;
 
@@ -26,8 +27,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.InsertBook;
 import model.InsertPatron;
-import model.Librarian;
+import model.SearchBook;
 import model.SearchPatron;
 // project imports
 import impresario.IModel;
@@ -47,8 +49,12 @@ public class TellerView extends View
 	private Button done;
 	private Hashtable<String, Scene> myViews;
 	private Stage myStage;
-	InsertPatron myInsertPatron = new InsertPatron();
-	SearchPatron mySearchPatron = new SearchPatron();
+	private InsertBookView myInsetBookView;
+	private Scene myScene;
+	private InsertBook myInsertBook;
+	private InsertPatron myInsertPatron;
+	private SearchBook mySearchBook;
+	private SearchPatron mySearchPatron;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -59,7 +65,6 @@ public class TellerView extends View
 	{
 
 		super(teller, "TellerView");
-		
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -78,6 +83,11 @@ public class TellerView extends View
 		getChildren().add(container);
 
 		//populateFields();
+		
+		myInsertBook = new InsertBook();
+		myInsertPatron = new InsertPatron();
+		mySearchBook = new SearchBook();
+		mySearchPatron = new SearchPatron();
 
 		// STEP 0: Be sure you tell your model what keys you are interested in
 		myModel.subscribe("LoginError", this);
@@ -112,12 +122,12 @@ public class TellerView extends View
 
 		newBook = new Button("INSERT NEW BOOK");
  		newBook.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	processAction(e);  
-            	     }
-        	});
+ 			@Override
+ 			public void handle(ActionEvent e) {
+ 				myInsertBook.showView();
+ 				processAction(e);
+ 			}	
+ 		});
 
 		HBox btnContainer = new HBox(15);
 		btnContainer.setAlignment(Pos.BASELINE_CENTER);
@@ -126,13 +136,12 @@ public class TellerView extends View
 		
 		newPatron = new Button("INSERT NEW PATRON");
  		newPatron.setOnAction(new EventHandler<ActionEvent>() {
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		    	 myInsertPatron.showView();
-       		     	//processAction(e); 
-       		     	
-            	    }
-        	});
+ 			@Override
+ 			public void handle(ActionEvent e) {	
+ 				myInsertPatron.showView();
+ 				processAction(e); 	
+ 			}
+ 		});
 
 		btnContainer = new HBox(15);
 		btnContainer.setAlignment(Pos.BASELINE_CENTER);
@@ -141,12 +150,12 @@ public class TellerView extends View
 		
 		searchBook = new Button("SEARCH BOOKS");
 		searchBook.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
-            	     }
-        	});
+			@Override
+       		public void handle(ActionEvent e) {
+				mySearchBook.showView();
+				processAction(e);        
+			}
+		});
 
 		btnContainer = new HBox(15);
 		btnContainer.setAlignment(Pos.BASELINE_CENTER);
@@ -155,13 +164,12 @@ public class TellerView extends View
 		
 		searchPatron = new Button("SEARCH PATRONS");
 		searchPatron.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		    	mySearchPatron.showView(); 
-       		     	//processAction(e);    
-            	     }
-        	});
+			@Override
+			public void handle(ActionEvent e) {
+				mySearchPatron.showView();
+				processAction(e);	
+			}	
+		});
 
 		btnContainer = new HBox(15);
 		btnContainer.setAlignment(Pos.BASELINE_CENTER);
@@ -174,6 +182,7 @@ public class TellerView extends View
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	 System.exit(0);
+       		    	 myStage.close();
        		     	processAction(e);    
        		     	
             	    }
@@ -188,10 +197,11 @@ public class TellerView extends View
 	}
 
 	
-	public void initializeViews(Hashtable<String, Scene> views, Stage stage) {
+	public void initializeViews(Hashtable<String, Scene> views, Stage stage, Scene scene) {
 		if (myViews == null && myStage == null) {
 			myViews = views;
 			myStage = stage;
+			myScene = scene;
 		}
 	}
 
@@ -221,6 +231,8 @@ public class TellerView extends View
 
 		clearErrorMessage();
 
+		if (userid == null || userid.getText() == null) { return; }
+		
 		String useridEntered = userid.getText();
 
 		if ((useridEntered == null) || (useridEntered.length() == 0))
@@ -264,8 +276,8 @@ public class TellerView extends View
 			// display the passed text
 			displayErrorMessage((String)value);
 		}
-
 	}
+	
 
 	/**
 	 * Display error message
