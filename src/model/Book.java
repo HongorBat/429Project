@@ -94,9 +94,11 @@ public class Book extends EntityBase {
 			if (persistentState.getProperty("bookId") != null) {
 				Properties whereClause = new Properties();
 				whereClause.setProperty("bookId", persistentState.getProperty("bookId"));
+				System.out.println(mySchema.toString() + " <<");
 				updatePersistentState(mySchema, persistentState, whereClause);
 				updateStatusMessage = "Book data for book id : " + persistentState.getProperty("bookId") + " updated successfully in database!";
 			} else {
+				System.out.println(mySchema.toString() + " <<");
 				Integer bookId = insertAutoIncrementalPersistentState(mySchema, persistentState);
 				persistentState.setProperty("bookId", "" + bookId.intValue());
 				updateStatusMessage = "Book id for new book : " +  persistentState.getProperty("bookId") + "installed successfully in database!";

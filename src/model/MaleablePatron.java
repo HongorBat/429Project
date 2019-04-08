@@ -2,7 +2,7 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class MaleablePatron {
+public class MaleablePatron implements Comparable {
 	
 	private SimpleStringProperty patronId;
 	private SimpleStringProperty name;
@@ -26,76 +26,81 @@ public class MaleablePatron {
 		status = new SimpleStringProperty((String)p.getState("status"));
 	}
 
-	public SimpleStringProperty getPatronId() {
-		return patronId;
+	public String getPatronId() {
+		return patronId.get();
 	}
 
-	public void setPatronId(SimpleStringProperty patronId) {
-		this.patronId = patronId;
+	public void setPatronId(String x) {
+		patronId.set(x);
 	}
 
-	public SimpleStringProperty getName() {
-		return name;
+	public String getName() {
+		return name.get();
 	}
 
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
+	public void setName(String x) {
+		name.get();
 	}
 
-	public SimpleStringProperty getAddress() {
-		return address;
+	public String getAddress() {
+		return address.get();
 	}
 
-	public void setAddress(SimpleStringProperty address) {
-		this.address = address;
+	public void setAddress(String x) {
+		address.get();
 	}
 
-	public SimpleStringProperty getCity() {
-		return city;
+	public String getCity() {
+		return city.get();
 	}
 
-	public void setCity(SimpleStringProperty city) {
-		this.city = city;
+	public void setCity(String x) {
+		city.get();
 	}
 
-	public SimpleStringProperty getStateCode() {
-		return stateCode;
+	public String getStateCode() {
+		return stateCode.get();
 	}
 
-	public void setStateCode(SimpleStringProperty stateCode) {
-		this.stateCode = stateCode;
+	public void setStateCode(String x) {
+		this.stateCode.get();
 	}
 
-	public SimpleStringProperty getZip() {
-		return zip;
+	public String getZip() {
+		return zip.get();
 	}
 
-	public void setZip(SimpleStringProperty zip) {
-		this.zip = zip;
+	public void setZip(String x) {
+		this.zip.set(x);
 	}
 
-	public SimpleStringProperty getEmail() {
-		return email;
+	public String getEmail() {
+		return email.get();
 	}
 
-	public void setEmail(SimpleStringProperty email) {
-		this.email = email;
+	public void setEmail(String email) {
+		this.email.get();
 	}
 
-	public SimpleStringProperty getDateOfBirth() {
-		return dateOfBirth;
+	public String getDateOfBirth() {
+		return dateOfBirth.get();
 	}
 
-	public void setDateOfBirth(SimpleStringProperty dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setDateOfBirth(String x) {
+		this.dateOfBirth.get();
 	}
 
-	public SimpleStringProperty getStatus() {
-		return status;
+	public String getStatus() {
+		return status.get();
 	}
 
-	public void setStatus(SimpleStringProperty status) {
-		this.status = status;
+	public void setStatus(String x) {
+		this.status.get();
 	}
 
+	@Override
+	public int compareTo(Object arg0) {
+		MaleablePatron p = (MaleablePatron)arg0;
+		return this.getName().compareTo(p.getName());
+	}
 }

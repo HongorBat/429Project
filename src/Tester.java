@@ -23,42 +23,43 @@ public class Tester {
 		// EXAMPLE OF SETTING UP A NEW BOOK
 		BookCollection bc = new BookCollection("Book");
 		Properties p1 = new Properties();
-		p1.setProperty("author", "randomAuthorA");
-		p1.setProperty("title", "randomTitleT");
+		//p1.setProperty("bookId", "222");
+		p1.setProperty("author", "Jane Doe");
+		p1.setProperty("title", "Jane's Adventures");
 		p1.setProperty("pubYear", "1998");
 		p1.setProperty("status", "");
 		Book b = new Book(p1);
 		b.update();
 		
 		System.out.println("----------------------------------------");
-		bc.findBooksWithTitleLike("P");
+		//bc.findBooksWithTitleLike("Jane");
 		System.out.println(bc.print());
 		System.out.println("----------------------------------------");
-		bc.findBooksOlderThanDay("2000");
-		System.out.println(bc.print());
+		//bc.findBooksOlderThanDay("1997");
+		//System.out.println(bc.print());
 		System.out.println("----------------------------------------");
 		
 
 		// EXAMPLE OF SETTING UP A NEW PATRON
 		PatronCollection pc = new PatronCollection("Patron");
 		Properties p2 = new Properties();
-		p2.setProperty("patronId", "222");
-		p2.setProperty("name", "patronName");
-		p2.setProperty("address", "patronAddress");
-		p2.setProperty("city", "patronCity");
-		p2.setProperty("stateCode", "13131");
-		p2.setProperty("zip", "2345678");
-		p2.setProperty("email","patronName@example.com");
-		p2.setProperty("dateOfBirth", "06/10/1997");
+		//p2.setProperty("patronId", "12");
+		p2.setProperty("name", "John Doe");
+		p2.setProperty("address", "123 cool st");
+		p2.setProperty("city", "Hampton");
+		p2.setProperty("stateCode", "31");
+		p2.setProperty("zip", "2347");
+		p2.setProperty("email","johnDoe99@example.com");
+		p2.setProperty("dateOfBirth", "06/13/2002");
 		p2.setProperty("status", "Alive");
 		Patron p = new Patron(p2);
 		p.update();
 		
 		System.out.println("----------------------------------------");
-		pc.findPatronsYoungerThan("09/1/1958");
+		pc.findPatronsYoungerThan("09/1/2008");
 		System.out.println(pc.print());
 		System.out.println("----------------------------------------");
-		pc.findPatronsAtZipCode("10694");
+		pc.findPatronsAtZipCode("2347");
 		System.out.println(pc.print());
 		System.out.println("----------------------------------------");
 		

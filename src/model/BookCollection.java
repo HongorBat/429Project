@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -90,8 +92,17 @@ public class BookCollection extends EntityBase {
     	return sb.toString();
     }
     
-    private void update() {
-    	
+    /**
+     * @return the array of books
+     */
+    public ArrayList<MutableBook> toArrayList() {
+    	ArrayList<MutableBook> list = new ArrayList<>();
+    	for (int i = 0; i < bookList.size(); i++) {
+    		Book b = (Book)bookList.get(i);
+    		list.add(new MutableBook(b));
+    	}
+    	Collections.sort(list);
+    	return list;
     }
     
 	@Override

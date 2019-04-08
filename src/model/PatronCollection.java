@@ -83,8 +83,8 @@ public class PatronCollection extends EntityBase {
 		ArrayList<MaleablePatron> list = new ArrayList<>();
     	for (int i = 0; i < patronList.size(); i++) {
     		Patron p = (Patron)patronList.get(i);
+    		System.out.println(p.toString() + " MMMM");
     		list.add(new MaleablePatron(p));
-    		System.out.print(list);
     	}
     	return list;
 	}

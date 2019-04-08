@@ -251,7 +251,7 @@ public class Teller implements IView, IModel
 			View newView = ViewFactory.createView("TellerView", this); // USE VIEW FACTORY
 			
 			TellerView tempView = (TellerView)newView;
-			tempView.initializeViews(myViews, myStage);
+			tempView.initializeViews(myViews, myStage, currentScene);
 			
 			currentScene = new Scene(newView);
 			myViews.put("TellerView", currentScene);
@@ -295,3 +295,4 @@ public class Teller implements IView, IModel
 		WindowPosition.placeCenter(myStage);
 	}
 }
+
