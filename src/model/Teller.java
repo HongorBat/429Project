@@ -133,12 +133,15 @@ public class Teller implements IView, IModel
 					createAndShowTransactionChoiceView();
 				}
 			}
-		} else
-			if(key.equals("AddVendorView") == true) {
+		} 
+		else if (key.equals("AddVendorView") == true) {
 				createAndShowAddVendorView();
 			}
-			else if (key.equals("TellerView") == true) {
+		else if (key.equals("TellerView") == true) {
 				createAndShowTellerView();
+			}
+		else if (key.equals("AddVIITView") == true) {
+				createAndShowAddVIITView();
 			}
 		else
 		if (key.equals("CancelTransaction") == true)
@@ -280,6 +283,21 @@ public class Teller implements IView, IModel
 			View newView = ViewFactory.createView("AddVendorView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("AddVendorView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	//---------------------------------------------------------
+	private void createAndShowAddVIITView() {
+		Scene currentScene = (Scene)myViews.get("AddVIITView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("AddVIITView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("AddVIITView", currentScene);
 		}
 				
 		swapToView(currentScene);
