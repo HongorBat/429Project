@@ -24,7 +24,9 @@ package database;
 
 // system imports
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Vector;
 
 import java.sql.Connection;
@@ -591,9 +593,27 @@ abstract public class Persistable
 				return null;
 			}
 
-	    	// construct a SQL statement from the passed parameters
+			System.out.println("[Persistable - 594]: " + updateValues.toString());
+	    	
+			// Just going to force this code to work... 
+			schema.clear(); // make sure this is clear
+			Set<Object> set = updateValues.keySet();
+			for (Object o : set) {
+				// get all info from updateValyes and put it into sche,a
+				String key = (String)o;
+				schema.setProperty(key, updateValues.getProperty(key));
+			}
+			
+			/*
+			System.out.println("PERSISTABLE.java 607");
+			System.out.println(schema.toString() + " <<");
+			System.out.println(updateValues.toString() + " <<");
+			System.out.println(whereValues.toString() + " <<");
+			*/
+			
+			// construct a SQL statement from the passed parameters
 			SQLUpdateStatement theSQLStatement = new SQLUpdateStatement(schema, updateValues, whereValues);
-			// DEBUG System.out.println("SQL Statement: " + theSQLStatement.toString());
+			//DEBUG System.out.println("SQL Statement: " + theSQLStatement.toString());
 
 			// verify the construction (should be exception?)
 			if(theSQLStatement == null)
@@ -607,24 +627,24 @@ abstract public class Persistable
 			// Only the Global Pool connection should be used!
 			Statement theStatement = theDBConnection.createStatement();
 
+			
 			// Stop Runaway Queries
 			theStatement.setMaxRows(20000);
 
-
+			
 			// The method executeUpdate executes a query on the database. The
 			// return result is of type integer which indicates the number of rows updated
 			int returnCode = theStatement.executeUpdate(theSQLStatement.toString());
 
 			// DEBUG: throw new SQLException("Testing only");
 
-			
 
 			return new Integer(returnCode);
 		}
 		catch (SQLException sqle)
 		{
-//			DEBUG: 
-			System.err.println( "An SQL Error Occured:" + sqle + "\n" + sqle.getErrorCode() + "\n" + sqle.getMessage() + "\n" + sqle);
+			// DEBUG: 
+			// System.err.println( "An SQL Error Occured:" + sqle + "\n" + sqle.getErrorCode() + "\n" + sqle.getMessage() + "\n" + sqle);
 			new Event(Event.getLeafLevelClassName(this), "updatePersistentState", "SQL Exception: " + sqle.getErrorCode() + ": " + sqle.getMessage(), Event.ERROR);
 			throw sqle;
 		}
