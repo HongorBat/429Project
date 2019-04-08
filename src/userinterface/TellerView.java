@@ -190,6 +190,18 @@ public class TellerView extends View
 			Properties props = new Properties();
 			myModel.stateChangeRequest("AddVendorView", props);
 		}
+		else if(evt.toString().contains("Add Inventory Item")) {
+			Properties props = new Properties();
+			myModel.stateChangeRequest("AddInventoryView", props);
+		}
+		else if(evt.toString().contains("Update Inventory Item")) {
+			Properties props = new Properties();
+			myModel.stateChangeRequest("UpdateInventoryView", props);
+		}
+		else if(evt.toString().contains("Update")) {
+			Properties props = new Properties();
+			myModel.stateChangeRequest("UpdateFieldView", props);
+		}
 
 	}
 

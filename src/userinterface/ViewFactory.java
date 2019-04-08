@@ -19,6 +19,18 @@ public class ViewFactory {
 		{
 			return new AddVendorView(model);
 		}
+		else if(viewName.equals("AddInventoryView") == true)
+		{
+			return new AddInventoryView(model);
+		}
+		else if(viewName.equals("UpdateInventoryView") == true)
+		{
+			return new UpdateInventoryView(model);
+		}
+		else if(viewName.equals("UpdateFieldView") == true)
+		{
+			return new UpdateFieldView(model);
+		}	
 		else
 			return null;
 	}

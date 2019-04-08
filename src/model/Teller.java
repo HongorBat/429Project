@@ -140,6 +140,16 @@ public class Teller implements IView, IModel
 			else if (key.equals("TellerView") == true) {
 				createAndShowTellerView();
 			}
+			else if (key.equals("AddInventoryView") == true) {
+				createAndShowAddInventoryView();
+			}
+			else if (key.equals("UpdateInventoryView") == true) {
+				createAndShowUpdateInventoryView();
+			}
+			else if (key.equals("UpdateFieldView") == true) {
+				createAndShowUpdateFieldView();
+			}
+		
 		else
 		if (key.equals("CancelTransaction") == true)
 		{
@@ -280,6 +290,48 @@ public class Teller implements IView, IModel
 			View newView = ViewFactory.createView("AddVendorView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("AddVendorView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowAddInventoryView() {
+		Scene currentScene = (Scene)myViews.get("AddInventoryView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("AddInventoryView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("AddInventoryView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowUpdateInventoryView() {
+		Scene currentScene = (Scene)myViews.get("AddInventoryView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("UpdateInventoryView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("UpdateInventoryView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowUpdateFieldView() {
+		Scene currentScene = (Scene)myViews.get("UpdateFieldView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("UpdateFieldView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("UpdateFieldView", currentScene);
 		}
 				
 		swapToView(currentScene);
