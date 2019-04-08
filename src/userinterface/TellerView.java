@@ -38,7 +38,7 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor;
+	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -94,7 +94,7 @@ public class TellerView extends View
         	grid.setAlignment(Pos.CENTER);
        		grid.setHgap(10);
         	grid.setVgap(10);
-        	grid.setPadding(new Insets(25, 25, 25, 25));
+        	grid.setPadding(new Insets(35, 35, 35, 35));
 
 		// data entry fields
 
@@ -132,7 +132,9 @@ public class TellerView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddVendorView", props);
             	     }
         	});
 
@@ -154,6 +156,22 @@ public class TellerView extends View
 		modifyVendorBtn.setAlignment(Pos.CENTER);
 		modifyVendorBtn.getChildren().add(modifyVendor);
 		grid.add(modifyVendorBtn, 1, 3);
+		
+		addVIIT = new Button("Add Vendor Inventory Item Type");
+		addVIIT.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddVIITView", props);
+            	     }
+        	});
+
+		HBox addVIITBtn = new HBox(15);
+		addVIITBtn.setAlignment(Pos.CENTER);
+		addVIITBtn.getChildren().add(addVIIT);
+		grid.add(addVIITBtn, 1, 4);
 
 		return grid;
 	}
@@ -186,6 +204,7 @@ public class TellerView extends View
 
 		clearErrorMessage();
 
+<<<<<<< HEAD
 		if(evt.toString().contains("Add Vendor")) {
 			Properties props = new Properties();
 			myModel.stateChangeRequest("AddVendorView", props);
@@ -202,6 +221,8 @@ public class TellerView extends View
 			Properties props = new Properties();
 			myModel.stateChangeRequest("UpdateFieldView", props);
 		}
+=======
+>>>>>>> 2589bf623996cc58c489b6daa44fc3d1e85f112f
 
 	}
 
