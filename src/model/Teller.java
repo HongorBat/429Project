@@ -327,7 +327,7 @@ public class Teller implements IView, IModel
 	}
 	
 	private void createAndShowUpdateInventoryView() {
-		Scene currentScene = (Scene)myViews.get("AddInventoryView");
+		Scene currentScene = (Scene)myViews.get("UpdateInventoryView");
 
 		if (currentScene == null)
 		{

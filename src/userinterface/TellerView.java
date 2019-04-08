@@ -204,7 +204,6 @@ public class TellerView extends View
 
 		clearErrorMessage();
 
-<<<<<<< HEAD
 		if(evt.toString().contains("Add Vendor")) {
 			Properties props = new Properties();
 			myModel.stateChangeRequest("AddVendorView", props);
@@ -217,12 +216,6 @@ public class TellerView extends View
 			Properties props = new Properties();
 			myModel.stateChangeRequest("UpdateInventoryView", props);
 		}
-		else if(evt.toString().contains("Update")) {
-			Properties props = new Properties();
-			myModel.stateChangeRequest("UpdateFieldView", props);
-		}
-=======
->>>>>>> 2589bf623996cc58c489b6daa44fc3d1e85f112f
 
 	}
 
