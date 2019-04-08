@@ -1,9 +1,9 @@
-
 // specify the package
 package userinterface;
 
 // system imports
 import java.text.NumberFormat;
+import java.util.Hashtable;
 import java.util.Properties;
 
 import javafx.event.Event;
@@ -26,7 +26,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
+import model.InsertPatron;
+import model.Librarian;
+import model.SearchPatron;
 // project imports
 import impresario.IModel;
 
@@ -38,17 +40,26 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button submitButton;
+	private Button newBook;
+	private Button newPatron;
+	private Button searchBook;
+	private Button searchPatron;
+	private Button done;
+	private Hashtable<String, Scene> myViews;
+	private Stage myStage;
+	InsertPatron myInsertPatron = new InsertPatron();
+	SearchPatron mySearchPatron = new SearchPatron();
 
 	// For showing error message
 	private MessageView statusLog;
 
 	// constructor for this class -- takes a model object
 	//----------------------------------------------------------
-	public TellerView( IModel teller)
+	public TellerView(IModel teller)
 	{
 
 		super(teller, "TellerView");
+		
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -66,7 +77,7 @@ public class TellerView extends View
 
 		getChildren().add(container);
 
-		populateFields();
+		//populateFields();
 
 		// STEP 0: Be sure you tell your model what keys you are interested in
 		myModel.subscribe("LoginError", this);
@@ -77,10 +88,10 @@ public class TellerView extends View
 	private Node createTitle()
 	{
 		
-		Text titleText = new Text("       Brockport Bank ATM          ");
-		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+		Text titleText = new Text("       Library System          ");
+		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 25));
 		titleText.setTextAlignment(TextAlignment.CENTER);
-		titleText.setFill(Color.DARKGREEN);
+		titleText.setFill(Color.BLACK);
 		
 	
 		return titleText;
@@ -97,50 +108,92 @@ public class TellerView extends View
         	grid.setPadding(new Insets(25, 25, 25, 25));
 
 		// data entry fields
-		Label userName = new Label("User ID:");
-        	grid.add(userName, 0, 0);
 
-		userid = new TextField();
-		userid.setOnAction(new EventHandler<ActionEvent>() {
+
+		newBook = new Button("INSERT NEW BOOK");
+ 		newBook.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);  
+            	     }
+        	});
+
+		HBox btnContainer = new HBox(15);
+		btnContainer.setAlignment(Pos.BASELINE_CENTER);
+		btnContainer.getChildren().add(newBook);
+		grid.add(btnContainer, 1, 1);
+		
+		newPatron = new Button("INSERT NEW PATRON");
+ 		newPatron.setOnAction(new EventHandler<ActionEvent>() {
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		    	 myInsertPatron.showView();
+       		     	//processAction(e); 
+       		     	
+            	    }
+        	});
+
+		btnContainer = new HBox(15);
+		btnContainer.setAlignment(Pos.BASELINE_CENTER);
+		btnContainer.getChildren().add(newPatron);
+		grid.add(btnContainer, 1, 2);
+		
+		searchBook = new Button("SEARCH BOOKS");
+		searchBook.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
        		     public void handle(ActionEvent e) {
        		     	processAction(e);    
             	     }
         	});
-        	grid.add(userid, 1, 0);
 
-		Label pw = new Label("Password:");
-        	grid.add(pw, 0, 1);
-
-		password = new PasswordField();
-		password.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
-            	     }
-        	});
-        	grid.add(password, 1, 1);
-
-		submitButton = new Button("Submit");
- 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
-            	     }
-        	});
-
-		HBox btnContainer = new HBox(10);
-		btnContainer.setAlignment(Pos.BOTTOM_RIGHT);
-		btnContainer.getChildren().add(submitButton);
+		btnContainer = new HBox(15);
+		btnContainer.setAlignment(Pos.BASELINE_CENTER);
+		btnContainer.getChildren().add(searchBook);
 		grid.add(btnContainer, 1, 3);
+		
+		searchPatron = new Button("SEARCH PATRONS");
+		searchPatron.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		    	mySearchPatron.showView(); 
+       		     	//processAction(e);    
+            	     }
+        	});
+
+		btnContainer = new HBox(15);
+		btnContainer.setAlignment(Pos.BASELINE_CENTER);
+		btnContainer.getChildren().add(searchPatron);
+		grid.add(btnContainer, 1, 4);
+		
+		done = new Button("DONE");
+		done.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		    	 System.exit(0);
+       		     	processAction(e);    
+       		     	
+            	    }
+        	});
+
+		btnContainer = new HBox(15);
+		btnContainer.setAlignment(Pos.BASELINE_CENTER);
+		btnContainer.getChildren().add(done);
+		grid.add(btnContainer, 1, 6);
 
 		return grid;
 	}
 
 	
+	public void initializeViews(Hashtable<String, Scene> views, Stage stage) {
+		if (myViews == null && myStage == null) {
+			myViews = views;
+			myStage = stage;
+		}
+	}
 
 	// Create the status log field
 	//-------------------------------------------------------------
@@ -153,11 +206,11 @@ public class TellerView extends View
 	}
 
 	//-------------------------------------------------------------
-	public void populateFields()
-	{
-		userid.setText("");
-		password.setText("");
-	}
+	//public void populateFields()
+	//{
+		//userid.setText("");
+		//password.setText("");
+	//}
 
 	// This method processes events generated from our GUI components.
 	// Make the ActionListeners delegate to this method
@@ -182,7 +235,6 @@ public class TellerView extends View
 		}
 
 	}
-
 	/**
 	 * Process userid and pwd supplied when Submit button is hit.
 	 * Action is to pass this info on to the teller object
@@ -234,4 +286,3 @@ public class TellerView extends View
 	}
 
 }
-
