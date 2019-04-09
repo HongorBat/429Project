@@ -30,34 +30,52 @@ public class Tester {
 		
 		//InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 		
-		/////////////////////////////////////////////////////////////////////// Inventory Item Type TEST
-		/*Properties p1 = new Properties();
-		//p1.setProperty("Barcode", "");
+		addInventoryItem();
+		// addVendor();
+		
+	}
+	
+	private static void addVendorInventoryItemType() {
+		
+		// Give the object some properties
+		Properties p1 = new Properties();
+		//p1.setProperty(arg0, arg1)
+	}
+	
+	private static void addVendor() {
+		// add the properties
+		Properties p2 = new Properties();
+		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
+		p2.setProperty("Name", " Shrek the Ogre");
+		p2.setProperty("PhoneNumber", "585-585-5855");
+		p2.setProperty("Status", "Active");
+		
+		// create item using properties, then add to db
+		Vendor ve = new Vendor(p2);
+		ve.update();
+	}
+	
+	private static void addInventoryItem() {
+		
+		// create the properties of the inventoryIte,
+		Properties p1 = new Properties();
+		//p1.setProperty("InventoryItemId", ""); // this is auto incremented dont touch
+		p1.setProperty("Barcode", "1234123");
 		p1.setProperty("InventoryItemTypeName", "Jimmy Neutron");
 		p1.setProperty("VendorId", "11414");
 		p1.setProperty("DateReceived", "10/10/10");
 		p1.setProperty("DateOfLastUse", "02/02/01");
 		p1.setProperty("Notes", "special note");
 		p1.setProperty("Status", "Available");
+		
+		// Create the Inventory Item object with the properties we made
 		InventoryItem it = new InventoryItem(p1);
-		it.update();*/
-		
-		//System.out.println(iic.toArrayList().size());
-		
-		/////////////////////////////////////////////////////////////////////// Vendor TEST
-		/*Properties p2 = new Properties();
-		//p2.setProperty("Id", "");
-		p2.setProperty("Name", " Shrek the Ogre");
-		p2.setProperty("PhoneNumber", "585-585-5855");
-		p2.setProperty("Status", "Active");
-		
-		Vendor ve = new Vendor(p2);
-		ve.update();*/
-		
-	
-	
+		// add it to the db
+		it.update();
 	}
 	
+	
+	/*
 	private static void oldTest() {
 		// EXAMPLE OF SETTING UP A NEW BOOK
 				BookCollection bc = new BookCollection("Book");
@@ -101,5 +119,5 @@ public class Tester {
 				pc.findPatronsAtZipCode("2347");
 				System.out.println(pc.print());
 				System.out.println("----------------------------------------");
-	}
+	}*/
 }
