@@ -199,11 +199,12 @@ public class ModifyVendorView extends View{
 	{
 		vndr = VendorName.getText();
 		
-		//if((vndr == null ) || (vndr.length() == 0)) {
-			//displayErrorMessage("Please Enter Zip!");
-			//vndr.requestFocus();
-	//	} 
-		
+		if((vndr == null ) || (vndr.length() == 0)) {
+			displayErrorMessage("Please enter a vendor!");
+			VendorName.requestFocus();
+			return;
+		} 
+		displayErrorMessage("");
 		getEntryTableModelValues(vndr);
 	}
 	
