@@ -29,16 +29,13 @@ public class UpdateInventoryView extends View{
 	// GUI components
 	protected TextField InventoryName;
 	
-	ObservableList<String> Result =
-    FXCollections.observableArrayList(
-            "Ceci est un test 1",
-            "Voici un autre test 2",
-            "Enfin le dernier  3"
-        );;
+	
 	
 	protected ComboBox<String> SearchResult;
 
 	protected TextField serviceCharge;
+	
+	protected String inventory;
 
 
 	protected Button cancelButton, updateButton, deleteButton;
@@ -125,7 +122,7 @@ public class UpdateInventoryView extends View{
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		    	   
+       		    	processAccountSelected();
             	  }
         	});
 		
@@ -138,7 +135,7 @@ public class UpdateInventoryView extends View{
 		inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
 		grid.add(inventoryUnits, 0, 2);
 
-		SearchResult = new ComboBox<String>(Result);
+		SearchResult = new ComboBox<String>();
 		grid.add(SearchResult, 1, 2);
 
 
@@ -187,6 +184,55 @@ public class UpdateInventoryView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	protected void processAccountSelected()
+	{
+		inventory = InventoryName.getText();
+		
+		if((inventory == null ) || (inventory.length() == 0)) {
+			displayErrorMessage("Please Enter Zip!");
+			InventoryName.requestFocus();
+		} 
+		
+		getEntryTableModelValues(inventory);
+	}
+	
+	protected void getEntryTableModelValues(String _inventory)
+	{
+		ObservableList<String> Result = FXCollections.observableArrayList();
+		Result.add("test 1");
+		Result.add("test 2");
+		
+		try
+		{
+			System.out.println(_inventory);
+			//PatronCollection patronCollection = new PatronCollection();
+			//patronCollection.findPatronsAtZipCode(zipcode);
+			//patronCollection.printResults();
+			
+			//Vector<Patron> entryList = (Vector<Patron>)patronCollection.getState("Patrons");
+
+			//Enumeration<Patron> entries = entryList.elements();
+			
+			
+
+			//while (entries.hasMoreElements() == true)
+			//{
+				//Patron nextAccount = (Patron)entries.nextElement();
+				//Vector<String> view = nextAccount.getEntryListView();
+
+				// add this list entry to the list
+				//PatronTableModel nextTableRowData = new PatronTableModel(view);
+				//tableData.add(nextTableRowData);
+				
+			//}
+			
+			SearchResult.setItems(Result);
+		}
+		catch (Exception e) {//SQLException e) {
+			// Need to handle this exception
+		}
 	}
 
 	

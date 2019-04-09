@@ -181,6 +181,9 @@ public class UpdateFieldView extends View{
 		
 		submitButton = new Button("Update");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		
+		
+		
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(submitButton);
 	
