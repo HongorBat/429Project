@@ -1,5 +1,6 @@
 package userinterface;
 
+import java.util.Optional;
 import java.util.Vector;
 
 import impresario.IModel;
@@ -11,8 +12,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -165,6 +169,13 @@ public class UpdateInventoryView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+      				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+      				INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(SELECTED_ITEM);
+      				InventoryItemType iit = INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
+  					INVENTORY_ITEM_TYPE_COLLECTION.deleteInventoryItemTypes(iit.getField("ItemTypeId"));
+      				Alert r = new Alert(AlertType.INFORMATION);
+      				r.setContentText("Item has been deleted.");
+      				r.show();
        		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});

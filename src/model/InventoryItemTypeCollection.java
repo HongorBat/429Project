@@ -22,6 +22,21 @@ public class InventoryItemTypeCollection extends EntityBase {
     /**
      * Retrieves all the inventory item types from the db
      */
+    public void deleteInventoryItemTypes(String itemTypeId) {
+    	try {
+    		inventoryItemTypeList.removeAllElements();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+        	String query = "DELETE FROM InventoryItemType WHERE ItemTypeId = '" + itemTypeId + "'";
+        	Statement stmt = con.createStatement();
+        	stmt.executeUpdate(query);
+    	} catch (Exception ex) {
+    		System.err.println("FAILED");
+    	}
+    }
+    
+    /**
+     * Retrieves all the inventory item types from the db
+     */
     public void getAllInventoryItemTypes() {
     	try {
     		inventoryItemTypeList.removeAllElements();
