@@ -110,18 +110,18 @@ public class AddInventoryView extends View{
 		VBox vbox = new VBox(20);
 
 		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setAlignment(Pos.CENTER);
+       	grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
 
-		Text prompt = new Text("ITEM INVENTORY INFORMATION");
-		prompt.setWrappingWidth(400);
-		prompt.setTextAlignment(TextAlignment.CENTER);
-		prompt.setFill(Color.BLACK);
-		grid.add(prompt, 0, 0, 2, 1);
+        Text prompt = new Text("ITEM INVENTORY INFORMATION");
+        prompt.setWrappingWidth(400);
+        prompt.setTextAlignment(TextAlignment.CENTER);
+        prompt.setFill(Color.BLACK);
+        grid.add(prompt, 0, 0, 2, 1);
 
-		Text itemTypeNameLabel = new Text(" Inventory Item Type Name : ");
+        Text itemTypeNameLabel = new Text(" Inventory Item Type Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		itemTypeNameLabel.setFont(myFont);
 		itemTypeNameLabel.setWrappingWidth(150);
@@ -131,7 +131,7 @@ public class AddInventoryView extends View{
 		TypeName = new TextField();
 		grid.add(TypeName, 1, 1);
 
-		Text inventoryUnits = new Text(" Units : ");
+        Text inventoryUnits = new Text(" Units : ");
 		inventoryUnits.setFont(myFont);
 		inventoryUnits.setWrappingWidth(150);
 		inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
@@ -190,23 +190,23 @@ public class AddInventoryView extends View{
 		cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent e) {
-				clearErrorMessage();
-				myModel.stateChangeRequest("TellerView", null);
-			}
-		});
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		    	clearErrorMessage();
+       		    	myModel.stateChangeRequest("TellerView", null);
+            	  }
+        	});
 
 		submitButton = new Button("Submit");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent e) {
-				clearErrorMessage();
-				addInventoryItem();
-			}
-		});
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		    	clearErrorMessage();
+  		    	addInventoryItem();
+  		     }
+       	  });
 
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(submitButton);
@@ -218,21 +218,76 @@ public class AddInventoryView extends View{
 	}
 
 	private void addInventoryItem() {
-
+		if ((TypeName == null ) || (TypeName.getLength() == 0))
+		{
+			displayErrorMessage("Please Enter name!");
+			TypeName.requestFocus();
+		}
+		else if ((Units == null) || (Units.getLength() == 0))
+		{
+			displayErrorMessage("Please a valid unit!");
+			Units.requestFocus();
+			return;
+		}
+		else if (Integer.parseInt(Units.getText()) < 0)
+		{
+			displayErrorMessage("You can't put a negativ unit!");
+			Units.requestFocus();
+		}
+		else if ((UnitMeasure == null) || (UnitMeasure.getLength() == 0))
+		{
+				displayErrorMessage("Please Enter Valid unit measure");
+				UnitMeasure.requestFocus();
+				return;
+		}
+		else if (Integer.parseInt(UnitMeasure.getText()) < 0)
+		{
+			displayErrorMessage("You can't put a negativ Unit Measure!");
+			UnitMeasure.requestFocus();
+		}
+		else if ((ValidityDay == null) || (ValidityDay.getLength() == 0))
+		{
+			displayErrorMessage("Please enter a valid validity day");
+			ValidityDay.requestFocus();
+			return;
+		}
+		else if (Integer.parseInt(ValidityDay.getText()) < 0)
+		{
+			displayErrorMessage("You can't put a negativ Validity Day!");
+			ValidityDay.requestFocus();
+		}
+		else if ((RoerderPoint == null) || (RoerderPoint.getLength() == 0))
+		{
+			displayErrorMessage("Please Enter a roerder point!");
+			RoerderPoint.requestFocus();
+		}
+		else if ((Notes == null) || (Notes.getLength() == 0))
+		{
+			displayErrorMessage("Please Enter zip note!");
+			Notes.requestFocus();
+		}
+		else if (Status == null)
+		{
+			displayErrorMessage("Please Enter a valid status!");
+			Status.requestFocus();
+		}
+		else
+		{
 		// create the properties of the inventoryIte,
 		Properties p1 = new Properties();
-		//p1.setProperty("InventoryItemId", "1"); // this is auto incremented dont touch
-		p1.setProperty("ItemTypeName", TypeName.getText());
-		p1.setProperty("Units", Units.getText());
-		p1.setProperty("UnitMeasure", UnitMeasure.getText());
-		p1.setProperty("ValidityDays", ValidityDay.getText());
-		p1.setProperty("ReorderPoint", RoerderPoint.getText());
-		p1.setProperty("Notes", Notes.getText());
-		p1.setProperty("Status", Status.getValue().toString());
-		// Create the Inventory Item object with the properties we made
-		InventoryItemType it = new InventoryItemType(p1);
-		// add it to the db
-		it.update();
+			//p1.setProperty("InventoryItemId", "1"); // this is auto incremented dont touch
+			p1.setProperty("ItemTypeName", TypeName.getText());
+			p1.setProperty("Units", Units.getText());
+			p1.setProperty("UnitMeasure", UnitMeasure.getText());
+			p1.setProperty("ValidityDays", ValidityDay.getText());
+			p1.setProperty("ReorderPoint", RoerderPoint.getText());
+			p1.setProperty("Notes", Notes.getText());
+			p1.setProperty("Status", Status.getValue().toString());
+			// Create the Inventory Item object with the properties we made
+			InventoryItemType it = new InventoryItemType(p1);
+			// add it to the db
+			it.update();
+		}
 	}
 
 	// Create the status log field
