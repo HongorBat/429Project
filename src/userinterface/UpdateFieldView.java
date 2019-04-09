@@ -33,7 +33,7 @@ public class UpdateFieldView extends View{
 	protected TextField TypeName;
 	protected TextField Units;
 	protected TextField UnitMeasure;
-	protected TextField ValidityDay;
+	protected TextField ValidityDays;
 	protected TextField ReorderPoint;
 	protected TextField Notes;
 	protected TextField ItemType;
@@ -134,8 +134,8 @@ public class UpdateFieldView extends View{
 		inventoryValidityDay.setTextAlignment(TextAlignment.RIGHT);
 		grid.add(inventoryValidityDay, 0, 4);
 
-		ValidityDay = new TextField();
-		grid.add(ValidityDay, 1, 4);
+		ValidityDays = new TextField();
+		grid.add(ValidityDays, 1, 4);
 		
 		Text inventoryRoerderPoint = new Text(" Roerder point: ");
 		inventoryRoerderPoint.setFont(myFont);
@@ -273,7 +273,7 @@ public class UpdateFieldView extends View{
 		InventoryItemType iit = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
 		Units.setText(iit.getField("Units"));
 		UnitMeasure.setText(iit.getField("UnitMeasure"));
-		ValidityDay.setText(iit.getField("ValidityDays"));
+		ValidityDays.setText(iit.getField("ValidityDays"));
 		ReorderPoint.setText(iit.getField("ReorderPoint"));
 		Notes.setText(iit.getField("Notes"));
 		Status.getSelectionModel().select(iit.getField("Status"));
@@ -283,7 +283,7 @@ public class UpdateFieldView extends View{
 		String str = UpdateInventoryView.SELECTED_ITEM;
 		iitc.updateInventoryItemTypeWithName(str, "Units", Units.getText());
 		iitc.updateInventoryItemTypeWithName(str, "UnitMeasure", UnitMeasure.getText());
-		iitc.updateInventoryItemTypeWithName(str, "ValidityDays", ValidityDay.getText());
+		iitc.updateInventoryItemTypeWithName(str, "ValidityDays", ValidityDays.getText());
 		iitc.updateInventoryItemTypeWithName(str, "ReorderPoint", ReorderPoint.getText());
 		iitc.updateInventoryItemTypeWithName(str, "Notes", Notes.getText());
 		iitc.updateInventoryItemTypeWithName(str, "Status", (String)Status.getSelectionModel().getSelectedItem());

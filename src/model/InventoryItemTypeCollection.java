@@ -63,17 +63,17 @@ public class InventoryItemTypeCollection extends EntityBase {
      * @param newValue value to set that field to
      */
     public void updateInventoryItemTypeWithName(String inventoryItemTypeName, String fieldName, String newValue) {
+    	StringBuilder sb = new StringBuilder();
     	try {
     		inventoryItemTypeList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-    		StringBuilder sb = new StringBuilder();
     		sb.append("UPDATE InventoryItemType SET ");
-    		sb.append(fieldName + " = " + newValue + " ");
+    		sb.append(fieldName + " = '" + newValue + "' ");
     		sb.append("WHERE ItemTypeName = '" + inventoryItemTypeName + "'");
         	Statement stmt = con.createStatement();
         	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
-    		System.err.println("FAILED ...");
+    		System.err.println("Faild query for " + sb.toString() );
     	}
     }
     
