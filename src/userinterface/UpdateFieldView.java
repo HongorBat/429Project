@@ -159,7 +159,7 @@ public class UpdateFieldView extends View{
 		Status.getItems().addAll(
 				"Active",
 				"Inactive");
-		grid.add(Status, 1, 3);
+		grid.add(Status, 1, 7);
 		Status.getSelectionModel().selectFirst();
 
 
