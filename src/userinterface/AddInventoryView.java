@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import javafx.util.StringConverter;
 import model.InventoryItem;
+import model.InventoryItemType;
 // project imports
 import impresario.IModel;
 
@@ -42,12 +43,13 @@ public class AddInventoryView extends View{
 	//with the Item Type Name, Units, Unit Measure, Validity Days, 
 	//Reorder Point, and Notes of the Inventory Item Type
 	// GUI components
-	protected TextField Barcode;
 	protected TextField TypeName;
-	protected TextField VendorId;
-	protected TextField DateReceived;
-	protected TextField DateOfLastUse;
+	protected TextField Units;
+	protected TextField UnitMeasure;
+	protected TextField ValidityDay;
+	protected TextField RoerderPoint;
 	protected TextField Notes;
+	protected TextField ItemType;
 	protected ComboBox Status;
 	
 	protected TextField serviceCharge;
@@ -118,52 +120,52 @@ public class AddInventoryView extends View{
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
-
-        Text barcode = new Text(" Barcode : ");
+        
+        Text itemTypeNameLabel = new Text(" Inventory Item Type Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-		barcode.setFont(myFont);
-		barcode.setWrappingWidth(150);
-		barcode.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(barcode, 0, 1);
-
-		Barcode = new TextField();
-		grid.add(Barcode, 1, 1);
-
-		Text inventoryTypeName = new Text(" Type Name : ");
-		inventoryTypeName.setFont(myFont);
-		inventoryTypeName.setWrappingWidth(150);
-		inventoryTypeName.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(inventoryTypeName, 0, 2);
+		itemTypeNameLabel.setFont(myFont);
+		itemTypeNameLabel.setWrappingWidth(150);
+		itemTypeNameLabel.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(itemTypeNameLabel, 0, 1);
 
 		TypeName = new TextField();
-		grid.add(TypeName, 1, 2);
+		grid.add(TypeName, 1, 1);
 
-		Text VID = new Text(" Vendor Id : ");
-		VID.setFont(myFont);
-		VID.setWrappingWidth(150);
-		VID.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(VID, 0, 3);
+        Text inventoryUnits = new Text(" Units : ");
+		inventoryUnits.setFont(myFont);
+		inventoryUnits.setWrappingWidth(150);
+		inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(inventoryUnits, 0, 2);
 
-		VendorId = new TextField();
-		grid.add(VendorId, 1, 3);
+		Units = new TextField();
+		grid.add(Units, 1, 2);
 
-		Text dteReceived = new Text(" Date Received : ");
-		dteReceived.setFont(myFont);
-		dteReceived.setWrappingWidth(150);
-		dteReceived.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(dteReceived, 0, 4);
+		Text inventoryUnitMeasure = new Text(" Unit measure : ");
+		inventoryUnitMeasure.setFont(myFont);
+		inventoryUnitMeasure.setWrappingWidth(150);
+		inventoryUnitMeasure.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(inventoryUnitMeasure, 0, 3);
 
-		DateReceived = new TextField();
-		grid.add(DateReceived, 1, 4);
+		UnitMeasure = new TextField();
+		grid.add(UnitMeasure, 1, 3);
 		
-		Text lastUse = new Text(" Date Of Last Use: ");
-		lastUse.setFont(myFont);
-		lastUse.setWrappingWidth(150);
-		lastUse.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(lastUse, 0, 5);
+		Text inventoryValidityDay = new Text(" Validity day: ");
+		inventoryValidityDay.setFont(myFont);
+		inventoryValidityDay.setWrappingWidth(150);
+		inventoryValidityDay.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(inventoryValidityDay, 0, 4);
 
-		DateOfLastUse = new TextField();
-		grid.add(DateOfLastUse, 1, 5);
+		ValidityDay = new TextField();
+		grid.add(ValidityDay, 1, 4);
+		
+		Text inventoryRoerderPoint = new Text(" Roerder point: ");
+		inventoryRoerderPoint.setFont(myFont);
+		inventoryRoerderPoint.setWrappingWidth(150);
+		inventoryRoerderPoint.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(inventoryRoerderPoint, 0, 5);
+
+		RoerderPoint = new TextField();
+		grid.add(RoerderPoint, 1, 5);
 		
 		Text inventoryNotes = new Text(" Notes: ");
 		inventoryNotes.setFont(myFont);
@@ -176,9 +178,10 @@ public class AddInventoryView extends View{
 		
 		Status = new ComboBox();
 		Status.getItems().addAll(
-				"Available", "Used", "Expired", "Returned");
-		Status.getSelectionModel().selectFirst();
+				"Active",
+				"Inactive");
 		grid.add(Status, 1, 7);
+		Status.getSelectionModel().selectFirst();
 
 
 		HBox doneCont = new HBox(10);
@@ -219,15 +222,15 @@ public class AddInventoryView extends View{
 		// create the properties of the inventoryIte,
 		Properties p1 = new Properties();
 			//p1.setProperty("InventoryItemId", "1"); // this is auto incremented dont touch
-			p1.setProperty("Barcode", Barcode.getText());
-			p1.setProperty("InventoryItemTypeName", TypeName.getText());
-			p1.setProperty("VendorId", VendorId.getText());
-			p1.setProperty("DateReceived", DateReceived.getText());
-			p1.setProperty("DateOfLastUse", DateOfLastUse.getText());
+			p1.setProperty("ItemTypeName", TypeName.getText());
+			p1.setProperty("Units", Units.getText());
+			p1.setProperty("UnitMeasure", UnitMeasure.getText());
+			p1.setProperty("ValidityDays", ValidityDay.getText());
+			p1.setProperty("ReorderPoint", RoerderPoint.getText());
 			p1.setProperty("Notes", Notes.getText());
 			p1.setProperty("Status", Status.getValue().toString());
 			// Create the Inventory Item object with the properties we made
-			InventoryItem it = new InventoryItem(p1);
+			InventoryItemType it = new InventoryItemType(p1);
 			// add it to the db
 			it.update();
 	}
