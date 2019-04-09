@@ -6,6 +6,8 @@
 /module/.classpath
 *.bat
 *.sql
+.project
+.settings
 
 # Log file
 *.log
