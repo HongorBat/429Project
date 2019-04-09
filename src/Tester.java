@@ -22,7 +22,6 @@ import model.Vendor;
 public class Tester {
 	public static void main(String[] args) {
 		newTest();
-		System.out.println("ffrrfqf");
 	}
 	
 	private static void newTest() {
@@ -33,6 +32,25 @@ public class Tester {
 		addInventoryItem();
 		// addVendor();
 		
+	}
+	
+	private static void addInventoryItem() {
+		
+		// create the properties of the inventoryIte,
+		Properties p1 = new Properties();
+		//p1.setProperty("InventoryItemId", "1"); // this is auto incremented dont touch
+		p1.setProperty("Barcode", "12343");
+		p1.setProperty("InventoryItemTypeName", "Jimmy Neutron");
+		p1.setProperty("VendorId", "11414");
+		p1.setProperty("DateReceived", "10/10/10");
+		p1.setProperty("DateOfLastUse", "02/02/01");
+		p1.setProperty("Notes", "special note");
+		p1.setProperty("Status", "Available");
+		
+		// Create the Inventory Item object with the properties we made
+		InventoryItem it = new InventoryItem(p1);
+		// add it to the db
+		it.update();
 	}
 	
 	private static void addVendorInventoryItemType() {
@@ -53,25 +71,6 @@ public class Tester {
 		// create item using properties, then add to db
 		Vendor ve = new Vendor(p2);
 		ve.update();
-	}
-	
-	private static void addInventoryItem() {
-		
-		// create the properties of the inventoryIte,
-		Properties p1 = new Properties();
-		//p1.setProperty("InventoryItemId", ""); // this is auto incremented dont touch
-		p1.setProperty("Barcode", "1234123");
-		p1.setProperty("InventoryItemTypeName", "Jimmy Neutron");
-		p1.setProperty("VendorId", "11414");
-		p1.setProperty("DateReceived", "10/10/10");
-		p1.setProperty("DateOfLastUse", "02/02/01");
-		p1.setProperty("Notes", "special note");
-		p1.setProperty("Status", "Available");
-		
-		// Create the Inventory Item object with the properties we made
-		InventoryItem it = new InventoryItem(p1);
-		// add it to the db
-		it.update();
 	}
 	
 	
