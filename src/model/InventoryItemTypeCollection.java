@@ -13,6 +13,7 @@ public class InventoryItemTypeCollection extends EntityBase {
 	
 	private Vector<InventoryItemType> inventoryItemTypeList;
     private String updateStatusMessage = "";
+    private String mm = " kmfqlkmkmewfq";
 
     public InventoryItemTypeCollection(String tableName) {
     	super(tableName);
