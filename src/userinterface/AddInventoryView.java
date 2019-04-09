@@ -48,7 +48,7 @@ public class AddInventoryView extends View{
 	protected TextField DateReceived;
 	protected TextField DateOfLastUse;
 	protected TextField Notes;
-	protected TextField Status;
+	protected ComboBox Status;
 	
 	protected TextField serviceCharge;
 
@@ -105,7 +105,7 @@ public class AddInventoryView extends View{
 	//-------------------------------------------------------------
 	private VBox createFormContent()
 	{
-		VBox vbox = new VBox(10);
+		VBox vbox = new VBox(20);
 
 		GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -174,13 +174,10 @@ public class AddInventoryView extends View{
 		Notes = new TextField();
 		grid.add(Notes, 1, 6);
 		
-		Text statust = new Text(" Status: ");
-		statust.setFont(myFont);
-		statust.setWrappingWidth(150);
-		statust.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(statust, 0, 7);
-
-		Status = new TextField();
+		Status = new ComboBox();
+		Status.getItems().addAll(
+				"Available", "Used", "Expired", "Returned");
+		Status.getSelectionModel().selectFirst();
 		grid.add(Status, 1, 7);
 
 
@@ -199,6 +196,15 @@ public class AddInventoryView extends View{
 		
 		submitButton = new Button("Submit");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		    	clearErrorMessage();
+  		    	addInventoryItem();
+  		     }
+       	  });
+		
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(submitButton);
 	
@@ -212,18 +218,18 @@ public class AddInventoryView extends View{
 		
 		// create the properties of the inventoryIte,
 		Properties p1 = new Properties();
-		//p1.setProperty("InventoryItemId", "1"); // this is auto incremented dont touch
-		p1.setProperty("Barcode", Barcode.getText());
-		p1.setProperty("InventoryItemTypeName", TypeName.getText());
-		p1.setProperty("Status", VendorId.getText());
-		p1.setProperty("VendorId", DateReceived.getText());
-		p1.setProperty("DateReceived", DateOfLastUse.getText());
-		p1.setProperty("DateOfLastUse", Notes.getText());
-		p1.setProperty("Notes", Status.getText());
-		// Create the Inventory Item object with the properties we made
-		InventoryItem it = new InventoryItem(p1);
-		// add it to the db
-		it.update();
+			//p1.setProperty("InventoryItemId", "1"); // this is auto incremented dont touch
+			p1.setProperty("Barcode", Barcode.getText());
+			p1.setProperty("InventoryItemTypeName", TypeName.getText());
+			p1.setProperty("VendorId", VendorId.getText());
+			p1.setProperty("DateReceived", DateReceived.getText());
+			p1.setProperty("DateOfLastUse", DateOfLastUse.getText());
+			p1.setProperty("Notes", Notes.getText());
+			p1.setProperty("Status", Status.getValue().toString());
+			// Create the Inventory Item object with the properties we made
+			InventoryItem it = new InventoryItem(p1);
+			// add it to the db
+			it.update();
 	}
 	
 	// Create the status log field
