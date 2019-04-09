@@ -188,8 +188,7 @@ public class AddVendorView extends View
 	}
 
 	private Boolean isSomethingEmpty() {
-		if (nameField.getText().isEmpty() || phoneNumberField.getText().isEmpty() || serviceCharge.getText().isEmpty() ||
-		statusBox.getSelectionModel().isEmpty()) {
+		if (nameField.getText().isEmpty() || phoneNumberField.getText().isEmpty()) {
 			return true;
 		}
 		return false;
