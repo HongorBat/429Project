@@ -202,7 +202,7 @@ public class UpdateInventoryView extends View{
 			InventoryName.requestFocus();
 			return;
 		} 
-		
+		displayErrorMessage("");
 		getEntryTableModelValues(inventory);
 	}
 	
