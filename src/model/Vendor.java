@@ -66,7 +66,25 @@ public class Vendor extends EntityBase {
 			throw new InvalidPrimaryKeyException("No Vendor matching id : " + id + " found.");
 		}
 	}
-	
+
+	public void setName(String name) {
+		persistentState.setProperty("Name", name);
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		persistentState.setProperty("PhoneNumber", phoneNumber);
+	}
+
+	public void setStatus(String status) {
+		persistentState.setProperty("Status", status);
+	}
+
+	public void printVendor() {
+		System.out.println(persistentState.getProperty("Id"));
+		System.out.println(persistentState.getProperty("Name"));
+		System.out.println(persistentState.getProperty("PhoneNumber"));
+		System.out.println(persistentState.getProperty("Status"));
+	}
 	/**
 	 * Sets up the dependencies of the db
 	 */
