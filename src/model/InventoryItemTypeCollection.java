@@ -13,10 +13,26 @@ public class InventoryItemTypeCollection extends EntityBase {
 	
 	private Vector<InventoryItemType> inventoryItemTypeList;
     private String updateStatusMessage = "";
+    private String mm = " kmfqlkmkmewfq";
 
     public InventoryItemTypeCollection(String tableName) {
     	super(tableName);
         inventoryItemTypeList = new Vector<InventoryItemType>();
+    }
+    
+    /**
+     * Retrieves all the inventory item types from the db
+     */
+    public void deleteInventoryItemTypes(String itemTypeId) {
+    	try {
+    		inventoryItemTypeList.removeAllElements();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+        	String query = "DELETE FROM InventoryItemType WHERE ItemTypeId = '" + itemTypeId + "'";
+        	Statement stmt = con.createStatement();
+        	stmt.executeUpdate(query);
+    	} catch (Exception ex) {
+    		System.err.println("FAILED");
+    	}
     }
     
     /**
