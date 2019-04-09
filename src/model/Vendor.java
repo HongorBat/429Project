@@ -135,4 +135,11 @@ public class Vendor extends EntityBase {
 			updateStatusMessage = "Error in installing InventoryItemType data in database!";
 		}
 	}
+	
+	public String getField(String fieldName) {
+		if (persistentState.getProperty(fieldName) != null) {
+			return persistentState.getProperty(fieldName);
+		}
+		return "EMPTY FIELD";
+	}
 }
