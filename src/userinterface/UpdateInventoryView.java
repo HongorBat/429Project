@@ -198,8 +198,9 @@ public class UpdateInventoryView extends View{
 		inventory = InventoryName.getText();
 		
 		if((inventory == null ) || (inventory.length() == 0)) {
-			displayErrorMessage("Please Enter Zip!");
+			displayErrorMessage("Please enter a name!");
 			InventoryName.requestFocus();
+			return;
 		} 
 		
 		getEntryTableModelValues(inventory);
