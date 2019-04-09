@@ -8,6 +8,8 @@
 *.sql
 .project
 .settings
+/bin/*
+/bin/
 
 # Log file
 *.log
