@@ -23,6 +23,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.Vendor;
+import model.VendorInventoryItemType;
 
 import java.util.Properties;
 
@@ -35,10 +37,9 @@ public class AddVIITView extends View
 {
 
 	// GUI components
-	protected TextField nameField;
-	protected TextField phoneNumberField;
-	protected ComboBox statusBox;
-	protected TextField serviceCharge;
+	protected TextField InventoryItemTypeName;
+	protected TextField VendorPrice;
+	protected TextField DateLastUpdated;
 
 	protected Button cancelButton, submitButton;
 
@@ -99,11 +100,33 @@ public class AddVIITView extends View
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
+        Text iITNLabel = new Text(" Inventory Item Type Name : ");
+		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
+		iITNLabel.setFont(myFont);
+		iITNLabel.setWrappingWidth(150);
+		iITNLabel.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(iITNLabel, 0, 1);
+
+		InventoryItemTypeName = new TextField();
+		grid.add(InventoryItemTypeName, 1, 1);
+
+		Text priceLabel = new Text(" Vendor Price : ");
+		priceLabel.setFont(myFont);
+		priceLabel.setWrappingWidth(150);
+		priceLabel.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(priceLabel, 0, 2);
+
+		VendorPrice = new TextField();
+		grid.add(VendorPrice, 1, 2);
+
+		Text dateUpdatedLabel = new Text(" Date Last Updated : ");
+		dateUpdatedLabel.setFont(myFont);
+		dateUpdatedLabel.setWrappingWidth(150);
+		dateUpdatedLabel.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(dateUpdatedLabel, 0, 3);
 		
-		statusBox = new ComboBox();
-		statusBox.getItems().addAll(
-				"Active");
-		grid.add(statusBox, 1, 3);
+		DateLastUpdated = new TextField();
+		grid.add(DateLastUpdated, 1, 3);
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -120,6 +143,14 @@ public class AddVIITView extends View
 		
 		submitButton = new Button("Submit");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		    	clearErrorMessage();
+  		    	addVIIT();  
+       	  }
+   	});
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(submitButton);
 	
@@ -127,6 +158,20 @@ public class AddVIITView extends View
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void addVIIT() {
+		// add the properties
+		Properties p3 = new Properties();
+		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
+		p3.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());
+		p3.setProperty("VendorPrice", VendorPrice.getText());
+		p3.setProperty("DateLastUpdated", DateLastUpdated.getText());       
+        
+		
+		// create item using properties, then add to db
+		VendorInventoryItemType ve = new VendorInventoryItemType(p3);
+		ve.update();
 	}
 
 
@@ -150,7 +195,7 @@ public class AddVIITView extends View
 		if (key.equals("ServiceCharge") == true)
 		{
 			String val = (String)value;
-			serviceCharge.setText(val);
+		//	serviceCharge.setText(val);
 			displayMessage("Service Charge Imposed: $ " + val);
 		}
 	}
