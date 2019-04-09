@@ -236,7 +236,7 @@ public class ModifyFieldView extends View{
 	}
 	
 	public void updateFields() {
-		String str = UpdateInventoryView.SELECTED_ITEM;
+		String str = ModifyVendorView.SELECTED_ITEM;
 		vc.updateVendorWithName(str, "PhoneNumber", PhoneNumber.getText());
 		vc.updateVendorWithName(str, "Status", (String)Status.getSelectionModel().getSelectedItem());
 	}

@@ -132,7 +132,7 @@ public class Vendor extends EntityBase {
 				updateStatusMessage = "Vendor matching : " +  persistentState.getProperty("Id") + "installed successfully in database!";
 			}
 		} catch (SQLException ex) {
-			updateStatusMessage = "Error in installing InventoryItemType data in database!";
+			updateStatusMessage = "Error in installing Vendor data in database!";
 		}
 	}
 	
