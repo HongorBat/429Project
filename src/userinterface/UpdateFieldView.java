@@ -1,5 +1,7 @@
 package userinterface;
 
+import java.util.Properties;
+
 import impresario.IModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -16,6 +19,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.InventoryItemType;
+import model.Vendor;
 
 public class UpdateFieldView extends View{
 	
@@ -31,6 +36,7 @@ public class UpdateFieldView extends View{
 	protected TextField RoerderPoint;
 	protected TextField Notes;
 	protected TextField ItemType;
+	protected ComboBox Status;
 	
 	protected TextField serviceCharge;
 
@@ -101,17 +107,8 @@ public class UpdateFieldView extends View{
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-		Text inventoryTypeName = new Text(" Type Name : ");
-		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-		inventoryTypeName.setFont(myFont);
-		inventoryTypeName.setWrappingWidth(150);
-		inventoryTypeName.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(inventoryTypeName, 0, 1);
-
-		TypeName = new TextField();
-		grid.add(TypeName, 1, 1);
-
 		Text inventoryUnits = new Text(" Units : ");
+		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		inventoryUnits.setFont(myFont);
 		inventoryUnits.setWrappingWidth(150);
 		inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
@@ -156,14 +153,12 @@ public class UpdateFieldView extends View{
 		Notes = new TextField();
 		grid.add(Notes, 1, 6);
 		
-		Text inventoryItemType = new Text(" Item type: ");
-		inventoryItemType.setFont(myFont);
-		inventoryItemType.setWrappingWidth(150);
-		inventoryItemType.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(inventoryItemType, 0, 7);
-
-		ItemType = new TextField();
-		grid.add(ItemType, 1, 7);
+		Status = new ComboBox();
+		Status.getItems().addAll(
+				"Active",
+				"Inactive");
+		grid.add(Status, 1, 3);
+		Status.getSelectionModel().selectFirst();
 
 
 		HBox doneCont = new HBox(10);
@@ -191,6 +186,19 @@ public class UpdateFieldView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void updateInventory() {
+		// add the properties
+		Properties p2 = new Properties();
+		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
+		p2.setProperty("Name", nameField.getText());
+		p2.setProperty("PhoneNumber", phoneNumberField.getText());
+		p2.setProperty("Status", statusBox.getValue().toString());
+		
+		// create item using properties, then add to db
+		InventoryItemType iIT = new InventoryItemType(p2);
+		ve.update();
 	}
 
 	
@@ -249,13 +257,7 @@ public class UpdateFieldView extends View{
 	
 	public void populateFields()
 	{
-		TypeName.setText("test1");
-		Units.setText("test1");
-		UnitMeasure.setText("test1");
-		ValidityDay.setText("test1");
-		RoerderPoint.setText("test1");
-		Notes.setText("test1");
-		ItemType.setText("test1");	
+
 	}
 
 }
