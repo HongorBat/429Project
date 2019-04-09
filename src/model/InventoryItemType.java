@@ -33,13 +33,13 @@ public class InventoryItemType extends EntityBase {
 	
 	/**
 	 * Contructor gets the inventory item type from the constructor
-	 * @param iitn
+	 * @param itemTypeId
 	 * @throws InvalidPrimaryKeyException
 	 */
-	public InventoryItemType(String iitn) throws InvalidPrimaryKeyException {
-		super(iitn);
+	public InventoryItemType(String itemTypeId) throws InvalidPrimaryKeyException {
+		super(itemTypeId);
 		setDependencies();
-		String query = "SELECT * FROM " + myTableName + " WHERE (ItemTypeName = " + iitn + ")";
+		String query = "SELECT * FROM " + myTableName + " WHERE (ItemTypeId = " + itemTypeId + ")";
 		Vector<Properties> allDataRetrieved = getSelectQueryResult(query);
 		// You must get one account at least
 		if (allDataRetrieved != null) {
@@ -47,7 +47,7 @@ public class InventoryItemType extends EntityBase {
 
 			// There should be EXACTLY one id of this book. More than that is an error
 			if (size != 1) {
-				throw new InvalidPrimaryKeyException("Multiple books matching id : " + iitn + " found.");
+				throw new InvalidPrimaryKeyException("Multiple InventoryItemTypes matching id : " + itemTypeId + " found.");
 			} else {
 				// copy all the retrieved data into persistent state
 				Properties retrievedBookData = allDataRetrieved.elementAt(0);
@@ -63,7 +63,7 @@ public class InventoryItemType extends EntityBase {
 			}
 		} else {
 			// if no book is found for this book id, throw an exception
-			throw new InvalidPrimaryKeyException("No patron matching id : " + iitn + " found.");
+			throw new InvalidPrimaryKeyException("No InventoryItemType matching id : " + itemTypeId + " found.");
 		}
 	}
 	
