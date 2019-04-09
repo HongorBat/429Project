@@ -3,7 +3,6 @@
 
 #ignore these too
 .classpath
-/module/.classpath
 *.bat
 *.sql
 .project
