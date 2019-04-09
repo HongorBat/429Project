@@ -152,7 +152,9 @@ public class TellerView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		     	processAction(e);    
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+    		     	myModel.stateChangeRequest("ModifyVendorView", props);
             	     }
         	});
 

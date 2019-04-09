@@ -153,6 +153,12 @@ public class Teller implements IView, IModel
 		else if (key.equals("AddVIITView") == true) {
 				createAndShowAddVIITView();
 			}
+		else if (key.equals("ModifyVendorView") == true) {
+			createAndShowModifyVendorView();
+		}
+		else if (key.equals("ModifyFieldView") == true) {
+			createAndShowModifyFieldView();
+		}
 		else
 		if (key.equals("CancelTransaction") == true)
 		{
@@ -349,6 +355,38 @@ public class Teller implements IView, IModel
 			View newView = ViewFactory.createView("UpdateFieldView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("UpdateFieldView", currentScene);
+
+
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowModifyVendorView() {
+		Scene currentScene = (Scene)myViews.get("ModifyVendorView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("ModifyVendorView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("ModifyVendorView", currentScene);
+
+
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowModifyFieldView() {
+		Scene currentScene = (Scene)myViews.get("ModifyFieldView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("ModifyFieldView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("ModifyFieldView", currentScene);
 
 
 		}

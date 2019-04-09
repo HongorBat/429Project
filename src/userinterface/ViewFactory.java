@@ -35,6 +35,14 @@ public class ViewFactory {
 		{
 			return new UpdateFieldView(model);
 		}	
+		else if(viewName.equals("ModifyVendorView") == true)
+		{
+			return new ModifyVendorView(model);
+		}	
+		else if(viewName.equals("ModifyFieldView") == true)
+		{
+			return new ModifyFieldView(model);
+		}	
 		else
 			return null;
 	}

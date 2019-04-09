@@ -90,7 +90,7 @@ public class VendorCollection extends EntityBase {
     /**
      * @return the array of InventoryItemType
      */
-    public Vector<Vendor> getInventoryItemTypeList() {
+    public Vector<Vendor> getVendorList() {
     	return vendorList;
     }
     
