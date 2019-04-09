@@ -178,6 +178,15 @@ public class UpdateFieldView extends View{
 		
 		submitButton = new Button("Update");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				updateFields();
+   		    	clearErrorMessage();
+   		    	myModel.stateChangeRequest("TellerView", null);   
+				
+			}
+		});
 		
 		
 		
@@ -268,5 +277,15 @@ public class UpdateFieldView extends View{
 		ReorderPoint.setText(iit.getField("ReorderPoint"));
 		Notes.setText(iit.getField("Notes"));
 		Status.getSelectionModel().select(iit.getField("Status"));
+	}
+	
+	public void updateFields() {
+		String str = UpdateInventoryView.SELECTED_ITEM;
+		iitc.updateInventoryItemTypeWithName(str, "Units", Units.getText());
+		iitc.updateInventoryItemTypeWithName(str, "UnitMeasure", UnitMeasure.getText());
+		iitc.updateInventoryItemTypeWithName(str, "ValidityDays", ValidityDay.getText());
+		iitc.updateInventoryItemTypeWithName(str, "ReorderPoint", ReorderPoint.getText());
+		iitc.updateInventoryItemTypeWithName(str, "Notes", Notes.getText());
+		iitc.updateInventoryItemTypeWithName(str, "Status", (String)Status.getSelectionModel().getSelectedItem());
 	}
 }
