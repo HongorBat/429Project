@@ -23,6 +23,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.InventoryItem;
 import model.InventoryItemCollection;
+import model.InventoryItemType;
+import model.InventoryItemTypeCollection;
 
 public class UpdateInventoryView extends View{
 
@@ -33,7 +35,8 @@ public class UpdateInventoryView extends View{
 	// GUI components
 	protected TextField InventoryName;
 	
-	private InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
+	public static InventoryItemTypeCollection INVENTORY_ITEM_TYPE_COLLECTION = new InventoryItemTypeCollection("InventoryItemType");
+	public static String SELECTED_ITEM = "";
 	protected ComboBox<String> SearchResult;
 
 	protected TextField serviceCharge;
@@ -174,8 +177,9 @@ public class UpdateInventoryView extends View{
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
-  		    	myModel.stateChangeRequest("UpdateFieldView", null);   
-       	  }
+  				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+  				myModel.stateChangeRequest("UpdateFieldView", null);
+  		     }
 		});
 	
 		
@@ -203,13 +207,12 @@ public class UpdateInventoryView extends View{
 	
 	protected void getEntryTableModelValues(String _inventory)
 	{
-		
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		iic.getInventoryItemNamesLike(_inventory);
-		Vector<InventoryItem> items = iic.getInventoryItemList();
+		INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(_inventory);
+		Vector<InventoryItemType> items = INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
-			InventoryItem ii = items.get(i);
-			Result.add(ii.getField("InventoryItemTypeName"));
+			InventoryItemType iit = items.get(i);
+			Result.add(iit.getField("ItemTypeName"));
 		}
 		
 		try

@@ -28,7 +28,7 @@ public class Tester {
 	private static void newTest() {
 		// this one is for the group project
 		
-		getInventoryItemCollection();
+		//getInventoryItemCollection();
 		
 		//addInventoryItemType();
 		//addInventoryItem();

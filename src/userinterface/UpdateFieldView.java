@@ -20,6 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.InventoryItemType;
+import model.InventoryItemTypeCollection;
 import model.Vendor;
 
 public class UpdateFieldView extends View{
@@ -33,12 +34,13 @@ public class UpdateFieldView extends View{
 	protected TextField Units;
 	protected TextField UnitMeasure;
 	protected TextField ValidityDay;
-	protected TextField RoerderPoint;
+	protected TextField ReorderPoint;
 	protected TextField Notes;
 	protected TextField ItemType;
 	protected ComboBox Status;
 	
 	protected TextField serviceCharge;
+	private InventoryItemTypeCollection iitc = new InventoryItemTypeCollection("InventoryItemType");
 
 
 	protected Button cancelButton, submitButton;
@@ -141,8 +143,8 @@ public class UpdateFieldView extends View{
 		inventoryRoerderPoint.setTextAlignment(TextAlignment.RIGHT);
 		grid.add(inventoryRoerderPoint, 0, 5);
 
-		RoerderPoint = new TextField();
-		grid.add(RoerderPoint, 1, 5);
+		ReorderPoint = new TextField();
+		grid.add(ReorderPoint, 1, 5);
 		
 		Text inventoryNotes = new Text(" Notes: ");
 		inventoryNotes.setFont(myFont);
@@ -192,13 +194,13 @@ public class UpdateFieldView extends View{
 		// add the properties
 		Properties p2 = new Properties();
 		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
-		p2.setProperty("Name", nameField.getText());
+		/*p2.setProperty("Name", nameField.getText());
 		p2.setProperty("PhoneNumber", phoneNumberField.getText());
 		p2.setProperty("Status", statusBox.getValue().toString());
 		
 		// create item using properties, then add to db
 		InventoryItemType iIT = new InventoryItemType(p2);
-		ve.update();
+		ve.update();*/
 	}
 
 	
@@ -257,7 +259,14 @@ public class UpdateFieldView extends View{
 	
 	public void populateFields()
 	{
-
+		iitc.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
+		UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
+		InventoryItemType iit = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
+		Units.setText(iit.getField("Units"));
+		UnitMeasure.setText(iit.getField("UnitMeasure"));
+		ValidityDay.setText(iit.getField("ValidityDays"));
+		ReorderPoint.setText(iit.getField("ReorderPoint"));
+		Notes.setText(iit.getField("Notes"));
+		Status.getSelectionModel().select(iit.getField("Status"));
 	}
-
 }

@@ -101,6 +101,18 @@ public class InventoryItemType extends EntityBase {
 		}	
 	}
 	
+	/**
+	 * Gets the value of the given field
+	 * @param fieldName field to get the value from
+	 * @return
+	 */
+	public String getField(String fieldName) {
+		if (persistentState.getProperty(fieldName) != null) {
+			return persistentState.getProperty(fieldName);
+		}
+		return "EMPTY FIELD";
+	}
+	
 	public void update() {
 		try {
 			if (persistentState.getProperty("ItemTypeId") != null) {

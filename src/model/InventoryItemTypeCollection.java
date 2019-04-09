@@ -1,7 +1,5 @@
 package model;
 
-package model;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -47,7 +45,7 @@ public class InventoryItemTypeCollection extends EntityBase {
     	try {
     		inventoryItemTypeList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT * FROM InventoryItemType WHERE ItemTypeName = '" + name + "'";
+        	String query = "SELECT * FROM InventoryItemType WHERE ItemTypeName LIKE '%" + name + "%'";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
@@ -95,7 +93,7 @@ public class InventoryItemTypeCollection extends EntityBase {
     /**
      * @return the array of InventoryItemType
      */
-    public Vector<InventoryItemType> getInventoryItemList() {
+    public Vector<InventoryItemType> getInventoryItemTypeList() {
     	return inventoryItemTypeList;
     }
     
