@@ -1,5 +1,7 @@
 package model;
 
+package model;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,28 +11,28 @@ import java.util.Vector;
 
 import database.JDBCBroker;
 
-public class InventoryItemCollection extends EntityBase {
+public class InventoryItemTypeCollection extends EntityBase {
 	
-	private Vector<InventoryItem> inventoryItemList;
+	private Vector<InventoryItemType> inventoryItemTypeList;
     private String updateStatusMessage = "";
 
-    public InventoryItemCollection(String tableName) {
+    public InventoryItemTypeCollection(String tableName) {
     	super(tableName);
-        inventoryItemList = new Vector<InventoryItem>();
+        inventoryItemTypeList = new Vector<InventoryItemType>();
     }
     
     /**
-     * Retrieves all the inventory items from the db
+     * Retrieves all the inventory item types from the db
      */
-    public void getAllInventoryItems() {
+    public void getAllInventoryItemTypes() {
     	try {
-    		inventoryItemList.removeAllElements();
+    		inventoryItemTypeList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT * FROM InventoryItem;";
+        	String query = "SELECT * FROM InventoryItemType;";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		inventoryItemList.addElement(new InventoryItem(rs.getString("InventoryItemId")));
+        		inventoryItemTypeList.addElement(new InventoryItemType(rs.getString("ItemTypeId")));
         	}
     	} catch (Exception ex) {
     		System.err.println("FAILED");
@@ -41,15 +43,15 @@ public class InventoryItemCollection extends EntityBase {
      * Gets particular inventory items with a name like the given name
      * @param name inventory items like this name
      */
-    public void getInventoryItemNamesLike(String name) {
+    public void getInventoryItemTypeName(String name) {
     	try {
-    		inventoryItemList.removeAllElements();
+    		inventoryItemTypeList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT * FROM InventoryItem WHERE InventoryItemTypeName LIKE '%" + name + "%'";
+        	String query = "SELECT * FROM InventoryItemType WHERE ItemTypeName = '" + name + "'";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		inventoryItemList.addElement(new InventoryItem(rs.getString("InventoryItemId")));
+        		inventoryItemTypeList.addElement(new InventoryItemType(rs.getString("ItemTypeId")));
         	}
     	} catch (Exception ex) {
     		System.err.println("FAILED");
@@ -64,7 +66,7 @@ public class InventoryItemCollection extends EntityBase {
      */
     public void updateInventoryItemWithName(String inventoryItemTypeName, String fieldName, String newValue) {
     	try {
-    		inventoryItemList.removeAllElements();
+    		inventoryItemTypeList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
     		StringBuilder sb = new StringBuilder();
     		sb.append("UPDATE InventoryItem SET ");
@@ -83,8 +85,8 @@ public class InventoryItemCollection extends EntityBase {
      */
     public String print() {
     	StringBuilder sb = new StringBuilder();
-    	for (int i = 0; i < inventoryItemList.size(); i++) {
-    		InventoryItem b = (InventoryItem)inventoryItemList.get(i);
+    	for (int i = 0; i < inventoryItemTypeList.size(); i++) {
+    		InventoryItemType b = (InventoryItemType)inventoryItemTypeList.get(i);
     		sb.append(b.toString() + "\n");
     	}
     	return sb.toString();
@@ -93,8 +95,8 @@ public class InventoryItemCollection extends EntityBase {
     /**
      * @return the array of InventoryItemType
      */
-    public Vector<InventoryItem> getInventoryItemList() {
-    	return inventoryItemList;
+    public Vector<InventoryItemType> getInventoryItemList() {
+    	return inventoryItemTypeList;
     }
     
 	@Override

@@ -84,8 +84,7 @@ public class InventoryItem extends EntityBase {
 	 */
 	@Override
 	public Object getState(String key) {
-		this.persistentState.getProperty(key);
-		return null;
+		return this.persistentState.getProperty(key);
 	}
 
 	@Override
@@ -118,4 +117,15 @@ public class InventoryItem extends EntityBase {
 		}
 	}
 
+	/**
+	 * Returns particular field name
+	 * @param fieldName
+	 * @return field value
+	 */
+	public String getField(String fieldName) {
+		if (persistentState.getProperty(fieldName) != null) {
+			return (String)persistentState.get(fieldName);
+		} 
+		return "Unavailable";
+	}
 }

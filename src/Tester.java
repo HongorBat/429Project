@@ -40,7 +40,6 @@ public class Tester {
 	private static void getInventoryItemCollection() {
 		InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 		iic.getInventoryItemNamesLike("a");
-		System.out.println(iic.toArrayList().size() + " <<<");
 		iic.updateInventoryItemWithName("asdf", "VendorId", "1111");
 	}
 	

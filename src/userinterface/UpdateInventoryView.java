@@ -1,5 +1,7 @@
 package userinterface;
 
+import java.util.Vector;
+
 import impresario.IModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.InventoryItem;
+import model.InventoryItemCollection;
 
 public class UpdateInventoryView extends View{
 
@@ -29,8 +33,7 @@ public class UpdateInventoryView extends View{
 	// GUI components
 	protected TextField InventoryName;
 	
-	
-	
+	private InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 	protected ComboBox<String> SearchResult;
 
 	protected TextField serviceCharge;
@@ -200,9 +203,14 @@ public class UpdateInventoryView extends View{
 	
 	protected void getEntryTableModelValues(String _inventory)
 	{
+		
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		Result.add("test 1");
-		Result.add("test 2");
+		iic.getInventoryItemNamesLike(_inventory);
+		Vector<InventoryItem> items = iic.getInventoryItemList();
+		for (int i = 0; i < items.size(); i++) {
+			InventoryItem ii = items.get(i);
+			Result.add(ii.getField("InventoryItemTypeName"));
+		}
 		
 		try
 		{
