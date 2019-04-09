@@ -4,7 +4,6 @@ package userinterface;
 
 // system imports
 import java.text.NumberFormat;
-import java.util.Hashtable;
 import java.util.Properties;
 
 import javafx.event.Event;
@@ -27,10 +26,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import model.InsertBook;
-import model.InsertPatron;
-import model.SearchBook;
-import model.SearchPatron;
+
 // project imports
 import impresario.IModel;
 
@@ -42,26 +38,14 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button newBook;
-	private Button newPatron;
-	private Button searchBook;
-	private Button searchPatron;
-	private Button done;
-	private Hashtable<String, Scene> myViews;
-	private Stage myStage;
-	private InsertBookView myInsetBookView;
-	private Scene myScene;
-	private InsertBook myInsertBook;
-	private InsertPatron myInsertPatron;
-	private SearchBook mySearchBook;
-	private SearchPatron mySearchPatron;
+	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT;
 
 	// For showing error message
 	private MessageView statusLog;
 
 	// constructor for this class -- takes a model object
 	//----------------------------------------------------------
-	public TellerView(IModel teller)
+	public TellerView( IModel teller)
 	{
 
 		super(teller, "TellerView");
@@ -83,11 +67,6 @@ public class TellerView extends View
 		getChildren().add(container);
 
 		//populateFields();
-		
-		myInsertBook = new InsertBook();
-		myInsertPatron = new InsertPatron();
-		mySearchBook = new SearchBook();
-		mySearchPatron = new SearchPatron();
 
 		// STEP 0: Be sure you tell your model what keys you are interested in
 		myModel.subscribe("LoginError", this);
@@ -98,10 +77,10 @@ public class TellerView extends View
 	private Node createTitle()
 	{
 		
-		Text titleText = new Text("       Library System          ");
-		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 25));
+		Text titleText = new Text("       Brockport Restauraunt Main Menu          ");
+		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		titleText.setTextAlignment(TextAlignment.CENTER);
-		titleText.setFill(Color.BLACK);
+		titleText.setFill(Color.DARKGREEN);
 		
 	
 		return titleText;
@@ -115,95 +94,93 @@ public class TellerView extends View
         	grid.setAlignment(Pos.CENTER);
        		grid.setHgap(10);
         	grid.setVgap(10);
-        	grid.setPadding(new Insets(25, 25, 25, 25));
+        	grid.setPadding(new Insets(35, 35, 35, 35));
 
 		// data entry fields
 
-
-		newBook = new Button("INSERT NEW BOOK");
- 		newBook.setOnAction(new EventHandler<ActionEvent>() {
- 			@Override
- 			public void handle(ActionEvent e) {
- 				myInsertBook.showView();
- 				processAction(e);
- 			}	
- 		});
-
-		HBox btnContainer = new HBox(15);
-		btnContainer.setAlignment(Pos.BASELINE_CENTER);
-		btnContainer.getChildren().add(newBook);
-		grid.add(btnContainer, 1, 1);
-		
-		newPatron = new Button("INSERT NEW PATRON");
- 		newPatron.setOnAction(new EventHandler<ActionEvent>() {
- 			@Override
- 			public void handle(ActionEvent e) {	
- 				myInsertPatron.showView();
- 				processAction(e); 	
- 			}
- 		});
-
-		btnContainer = new HBox(15);
-		btnContainer.setAlignment(Pos.BASELINE_CENTER);
-		btnContainer.getChildren().add(newPatron);
-		grid.add(btnContainer, 1, 2);
-		
-		searchBook = new Button("SEARCH BOOKS");
-		searchBook.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-       		public void handle(ActionEvent e) {
-				mySearchBook.showView();
-				processAction(e);        
-			}
-		});
-
-		btnContainer = new HBox(15);
-		btnContainer.setAlignment(Pos.BASELINE_CENTER);
-		btnContainer.getChildren().add(searchBook);
-		grid.add(btnContainer, 1, 3);
-		
-		searchPatron = new Button("SEARCH PATRONS");
-		searchPatron.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				mySearchPatron.showView();
-				processAction(e);	
-			}	
-		});
-
-		btnContainer = new HBox(15);
-		btnContainer.setAlignment(Pos.BASELINE_CENTER);
-		btnContainer.getChildren().add(searchPatron);
-		grid.add(btnContainer, 1, 4);
-		
-		done = new Button("DONE");
-		done.setOnAction(new EventHandler<ActionEvent>() {
+		addInventoryItem = new Button("Add Inventory Item");
+ 		addInventoryItem.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		    	 System.exit(0);
-       		    	 myStage.close();
-       		     	processAction(e);    
-       		     	
-            	    }
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddInventoryView", props);
+            	     }
         	});
 
-		btnContainer = new HBox(15);
-		btnContainer.setAlignment(Pos.BASELINE_CENTER);
-		btnContainer.getChildren().add(done);
-		grid.add(btnContainer, 1, 6);
+		HBox addIIBtn = new HBox(15);
+		addIIBtn.setAlignment(Pos.CENTER);
+		addIIBtn.getChildren().add(addInventoryItem);
+		grid.add(addIIBtn, 1, 0);
+		
+		updateInventoryItem = new Button("Update Inventory Item");
+		updateInventoryItem.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("UpdateInventoryView", props);
+            	     }
+        	});
+
+		HBox updateIIBtn = new HBox(15);
+		updateIIBtn.setAlignment(Pos.CENTER);
+		updateIIBtn.getChildren().add(updateInventoryItem);
+		grid.add(updateIIBtn, 1, 1);
+
+		
+		addVendor = new Button("Add Vendor");
+		addVendor.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddVendorView", props);
+            	     }
+        	});
+
+		HBox addVendorBtn = new HBox(15);
+		addVendorBtn.setAlignment(Pos.CENTER);
+		addVendorBtn.getChildren().add(addVendor);
+		grid.add(addVendorBtn, 1, 2);
+		
+		modifyVendor = new Button("Modify Vendor");
+		modifyVendor.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e);    
+            	     }
+        	});
+
+		HBox modifyVendorBtn = new HBox(15);
+		modifyVendorBtn.setAlignment(Pos.CENTER);
+		modifyVendorBtn.getChildren().add(modifyVendor);
+		grid.add(modifyVendorBtn, 1, 3);
+		
+		addVIIT = new Button("Add Vendor Inventory Item Type");
+		addVIIT.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("AddVIITView", props);
+            	     }
+        	});
+
+		HBox addVIITBtn = new HBox(15);
+		addVIITBtn.setAlignment(Pos.CENTER);
+		addVIITBtn.getChildren().add(addVIIT);
+		grid.add(addVIITBtn, 1, 4);
 
 		return grid;
 	}
 
 	
-	public void initializeViews(Hashtable<String, Scene> views, Stage stage, Scene scene) {
-		if (myViews == null && myStage == null) {
-			myViews = views;
-			myStage = stage;
-			myScene = scene;
-		}
-	}
 
 	// Create the status log field
 	//-------------------------------------------------------------
@@ -231,22 +208,8 @@ public class TellerView extends View
 
 		clearErrorMessage();
 
-		if (userid == null || userid.getText() == null) { return; }
-		
-		String useridEntered = userid.getText();
-
-		if ((useridEntered == null) || (useridEntered.length() == 0))
-		{
-			displayErrorMessage("Please enter a user id!");
-			userid.requestFocus();
-		}
-		else
-		{
-			String passwordEntered = password.getText();
-			processUserIDAndPassword(useridEntered, passwordEntered);
-		}
-
 	}
+
 	/**
 	 * Process userid and pwd supplied when Submit button is hit.
 	 * Action is to pass this info on to the teller object
@@ -276,8 +239,8 @@ public class TellerView extends View
 			// display the passed text
 			displayErrorMessage((String)value);
 		}
+
 	}
-	
 
 	/**
 	 * Display error message
@@ -298,3 +261,4 @@ public class TellerView extends View
 	}
 
 }
+

@@ -1,7 +1,6 @@
 package userinterface;
 
 import impresario.IModel;
-import model.InsertBook;
 
 //==============================================================================
 public class ViewFactory {
@@ -16,69 +15,28 @@ public class ViewFactory {
 		{
 			return new TransactionChoiceView(model);
 		}
-		else if(viewName.equals("AccountCollectionView") == true)
+		else if(viewName.equals("AddVendorView") == true)
 		{
-			return new AccountCollectionView(model);
+			return new AddVendorView(model);
+		}		
+		else if(viewName.equals("AddVIITView") == true)
+		{
+			return new AddVIITView(model);
 		}
-		else if(viewName.equals("AccountView") == true)
+		else if(viewName.equals("AddInventoryView") == true)
 		{
-			return new AccountView(model);
+			return new AddInventoryView(model);
 		}
-		else if(viewName.equals("AccountHolderIDEntryView") == true)
+		else if(viewName.equals("UpdateInventoryView") == true)
 		{
-			return new AccountHolderIDEntryView(model);
+			return new UpdateInventoryView(model);
 		}
-		else if(viewName.equals("DepositTransactionView") == true)
+		else if(viewName.equals("UpdateFieldView") == true)
 		{
-			return new DepositTransactionView(model);
-		}
-		else if(viewName.equals("DepositAmountView") == true)
-		{
-			return new DepositAmountView(model);
-		}
-		else if(viewName.equals("WithdrawTransactionView") == true)
-		{
-			return new WithdrawTransactionView(model);
-		}
-		else if(viewName.equals("TransferTransactionView") == true)
-		{
-			return new TransferTransactionView(model);
-		}
-		else if(viewName.equals("BalanceInquiryTransactionView") == true)
-		{
-			return new BalanceInquiryTransactionView(model);
-		}
-		else if(viewName.equals("BalanceInquiryReceipt") == true)
-		{
-			return new BalanceInquiryReceipt(model);
-		}
-		else if(viewName.equals("WithdrawReceipt") == true)
-		{
-			return new WithdrawReceipt(model);
-		}
-		else if(viewName.equals("DepositReceipt") == true)
-		{
-			return new DepositReceipt(model);
-		}
-		else if(viewName.equals("TransferReceipt") == true)
-		{
-			return new TransferReceipt(model);
-		}
-		else if (viewName.equals("InsertBookView") == true) 
-		{
-			return new InsertBookView(model);
-			
-		} else if (viewName.equals("InsertPatronView")){
-			return new InsertPatronView(model);
-		} else if (viewName.equals("SearchBookView")) {
-			
-			return new SearchBookView(model);
-		} else if (viewName.equals("SearchPatronView")) {
-			return new SearchPatronView(model);
-		} else {
-			
+			return new UpdateFieldView(model);
+		}	
+		else
 			return null;
-		}
 	}
 
 
