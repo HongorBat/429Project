@@ -4,6 +4,8 @@
 #ignore these too
 .classpath
 /module/.classpath
+*.bat
+*.sql
 
 # Log file
 *.log
