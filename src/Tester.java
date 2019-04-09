@@ -14,6 +14,7 @@ import model.Book;
 import model.BookCollection;
 import model.InventoryItem;
 import model.InventoryItemCollection;
+import model.InventoryItemType;
 import model.Patron;
 import model.PatronCollection;
 import model.Teller;
@@ -29,7 +30,8 @@ public class Tester {
 		
 		//InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 		
-		addInventoryItem();
+		//addInventoryItemType();
+		//addInventoryItem();
 		// addVendor();
 		
 	}
@@ -53,11 +55,22 @@ public class Tester {
 		it.update();
 	}
 	
-	private static void addVendorInventoryItemType() {
+	private static void addInventoryItemType() {
 		
 		// Give the object some properties
 		Properties p1 = new Properties();
-		//p1.setProperty(arg0, arg1)
+		//p1.setProperty("ItemTypeId", "");
+		p1.setProperty("Units", "111");
+		p1.setProperty("UnitMeasure", "Lbs");
+		p1.setProperty("ValidityDays", "20");
+		p1.setProperty("ReorderPoint", ".012");
+		p1.setProperty("Notes", "this is a note");
+		p1.setProperty("ItemTypeName", "Jimmy Neutron");
+		
+		InventoryItemType iit = new InventoryItemType(p1);
+		iit.update();
+		
+		
 	}
 	
 	private static void addVendor() {
