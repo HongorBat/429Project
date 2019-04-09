@@ -62,14 +62,14 @@ public class InventoryItemTypeCollection extends EntityBase {
      * @param fieldName name of the field that you want to update
      * @param newValue value to set that field to
      */
-    public void updateInventoryItemWithName(String inventoryItemTypeName, String fieldName, String newValue) {
+    public void updateInventoryItemTypeWithName(String inventoryItemTypeName, String fieldName, String newValue) {
     	try {
     		inventoryItemTypeList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
     		StringBuilder sb = new StringBuilder();
-    		sb.append("UPDATE InventoryItem SET ");
+    		sb.append("UPDATE InventoryItemType SET ");
     		sb.append(fieldName + " = " + newValue + " ");
-    		sb.append("WHERE InventoryItemTypeName = '" + inventoryItemTypeName + "'");
+    		sb.append("WHERE ItemTypeName = '" + inventoryItemTypeName + "'");
         	Statement stmt = con.createStatement();
         	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
