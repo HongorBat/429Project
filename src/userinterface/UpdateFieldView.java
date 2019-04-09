@@ -59,7 +59,7 @@ public class UpdateFieldView extends View{
 
 		getChildren().add(container);
 
-		//populateFields();
+		populateFields();
 
 		myModel.subscribe("ServiceCharge", this);
 		myModel.subscribe("UpdateStatusMessage", this);
@@ -245,6 +245,17 @@ public class UpdateFieldView extends View{
 	public void clearErrorMessage()
 	{
 		statusLog.clearErrorMessage();
+	}
+	
+	public void populateFields()
+	{
+		TypeName.setText("test1");
+		Units.setText("test1");
+		UnitMeasure.setText("test1");
+		ValidityDay.setText("test1");
+		RoerderPoint.setText("test1");
+		Notes.setText("test1");
+		ItemType.setText("test1");	
 	}
 
 }
