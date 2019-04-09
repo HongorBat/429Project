@@ -142,6 +142,7 @@ public class UpdateInventoryView extends View{
 		grid.add(inventoryUnits, 0, 2);
 
 		SearchResult = new ComboBox<String>();
+		SearchResult.getSelectionModel().selectFirst();
 		grid.add(SearchResult, 1, 2);
 
 
