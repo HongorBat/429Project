@@ -7,9 +7,9 @@ import java.util.Vector;
 
 import exception.InvalidPrimaryKeyException;
 
-public class InventoryItem extends EntityBase {
+public class VendorInventoryItemType extends EntityBase {
 	
-	private static final String myTableName = "InventoryItem";
+	private static final String myTableName = "VendorInventoryItemType";
 	protected Properties dependencies;
 	private String updateStatusMessage = "";
 	
@@ -18,10 +18,10 @@ public class InventoryItem extends EntityBase {
 	 * @param iitn
 	 * @throws InvalidPrimaryKeyException
 	 */
-	public InventoryItem(String inventoryItemId) throws InvalidPrimaryKeyException {
-		super(inventoryItemId);
+	public VendorInventoryItemType(String vendorId) throws InvalidPrimaryKeyException {
+		super(vendorId);
 		setDependencies();
-		String query = "SELECT * FROM " + myTableName + " WHERE (InventoryItemId = " + inventoryItemId + ")";
+		String query = "SELECT * FROM " + myTableName + " WHERE (VendorId = " + vendorId + ")";
 		Vector<Properties> allDataRetrieved = getSelectQueryResult(query);
 		// You must get one account at least
 		if (allDataRetrieved != null) {
@@ -29,7 +29,7 @@ public class InventoryItem extends EntityBase {
 
 			// There should be EXACTLY one id of this book. More than that is an error
 			if (size != 1) {
-				throw new InvalidPrimaryKeyException("Multiple InventoryItems matching InventoryItemId : " + inventoryItemId + " found.");
+				throw new InvalidPrimaryKeyException("Multiple InventoryItems matching Barcode : " + vendorId + " found.");
 			} else {
 				// copy all the retrieved data into persistent state
 				Properties retrievedBookData = allDataRetrieved.elementAt(0);
@@ -45,7 +45,7 @@ public class InventoryItem extends EntityBase {
 			}
 		} else {
 			// if no book is found for this book id, throw an exception
-			throw new InvalidPrimaryKeyException("No InventoryItem with InventoryItemId : " + inventoryItemId + " found.");
+			throw new InvalidPrimaryKeyException("No InventoryItem with Barcode : " + vendorId + " found.");
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class InventoryItem extends EntityBase {
 	 * Constructor that can manually create Inventory Item Type object
 	 * @param props 
 	 */
-	public InventoryItem(Properties props) {
+	public VendorInventoryItemType(Properties props) {
 		super(myTableName);
 		setDependencies();
 		persistentState = new Properties();
@@ -103,15 +103,15 @@ public class InventoryItem extends EntityBase {
 	
 	public void update() {
 		try {
-			if (persistentState.getProperty("InventoryItemId") != null) {
+			if (persistentState.getProperty("VendorId") != null) {
 				Properties whereClause = new Properties();
-				whereClause.setProperty("InventoryItemId", persistentState.getProperty("InventoryItemId"));
+				whereClause.setProperty("VendorId", persistentState.getProperty("VendorId"));
 				updatePersistentState(mySchema, persistentState, whereClause);
-				updateStatusMessage = "InventoryItemId for InventoryItem : " + persistentState.getProperty("InventoryItemId") + " updated successfully in database!";
+				updateStatusMessage = "VendorId for VendorInventoryItemType : " + persistentState.getProperty("VendorId") + " updated successfully in database!";
 			} else {
 				Integer id = insertAutoIncrementalPersistentState(mySchema, persistentState);
-				persistentState.setProperty("InventoryItemId", "" + id.intValue());
-				updateStatusMessage = "InventoryItemId for InventoryItem : " +  persistentState.getProperty("InventoryItemId") + "installed successfully in database!";
+				persistentState.setProperty("VendorId", "" + id.intValue());
+				updateStatusMessage = "VendorId for VendorInventoryItemType : " +  persistentState.getProperty("VendorId") + "installed successfully in database!";
 			}
 		} catch (SQLException ex) {
 			updateStatusMessage = "Error in installing InventoryItem in database!";
