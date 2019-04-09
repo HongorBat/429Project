@@ -28,12 +28,20 @@ public class Tester {
 	private static void newTest() {
 		// this one is for the group project
 		
-		//InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
+		getInventoryItemCollection();
 		
 		//addInventoryItemType();
 		//addInventoryItem();
 		// addVendor();
 		
+	}
+	
+	
+	private static void getInventoryItemCollection() {
+		InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
+		iic.getInventoryItemNamesLike("a");
+		System.out.println(iic.toArrayList().size() + " <<<");
+		iic.updateInventoryItemWithName("asdf", "VendorId", "1111");
 	}
 	
 	private static void addInventoryItem() {
@@ -55,6 +63,10 @@ public class Tester {
 		it.update();
 	}
 	
+	private static void editInventoryItem() {
+		
+	}
+	
 	private static void addInventoryItemType() {
 		
 		// Give the object some properties
@@ -69,8 +81,6 @@ public class Tester {
 		
 		InventoryItemType iit = new InventoryItemType(p1);
 		iit.update();
-		
-		
 	}
 	
 	private static void addVendor() {

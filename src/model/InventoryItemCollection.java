@@ -18,77 +18,63 @@ public class InventoryItemCollection extends EntityBase {
     	super(tableName);
         inventoryItemList = new Vector<InventoryItem>();
     }
+    
 
-    public void getAllItemCollections() {
+    /**
+     * Retrieves all the inventory items from the db
+     */
+    public void getAllInventoryItems() {
     	try {
     		inventoryItemList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT * FROM Book";
+        	String query = "SELECT * FROM InventoryItem;";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		inventoryItemList.addElement(new InventoryItem(rs.getString("Barcode")));
-        	}
-    	} catch (Exception ex) {
-    		System.err.println("FAILED");
-    	}
-    }
-    /*
-    public void findBooksOlderThanDay(String year) { 
-    	try {
-    		inventoryItemList.removeAllElements();
-        	Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT bookId FROM Book WHERE pubYear < " + year;
-        	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery(query);
-        	while (rs.next()) {
-        		inventoryItemList.addElement(new Book(rs.getString("bookId")));
+        		inventoryItemList.addElement(new InventoryItem(rs.getString("InventoryItemId")));
         	}
     	} catch (Exception ex) {
     		System.err.println("FAILED");
     	}
     }
     
-    public void findBooksNewerThanDate(String year) { 
+    /**
+     * Gets particular inventory items with a name like the given name
+     * @param name inventory items like this name
+     */
+    public void getInventoryItemNamesLike(String name) {
     	try {
     		inventoryItemList.removeAllElements();
-        	Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT bookId FROM Book WHERE pubYear > " + year;
+    		Connection con = JDBCBroker.getInstance().getConnection();
+        	String query = "SELECT * FROM InventoryItem WHERE InventoryItemTypeName LIKE '%" + name + "%'";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		inventoryItemList.addElement(new Book(rs.getString("bookId")));
+        		inventoryItemList.addElement(new InventoryItem(rs.getString("InventoryItemId")));
         	}
     	} catch (Exception ex) {
     		System.err.println("FAILED");
     	}
     }
-    public void findBooksWithTitleLike(String title) {
+    
+    /**
+     * 
+     * @param inventoryItemTypeName Name of the InventoryItem
+     * @param fieldName name of the field that you want to update
+     * @param newValue value to set that field to
+     */
+    public void updateInventoryItemWithName(String inventoryItemTypeName, String fieldName, String newValue) {
     	try {
     		inventoryItemList.removeAllElements();
-        	Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT bookId FROM Book WHERE title LIKE '%" + title + "%'";
+    		Connection con = JDBCBroker.getInstance().getConnection();
+    		StringBuilder sb = new StringBuilder();
+    		sb.append("UPDATE InventoryItem SET ");
+    		sb.append(fieldName + " = " + newValue + " ");
+    		sb.append("WHERE InventoryItemTypeName = '" + inventoryItemTypeName + "'");
         	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery(query);
-        	while (rs.next()) {
-        		inventoryItemList.addElement(new Book(rs.getString("bookId")));
-        	}
+        	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
-    		System.err.println("FAILED");
-    	}
-    }
-    public void findBooksWithAuthorLike(String author) {
-        try {
-    		inventoryItemList.removeAllElements();
-        	Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT bookId FROM Book WHERE author LIKE '%" + author + "%'";
-        	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery(query);
-        	while (rs.next()) {
-        		inventoryItemList.addElement(new Book(rs.getString("bookId")));
-        	}
-    	} catch (Exception ex) {
-    		System.err.println("FAILED");
+    		System.err.println("FAILED ...");
     	}
     }
     
