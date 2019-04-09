@@ -11,6 +11,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -46,6 +48,8 @@ public class UpdateInventoryView extends View{
 	protected TextField serviceCharge;
 	
 	protected String inventory;
+	
+	Alert confirmation;
 
 
 	protected Button cancelButton, updateButton, deleteButton;
@@ -146,6 +150,7 @@ public class UpdateInventoryView extends View{
 		grid.add(inventoryUnits, 0, 2);
 
 		SearchResult = new ComboBox<String>();
+		SearchResult.getSelectionModel().selectFirst();
 		grid.add(SearchResult, 1, 2);
 
 

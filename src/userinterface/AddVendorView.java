@@ -157,8 +157,12 @@ public class AddVendorView extends View
 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 			 @Override
 		     public void handle(ActionEvent e) {
-		    	clearErrorMessage();
-		    	addVendor();  
+			 	if (isSomethingEmpty()) {
+			 		displayErrorMessage("Please fill out all the fields");
+				} else {
+					clearErrorMessage();
+					addVendor();
+				}
    	  }
 	});
 		doneCont.getChildren().add(cancelButton);
@@ -183,6 +187,13 @@ public class AddVendorView extends View
 		ve.update();
 	}
 
+	private Boolean isSomethingEmpty() {
+		if (nameField.getText().isEmpty() || phoneNumberField.getText().isEmpty() || serviceCharge.getText().isEmpty() ||
+		statusBox.getSelectionModel().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 
 	// Create the status log field
 	//-------------------------------------------------------------
