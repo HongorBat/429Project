@@ -23,6 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.Vendor;
 
 import java.util.Properties;
 
@@ -136,6 +137,7 @@ public class AddVendorView extends View
 				"Active",
 				"Inactive");
 		grid.add(statusBox, 1, 3);
+		statusBox.getSelectionModel().selectFirst();
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -152,6 +154,13 @@ public class AddVendorView extends View
 		
 		submitButton = new Button("Submit");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+			 @Override
+		     public void handle(ActionEvent e) {
+		    	clearErrorMessage();
+		    	addVendor();  
+   	  }
+	});
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(submitButton);
 	
@@ -159,6 +168,19 @@ public class AddVendorView extends View
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void addVendor() {
+		// add the properties
+		Properties p2 = new Properties();
+		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
+		p2.setProperty("Name", nameField.getText());
+		p2.setProperty("PhoneNumber", phoneNumberField.getText());
+		p2.setProperty("Status", statusBox.getValue().toString());
+		
+		// create item using properties, then add to db
+		Vendor ve = new Vendor(p2);
+		ve.update();
 	}
 
 
