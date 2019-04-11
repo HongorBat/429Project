@@ -141,10 +141,13 @@ public class ModifyFieldView extends View{
 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				updateFields();
-   		    	clearErrorMessage();
-   		    	myModel.stateChangeRequest("TellerView", null);   
-				
+				if (PhoneNumber.getText().isEmpty() || !PhoneNumber.getText().matches("\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")) {
+					displayErrorMessage("Please enter a valid phone number.");
+				} else {
+					updateFields();
+					clearErrorMessage();
+					myModel.stateChangeRequest("TellerView", null);
+				}
 			}
 		});
 		
