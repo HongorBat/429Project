@@ -160,6 +160,11 @@ public class AddVendorView extends View
 			 	if (isSomethingEmpty()) {
 			 		displayErrorMessage("Please fill out all the fields");
 				} else {
+			 		if (!phoneNumberField.getText().matches("\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d"))
+					{
+						displayErrorMessage("Please enter a valid phone number.");
+						return;
+					}
 					clearErrorMessage();
 					addVendor();
 				}
