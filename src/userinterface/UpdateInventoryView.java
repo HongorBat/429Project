@@ -193,8 +193,18 @@ public class UpdateInventoryView extends View{
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
+  		    	//System.out.println(SearchResult.getSelectionModel().getSelectedItem().toString() + "<----");
+  		    	if(SearchResult.getSelectionModel().getSelectedItem() == null)
+  		    	{
+  		    		Alert a = new Alert(AlertType.NONE);
+  		    		a.setAlertType(AlertType.ERROR);
+  		    		a.setContentText("Please select an item from the dropdown box before updating.");
+  		    		a.show(); 
+  		    	}
+  		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				myModel.stateChangeRequest("UpdateFieldView", null);
+  		    	}
   		     }
 		});
 	

@@ -187,15 +187,24 @@ public class ModifyVendorView extends View{
         	});
 		
 		
-		updateButton = new Button("Update");
+		updateButton = new Button("Modify");
 		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		updateButton.setOnAction(new EventHandler<ActionEvent>() {
 
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
+  		    	if(SearchResult.getSelectionModel().getSelectedItem() == null)
+  		    	{
+  		    		Alert a = new Alert(AlertType.NONE);
+  		    		a.setAlertType(AlertType.ERROR);
+  		    		a.setContentText("Please select a vendor from the dropdown box before updating.");
+  		    		a.show(); 
+  		    	}
+  		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				myModel.stateChangeRequest("ModifyFieldView", null);
+  		    	}
   		     }
 		});
 	
