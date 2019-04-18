@@ -18,7 +18,6 @@ import exception.InvalidPrimaryKeyException;
 import exception.PasswordMismatchException;
 import event.Event;
 import userinterface.MainStageContainer;
-import userinterface.TellerView;
 import userinterface.View;
 import userinterface.ViewFactory;
 import userinterface.WindowPosition;
@@ -38,7 +37,7 @@ public class Teller implements IView, IModel
 
 	// GUI Components
 	private Hashtable<String, Scene> myViews;
-	private Stage	myStage;
+	private Stage	  	myStage;
 
 	private String loginErrorMessage = "";
 	private String transactionErrorMessage = "";
@@ -53,7 +52,8 @@ public class Teller implements IView, IModel
 		// STEP 3.1: Create the Registry object - if you inherit from
 		// EntityBase, this is done for you. Otherwise, you do it yourself
 		myRegistry = new ModelRegistry("Teller");
-		if(myRegistry == null) {
+		if(myRegistry == null)
+		{
 			new Event(Event.getLeafLevelClassName(this), "Teller",
 				"Could not instantiate Registry", Event.ERROR);
 		}
@@ -118,7 +118,8 @@ public class Teller implements IView, IModel
 	{
 		// STEP 4: Write the sCR method component for the key you
 		// just set up dependencies for
-		// DEBUG System.out.println("Teller.sCR: key = " + key);
+		// DEBUG 
+		System.out.println("Teller.sCR: key = " + key);
 
 		if (key.equals("Login") == true)
 		{
@@ -132,6 +133,31 @@ public class Teller implements IView, IModel
 					createAndShowTransactionChoiceView();
 				}
 			}
+		} 
+		else if (key.equals("AddVendorView") == true) {
+				createAndShowAddVendorView();
+			}
+		else if (key.equals("TellerView") == true) {
+				createAndShowTellerView();
+			}
+			else if (key.equals("AddInventoryView") == true) {
+				createAndShowAddInventoryView();
+			}
+			else if (key.equals("UpdateInventoryView") == true) {
+				createAndShowUpdateInventoryView();
+			}
+			else if (key.equals("UpdateFieldView") == true) {
+				createAndShowUpdateFieldView();
+			}
+
+		else if (key.equals("AddVIITView") == true) {
+				createAndShowAddVIITView();
+			}
+		else if (key.equals("ModifyVendorView") == true) {
+			createAndShowModifyVendorView();
+		}
+		else if (key.equals("ModifyFieldView") == true) {
+			createAndShowModifyFieldView();
 		}
 		else
 		if (key.equals("CancelTransaction") == true)
@@ -153,6 +179,7 @@ public class Teller implements IView, IModel
 			{
 				transactionErrorMessage = "Transaction impossible: Customer not identified";
 			}
+
 		}
 		else
 		if (key.equals("Logout") == true)
@@ -213,6 +240,7 @@ public class Teller implements IView, IModel
 		{
 			Transaction trans = TransactionFactory.createTransaction(
 				transactionType, myAccountHolder);
+
 			trans.subscribe("CancelTransaction", this);
 			trans.stateChangeRequest("DoYourJob", "");
 		}
@@ -237,27 +265,135 @@ public class Teller implements IView, IModel
 			currentScene = new Scene(newView);
 			myViews.put("TransactionChoiceView", currentScene);
 		}
+				
+
 		// make the view visible by installing it into the frame
 		swapToView(currentScene);
+		
 	}
 
 	//------------------------------------------------------------
 	private void createAndShowTellerView()
 	{
 		Scene currentScene = (Scene)myViews.get("TellerView");
+
 		if (currentScene == null)
 		{
 			// create our initial view
 			View newView = ViewFactory.createView("TellerView", this); // USE VIEW FACTORY
-			
-			TellerView tempView = (TellerView)newView;
-			tempView.initializeViews(myViews, myStage, currentScene);
-			
 			currentScene = new Scene(newView);
 			myViews.put("TellerView", currentScene);
 		}
+				
+		swapToView(currentScene);
+		
+	}
+	
+	//---------------------------------------------------------
+	private void createAndShowAddVendorView() {
+		Scene currentScene = (Scene)myViews.get("AddVendorView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("AddVendorView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("AddVendorView", currentScene);
+		}
+				
 		swapToView(currentScene);
 	}
+	
+	private void createAndShowAddInventoryView() {
+		Scene currentScene = (Scene)myViews.get("AddInventoryView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("AddInventoryView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("AddInventoryView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+
+	private void createAndShowAddVIITView() {
+		Scene currentScene = (Scene)myViews.get("AddVIITView");
+
+		if (currentScene == null)
+		{
+
+			View newView = ViewFactory.createView("AddVIITView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("AddVIITView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowUpdateInventoryView() {
+		Scene currentScene = (Scene)myViews.get("UpdateInventoryView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("UpdateInventoryView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("UpdateInventoryView", currentScene);
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowUpdateFieldView() {
+		Scene currentScene = (Scene)myViews.get("UpdateFieldView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("UpdateFieldView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("UpdateFieldView", currentScene);
+
+
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowModifyVendorView() {
+		Scene currentScene = (Scene)myViews.get("ModifyVendorView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("ModifyVendorView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("ModifyVendorView", currentScene);
+
+
+		}
+				
+		swapToView(currentScene);
+	}
+	
+	private void createAndShowModifyFieldView() {
+		Scene currentScene = (Scene)myViews.get("ModifyFieldView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("ModifyFieldView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("ModifyFieldView", currentScene);
+
+
+		}
+				
+		swapToView(currentScene);
+	}
+
 
 	/** Register objects to receive state updates. */
 	//----------------------------------------------------------
@@ -277,9 +413,13 @@ public class Teller implements IView, IModel
 		myRegistry.unSubscribe(key, subscriber);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
 	public void swapToView(Scene newScene)
 	{
+
+		
 		if (newScene == null)
 		{
 			System.out.println("Teller.swapToView(): Missing view for display");
@@ -291,8 +431,11 @@ public class Teller implements IView, IModel
 		myStage.setScene(newScene);
 		myStage.sizeToScene();
 		
+			
 		//Place in center
 		WindowPosition.placeCenter(myStage);
+
 	}
+
 }
 

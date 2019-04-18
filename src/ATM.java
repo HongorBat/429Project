@@ -50,7 +50,7 @@ public class ATM extends Application
 	//----------------------------------------------------------
 	public void start(Stage primaryStage)
 	{
-	   System.out.println("ATM Version 3.00");
+	   System.out.println("Restaurant Version 3.00");
 	   System.out.println("Copyright 2004/2015 Sandeep Mitra and T M Rao");
 
            // Create the top-level container (main frame) and add contents to it.
