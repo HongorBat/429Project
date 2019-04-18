@@ -3,6 +3,8 @@ package userinterface;
 
 // system imports
 import javafx.event.Event;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -26,9 +28,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Vendor;
+import model.VendorCollection;
 import model.VendorInventoryItemType;
 
 import java.util.Properties;
+import java.util.Vector;
 
 // project imports
 import impresario.IModel;
@@ -42,8 +46,13 @@ public class AddVIITView extends View
 	protected TextField InventoryItemTypeName;
 	protected TextField VendorPrice;
 	protected TextField DateLastUpdated;
+	protected TextField VendorName;
+	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
+	protected ComboBox<String> SearchResult;
+	
+	protected String vndrName;
 
-	protected Button cancelButton, submitButton;
+	protected Button cancelButton, submitButton, updateButton;
 
 	// For showing error message
 	protected MessageView statusLog;
@@ -101,34 +110,68 @@ public class AddVIITView extends View
        	grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        Text vndrName = new Text(" Vendor Name : ");
+		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
+		vndrName.setFont(myFont);
+		vndrName.setWrappingWidth(150);
+		vndrName.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(vndrName, 0, 1);
+		
+
+		VendorName = new TextField();
+		grid.add(VendorName, 1, 1);
+		
+		
+		updateButton = new Button("Search");
+		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		updateButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		    	processAccountSelected();
+            	  }
+        	});
+		
+		grid.add(updateButton, 2, 1);
+		
+
+		Text inventoryUnits = new Text(" Search Result : ");
+		inventoryUnits.setFont(myFont);
+		inventoryUnits.setWrappingWidth(150);
+		inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(inventoryUnits, 0, 2);
+
+		SearchResult = new ComboBox<String>();
+		SearchResult.getSelectionModel().selectFirst();
+		grid.add(SearchResult, 1, 2);
 
         Text iITNLabel = new Text(" Inventory Item Type Name : ");
-		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		iITNLabel.setFont(myFont);
 		iITNLabel.setWrappingWidth(150);
 		iITNLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(iITNLabel, 0, 1);
+		grid.add(iITNLabel, 0, 3);
 
 		InventoryItemTypeName = new TextField();
-		grid.add(InventoryItemTypeName, 1, 1);
+		grid.add(InventoryItemTypeName, 1, 3);
 
 		Text priceLabel = new Text(" Vendor Price : ");
 		priceLabel.setFont(myFont);
 		priceLabel.setWrappingWidth(150);
 		priceLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(priceLabel, 0, 2);
+		grid.add(priceLabel, 0, 4);
 
 		VendorPrice = new TextField();
-		grid.add(VendorPrice, 1, 2);
+		grid.add(VendorPrice, 1, 4);
 
 		Text dateUpdatedLabel = new Text(" Date Last Updated : ");
 		dateUpdatedLabel.setFont(myFont);
 		dateUpdatedLabel.setWrappingWidth(150);
 		dateUpdatedLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(dateUpdatedLabel, 0, 3);
+		grid.add(dateUpdatedLabel, 0, 5);
 		
 		DateLastUpdated = new TextField();
-		grid.add(DateLastUpdated, 1, 3);
+		grid.add(DateLastUpdated, 1, 5);
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -186,6 +229,59 @@ public class AddVIITView extends View
 		ve.update();
 	}
 
+	protected void processAccountSelected()
+	{
+		vndrName = VendorName.getText();
+		
+		if((vndrName == null ) || (vndrName.length() == 0)) {
+			displayErrorMessage("Please enter a name!");
+			VendorName.requestFocus();
+			return;
+		} 
+		displayErrorMessage("");
+		getEntryTableModelValues(vndrName);
+	}
+	
+	protected void getEntryTableModelValues(String _vendor)
+	{
+		ObservableList<String> Result = FXCollections.observableArrayList();
+		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
+		Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
+		for (int i = 0; i < items.size(); i++) {
+			Vendor vnd = items.get(i);
+			Result.add(vnd.getField("Name"));
+		}
+		
+		try
+		{
+			//System.out.println(_vendor);
+			//PatronCollection patronCollection = new PatronCollection();
+			//patronCollection.findPatronsAtZipCode(zipcode);
+			//patronCollection.printResults();
+			
+			//Vector<Patron> entryList = (Vector<Patron>)patronCollection.getState("Patrons");
+
+			//Enumeration<Patron> entries = entryList.elements();
+			
+			
+
+			//while (entries.hasMoreElements() == true)
+			//{
+				//Patron nextAccount = (Patron)entries.nextElement();
+				//Vector<String> view = nextAccount.getEntryListView();
+
+				// add this list entry to the list
+				//PatronTableModel nextTableRowData = new PatronTableModel(view);
+				//tableData.add(nextTableRowData);
+				
+			//}
+			
+			SearchResult.setItems(Result);
+		}
+		catch (Exception e) {//SQLException e) {
+			// Need to handle this exception
+		}
+	}
 
 	// Create the status log field
 	//-------------------------------------------------------------
