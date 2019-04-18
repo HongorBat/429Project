@@ -14,6 +14,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -167,6 +169,10 @@ public class AddVendorView extends View
 					}
 					clearErrorMessage();
 					addVendor();
+					
+					Alert a = new Alert(AlertType.INFORMATION);
+					a.setContentText("Vendor has been added.");
+					a.show();
 				}
    	  }
 	});

@@ -231,7 +231,7 @@ public class ModifyFieldView extends View{
 	
 	public void populateFields()
 	{
-		vc.getAllVendorsLike(ModifyVendorView.SELECTED_ITEM);
+		vc.getAllVendorsWithNameLike(ModifyVendorView.SELECTED_ITEM);
 		UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(ModifyVendorView.SELECTED_ITEM);
 		Vendor vndr = ModifyVendorView.VENDOR_COLLECTION.getVendorList().get(0);
 		PhoneNumber.setText(vndr.getField("PhoneNumber"));

@@ -37,7 +37,7 @@ public class VendorCollection extends EntityBase {
     	}
     }
     
-    public void getAllVendorsLike(String name) {
+    public void getAllVendorsWithNameLike(String name) {
     	try {
     		vendorList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
@@ -70,10 +70,26 @@ public class VendorCollection extends EntityBase {
         	Statement stmt = con.createStatement();
         	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
-    		System.err.println("Faild query for " + sb.toString() );
+    		System.err.println("Failed update for " + sb.toString());
     	}
     }
     
+    /**
+     * Given a id, removes the vendor with the given id from the db
+     * @param id identifier for the vendor
+     */
+    public void deleteVendorWithId(String id) {
+    	StringBuilder sb = new StringBuilder();
+    	try {
+    		vendorList.removeAllElements();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+    		sb.append("DELETE FROM Vendor WHERE Id ='" + id + "'");
+    		Statement stmt = con.createStatement();
+    		stmt.executeUpdate(sb.toString());
+    	} catch (Exception ex) {
+    		System.err.println("Failed delete for " + sb.toString());
+    	}
+    }
     /**
      * JUST FOR DEBUGGING PURPOSES
      * @return

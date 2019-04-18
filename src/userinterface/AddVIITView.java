@@ -9,11 +9,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -148,7 +150,17 @@ public class AddVIITView extends View
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
-  		    	addVIIT();  
+  		    	
+  		    	
+  		    	if (InventoryItemTypeName.getText().length() == 0 || VendorPrice.getText().length() == 0 || DateLastUpdated.getText().length() == 0) {
+  		    		displayErrorMessage("Field(s) have been left blank!");
+  		    		return;
+  		    	}
+  		    	
+  		    	addVIIT();
+  		    	Alert a = new Alert(AlertType.INFORMATION);
+  		    	a.setContentText("Vendor Inventory Item Type was added.");
+  		    	a.show();
        	  }
    	});
 		doneCont.getChildren().add(cancelButton);

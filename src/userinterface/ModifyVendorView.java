@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -169,6 +170,18 @@ public class ModifyVendorView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	
+       		    	Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + SELECTED_ITEM + "?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+       		    	alert.showAndWait();
+
+       		    	if (alert.getResult() == ButtonType.NO) {
+       		    		System.out.println("ModifyVendorView.deleteButton.NO");
+       		    		return;
+       		    	}
+   		    		System.out.println("ModifyVendowView.deleteButton.ELSE");
+   		    		VENDOR_COLLECTION.getAllVendorsWithNameLike(SELECTED_ITEM);
+   		    		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
+   		    		VENDOR_COLLECTION.deleteVendorWithId(v.getField("Id"));
        		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});
@@ -213,7 +226,7 @@ public class ModifyVendorView extends View{
 	protected void getEntryTableModelValues(String _vendor)
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		VENDOR_COLLECTION.getAllVendorsLike(_vendor);
+		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
 		Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
 		for (int i = 0; i < items.size(); i++) {
 			Vendor vnd = items.get(i);
