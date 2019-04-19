@@ -52,7 +52,7 @@ public class AddVIITView extends View
 	
 	protected String vndrName;
 
-	protected Button cancelButton, submitButton, updateButton;
+	protected Button cancelButton, submitButton, searchButton;
 
 	// For showing error message
 	protected MessageView statusLog;
@@ -123,9 +123,9 @@ public class AddVIITView extends View
 		grid.add(VendorName, 1, 1);
 		
 		
-		updateButton = new Button("Search");
-		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-		updateButton.setOnAction(new EventHandler<ActionEvent>() {
+		searchButton = new Button("Search");
+		searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
        		     public void handle(ActionEvent e) {
@@ -133,7 +133,7 @@ public class AddVIITView extends View
             	  }
         	});
 		
-		grid.add(updateButton, 2, 1);
+		grid.add(searchButton, 2, 1);
 		
 
 		Text inventoryUnits = new Text(" Search Result : ");
@@ -194,13 +194,12 @@ public class AddVIITView extends View
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   		    	
-  		    	
   		    	if (InventoryItemTypeName.getText().length() == 0 || VendorPrice.getText().length() == 0 || DateLastUpdated.getText().length() == 0) {
   		    		displayErrorMessage("Field(s) have been left blank!");
   		    		return;
   		    	}
-  		    	
-  		    	addVIIT();
+
+  		    	addVIIT(fetchVendorId());
   		    	Alert a = new Alert(AlertType.INFORMATION);
   		    	a.setContentText("Vendor Inventory Item Type was added.");
   		    	a.show();
@@ -215,14 +214,22 @@ public class AddVIITView extends View
 		return vbox;
 	}
 	
-	private void addVIIT() {
+	private String fetchVendorId() {
+		String vnderName = SearchResult.getSelectionModel().getSelectedItem();
+	    VENDOR_COLLECTION.getAllVendorsWithNameLike(vnderName);
+		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
+		return v.getField("Id");
+	}
+	
+	
+	private void addVIIT(String id) {
 		// add the properties
 		Properties p3 = new Properties();
 		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
 		p3.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());
 		p3.setProperty("VendorPrice", VendorPrice.getText());
-		p3.setProperty("DateLastUpdated", DateLastUpdated.getText());       
-        
+		p3.setProperty("DateLastUpdated", DateLastUpdated.getText());   
+		p3.setProperty("VendorsId", id);
 		
 		// create item using properties, then add to db
 		VendorInventoryItemType ve = new VendorInventoryItemType(p3);
