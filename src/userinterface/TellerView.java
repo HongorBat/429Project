@@ -38,7 +38,7 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT;
+	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT, deleteVIIT;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -178,6 +178,22 @@ public class TellerView extends View
 		addVIITBtn.setAlignment(Pos.CENTER);
 		addVIITBtn.getChildren().add(addVIIT);
 		grid.add(addVIITBtn, 1, 4);
+		
+		deleteVIIT = new Button("Delete Vendor Inventory Item Type");
+		deleteVIIT.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("deleteVIITView", props);
+            	     }
+        	});
+
+		HBox deleteVIITBtn = new HBox(15);
+		deleteVIITBtn.setAlignment(Pos.CENTER);
+		deleteVIITBtn.getChildren().add(deleteVIIT);
+		grid.add(deleteVIITBtn, 1, 5);
 
 		return grid;
 	}
