@@ -13,3 +13,5 @@
 [2/21/19, 6:16 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1062: Duplicate entry '1' for key 'PRIMARY'>
 [2/21/19, 6:16 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1062: Duplicate entry '1' for key 'PRIMARY'>
 [4/8/19, 7:32 PM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
+[4/23/19 5:38 PM]|InventoryItemType|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 0: Data truncation: Incorrect decimal value: 'sdf' for column 'ReorderPoint' at row 1>
+[4/23/19 5:39 PM]|InventoryItemType|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 0: Data truncation: Incorrect decimal value: 'sdf' for column 'ReorderPoint' at row 1>
