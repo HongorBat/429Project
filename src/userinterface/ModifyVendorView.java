@@ -211,7 +211,6 @@ public class ModifyVendorView extends View{
 		
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(updateButton);
-		doneCont.getChildren().add(deleteButton);
 	
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(doneCont);

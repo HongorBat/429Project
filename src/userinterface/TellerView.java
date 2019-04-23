@@ -114,7 +114,7 @@ public class TellerView extends View
 		addIIBtn.getChildren().add(addInventoryItem);
 		grid.add(addIIBtn, 1, 0);
 		
-		updateInventoryItem = new Button("Update Inventory Item");
+		updateInventoryItem = new Button("Update/Delete Inventory Item");
 		updateInventoryItem.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
