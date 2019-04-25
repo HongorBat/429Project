@@ -202,7 +202,7 @@ public class TellerView extends View
        		     public void handle(ActionEvent e) {
        		     	processAction(e); 
        		     	Properties props = new Properties();
-       		     	myModel.stateChangeRequest("TakeOutInventory", props);
+       		     	myModel.stateChangeRequest("TakeOutInventoryView", props);
             	     }
         	});
 
