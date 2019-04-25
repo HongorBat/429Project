@@ -38,7 +38,7 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT, deleteVIIT;
+	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT, deleteVIIT, takeOut, processInv;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -94,7 +94,7 @@ public class TellerView extends View
         	grid.setAlignment(Pos.CENTER);
        		grid.setHgap(10);
         	grid.setVgap(10);
-        	grid.setPadding(new Insets(35, 35, 35, 35));
+        	grid.setPadding(new Insets(50, 50, 50, 50));
 
 		// data entry fields
 
@@ -194,6 +194,38 @@ public class TellerView extends View
 		deleteVIITBtn.setAlignment(Pos.CENTER);
 		deleteVIITBtn.getChildren().add(deleteVIIT);
 		grid.add(deleteVIITBtn, 1, 5);
+		
+		takeOut = new Button("Take out Inventory Item");
+		takeOut.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("TakeOutInventory", props);
+            	     }
+        	});
+
+		HBox takeOutBtn = new HBox(15);
+		takeOutBtn.setAlignment(Pos.CENTER);
+		takeOutBtn.getChildren().add(takeOut);
+		grid.add(takeOutBtn, 1, 6);
+		
+		processInv = new Button("Process Invoice");
+		processInv.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("ProcessInvoiceView", props);
+            	     }
+        	});
+
+		HBox processInvBtn = new HBox(15);
+		processInvBtn.setAlignment(Pos.CENTER);
+		processInvBtn.getChildren().add(processInv);
+		grid.add(processInvBtn, 1, 7);
 
 		return grid;
 	}
