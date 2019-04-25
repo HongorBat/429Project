@@ -89,8 +89,28 @@ public class InventoryItemTypeCollection extends EntityBase {
         	Statement stmt = con.createStatement();
         	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
-    		System.err.println("Faild query for " + sb.toString() );
+    		System.err.println("Failed query for " + sb.toString() );
     	}
+    }
+    
+    /**
+     * This returns the validity days quantity
+     * @param name the name of the inventoryitemtype to reduce by 1
+     * 
+     * Takes the inventory item type name, and reduces the units by 1, returning the 
+     * validity of days
+     */
+    public int reduceInventoryItemTypeUnits(String name) {
+    	getInventoryItemTypeName(name);
+    	InventoryItemType it = inventoryItemTypeList.get(0);
+    	int currentValOfUnitsField = Integer.valueOf(it.getField("Units"));
+    	if (currentValOfUnitsField > 0) {
+    		currentValOfUnitsField--;
+    		updateInventoryItemTypeWithName(name, "Units", currentValOfUnitsField + "");
+    	} else {
+    		System.err.println("Failed to reduce the units of an InventoryItemType... ");
+    	}
+    	return Integer.valueOf(it.getField("ValidityDays"));
     }
     
     /**
