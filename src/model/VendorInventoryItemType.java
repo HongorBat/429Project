@@ -10,6 +10,7 @@ import exception.InvalidPrimaryKeyException;
 public class VendorInventoryItemType extends EntityBase {
 	
 	private static final String myTableName = "VendorInventoryItemType";
+	private static final String UNIQUE_IDENTIFIER = "Id";
 	protected Properties dependencies;
 	private String updateStatusMessage = "";
 	
@@ -21,7 +22,7 @@ public class VendorInventoryItemType extends EntityBase {
 	public VendorInventoryItemType(String vendorId) throws InvalidPrimaryKeyException {
 		super(vendorId);
 		setDependencies();
-		String query = "SELECT * FROM " + myTableName + " WHERE (VendorId = " + vendorId + ")";
+		String query = "SELECT * FROM " + myTableName + " WHERE (" + UNIQUE_IDENTIFIER +" = " + vendorId + ")";
 		Vector<Properties> allDataRetrieved = getSelectQueryResult(query);
 		// You must get one account at least
 		if (allDataRetrieved != null) {
@@ -29,7 +30,7 @@ public class VendorInventoryItemType extends EntityBase {
 
 			// There should be EXACTLY one id of this book. More than that is an error
 			if (size != 1) {
-				throw new InvalidPrimaryKeyException("Multiple InventoryItems matching Barcode : " + vendorId + " found.");
+				throw new InvalidPrimaryKeyException("Multiple VendorInventoryItemTypes matching Barcode : " + vendorId + " found.");
 			} else {
 				// copy all the retrieved data into persistent state
 				Properties retrievedBookData = allDataRetrieved.elementAt(0);
@@ -45,7 +46,7 @@ public class VendorInventoryItemType extends EntityBase {
 			}
 		} else {
 			// if no book is found for this book id, throw an exception
-			throw new InvalidPrimaryKeyException("No InventoryItem with Barcode : " + vendorId + " found.");
+			throw new InvalidPrimaryKeyException("No VendorInventoryItemTypes with Barcode : " + vendorId + " found.");
 		}
 	}
 	
@@ -103,15 +104,15 @@ public class VendorInventoryItemType extends EntityBase {
 	
 	public void update() {
 		try {
-			if (persistentState.getProperty("VendorId") != null) {
+			if (persistentState.getProperty(UNIQUE_IDENTIFIER) != null) {
 				Properties whereClause = new Properties();
-				whereClause.setProperty("VendorId", persistentState.getProperty("VendorId"));
+				whereClause.setProperty(UNIQUE_IDENTIFIER, persistentState.getProperty(UNIQUE_IDENTIFIER));
 				updatePersistentState(mySchema, persistentState, whereClause);
-				updateStatusMessage = "VendorId for VendorInventoryItemType : " + persistentState.getProperty("VendorId") + " updated successfully in database!";
+				updateStatusMessage = UNIQUE_IDENTIFIER + " for VendorInventoryItemType : " + persistentState.getProperty(UNIQUE_IDENTIFIER) + " updated successfully in database!";
 			} else {
 				Integer id = insertAutoIncrementalPersistentState(mySchema, persistentState);
-				persistentState.setProperty("VendorId", "" + id.intValue());
-				updateStatusMessage = "VendorId for VendorInventoryItemType : " +  persistentState.getProperty("VendorId") + "installed successfully in database!";
+				persistentState.setProperty(UNIQUE_IDENTIFIER, "" + id.intValue());
+				updateStatusMessage = UNIQUE_IDENTIFIER + " for VendorInventoryItemType : " +  persistentState.getProperty(UNIQUE_IDENTIFIER) + "installed successfully in database!";
 			}
 		} catch (SQLException ex) {
 			updateStatusMessage = "Error in installing InventoryItem in database!";
