@@ -95,19 +95,6 @@ public class InventoryItemCollection extends EntityBase {
     	}
     }
     
-    public void setAsUsed(String barcode, boolean isExpired) {
-    	getAllWithBarcode(barcode);
-    	InventoryItem it = inventoryItemList.get(0);
-    	// no such barcode exists, it this returns here
-    	if (it == null || inventoryItemList.size() == 0) { return; }
-    	String nameOfGivenItem = it.getField("Name");
-    	if (isExpired) {
-        	updateInventoryItemWithName(nameOfGivenItem, "Status", "Expired");
-    	} else {
-        	updateInventoryItemWithName(nameOfGivenItem, "Status", "Used");
-    	}
-    }
-    
     /**
      * 
      * @param inventoryItemTypeName Name of the InventoryItem
