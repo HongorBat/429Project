@@ -42,6 +42,10 @@ public class ViewFactory {
 		else if(viewName.equals("ModifyFieldView") == true)
 		{
 			return new ModifyFieldView(model);
+		}
+		else if(viewName.equals("DeleteVIITView") == true)
+		{
+			return new DeleteVIITView(model);
 		}	
 		else
 			return null;

@@ -186,7 +186,7 @@ public class TellerView extends View
        		     public void handle(ActionEvent e) {
        		     	processAction(e); 
        		     	Properties props = new Properties();
-       		     	myModel.stateChangeRequest("deleteVIITView", props);
+       		     	myModel.stateChangeRequest("DeleteVIITView", props);
             	     }
         	});
 
