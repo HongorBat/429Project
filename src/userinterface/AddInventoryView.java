@@ -229,9 +229,13 @@ public class AddInventoryView extends View{
 			Units.requestFocus();
 			return;
 		}
-		else if (Integer.parseInt(Units.getText()) < 0)
+		else if (!(Units.getText().matches("^-?[0-9]+")))
 		{
-			displayErrorMessage("You can't put a negativ unit!");
+			displayErrorMessage("You can't put a string in a unit!");
+			Units.requestFocus();
+		}
+		else if (Integer.parseInt(Units.getText()) < 0) {
+			displayErrorMessage("You can't put a negative unit!");
 			Units.requestFocus();
 		}
 		else if ((UnitMeasure == null) || (UnitMeasure.getLength() == 0))
@@ -240,9 +244,9 @@ public class AddInventoryView extends View{
 				UnitMeasure.requestFocus();
 				return;
 		}
-		else if (Integer.parseInt(UnitMeasure.getText()) < 0)
+		else if (!(UnitMeasure.getText().matches("[a-zA-Z]+")))
 		{
-			displayErrorMessage("You can't put a negativ Unit Measure!");
+			displayErrorMessage("You can't put a number in Unit Measure!");
 			UnitMeasure.requestFocus();
 		}
 		else if ((ValidityDay == null) || (ValidityDay.getLength() == 0))
@@ -251,14 +255,23 @@ public class AddInventoryView extends View{
 			ValidityDay.requestFocus();
 			return;
 		}
-		else if (Integer.parseInt(ValidityDay.getText()) < 0)
+		else if (!(ValidityDay.getText().matches("^-?[0-9]+")))
 		{
-			displayErrorMessage("You can't put a negativ Validity Day!");
+			displayErrorMessage("You can't put a string in a Validity Day!");
+			ValidityDay.requestFocus();
+		}
+		else if(Integer.parseInt(ValidityDay.getText()) < 0 &&
+				Integer.parseInt(ValidityDay.getText()) != -1) {
+			displayErrorMessage("Validity Day cannot be greater than -1");
 			ValidityDay.requestFocus();
 		}
 		else if ((RoerderPoint == null) || (RoerderPoint.getLength() == 0))
 		{
 			displayErrorMessage("Please Enter a roerder point!");
+			RoerderPoint.requestFocus();
+		}
+		else if (!(RoerderPoint.getText().matches("[0-9]+"))) {
+			displayErrorMessage("You can't enter string in Reorder Point");
 			RoerderPoint.requestFocus();
 		}
 		else if ((Notes == null) || (Notes.getLength() == 0))
