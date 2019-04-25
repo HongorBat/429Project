@@ -38,7 +38,10 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
     	try {
     		viitList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT * FROM VendorInventoryItemTypes WHERE Name LIKE '%" + name + "%'";
+    		String query = "SELECT VendorId, InventoryItemTypeName, Vendor.Name FROM VendorInventoryItemType " +
+					"JOIN Vendor ON VendorInventoryItemType.VendorsId = Vendor.Id " +
+					"WHERE VendorInventoryItemType.Name LIKE '%" + name + "%'";
+        	//String query = " SELECT * FROM VendorInventoryItemTypes WHERE Name LIKE '%" + name + "%'";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
