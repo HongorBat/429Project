@@ -46,7 +46,15 @@ public class ViewFactory {
 		else if(viewName.equals("DeleteVIITView") == true)
 		{
 			return new DeleteVIITView(model);
-		}	
+		}
+		else if(viewName.equals("TakeOutInventoryView") == true)
+		{
+			return new TakeOutInventoryView(model);
+		}
+		else if(viewName.equals("ProcessInvoiceView") == true)
+		{
+			return new ProcessInvoiceView(model);
+		}
 		else
 			return null;
 	}
