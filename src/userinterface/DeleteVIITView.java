@@ -1,8 +1,8 @@
+// specify the package
 package userinterface;
 
-import java.util.Vector;
-
-import impresario.IModel;
+// system imports
+import javafx.event.Event;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,12 +10,17 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,40 +29,42 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import model.InventoryItem;
-import model.InventoryItemCollection;
-import model.InventoryItemType;
-import model.InventoryItemTypeCollection;
+import javafx.stage.Stage;
 import model.Vendor;
 import model.VendorCollection;
+import model.VendorInventoryItemType;
 
-public class ModifyVendorView extends View{
+import java.util.Properties;
+import java.util.Vector;
+
+// project imports
+import impresario.IModel;
+//justus sucks
+/** The class containing the Account View  for the ATM application */
+//==============================================================
+public class DeleteVIITView extends View
+{
 
 	// GUI components
-	//Restaurant owner provides the Inventory Manager 
-	//with the Item Type Name, Units, Unit Measure, Validity Days, 
-	//Reorder Point, and Notes of the Inventory Item Type
-	// GUI components
+	protected TextField InventoryItemTypeName;
+	protected TextField VendorPrice;
+	protected TextField DateLastUpdated;
 	protected TextField VendorName;
-	
 	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
-	public static String SELECTED_ITEM = "";
 	protected ComboBox<String> SearchResult;
-
-	protected TextField serviceCharge;
 	
-	protected String vndr;
+	protected String vndrName;
 
-
-	protected Button cancelButton, updateButton, deleteButton;
+	protected Button cancelButton, submitButton, searchButton;
 
 	// For showing error message
 	protected MessageView statusLog;
+
 	// constructor for this class -- takes a model object
 	//----------------------------------------------------------
-	public ModifyVendorView(IModel account)
+	public DeleteVIITView(IModel account)
 	{
-		super(account, "ModifyVendorView");
+		super(account, "DeleteVIITView");
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -72,8 +79,6 @@ public class ModifyVendorView extends View{
 		container.getChildren().add(createStatusLog("             "));
 
 		getChildren().add(container);
-
-		//populateFields();
 
 		myModel.subscribe("ServiceCharge", this);
 		myModel.subscribe("UpdateStatusMessage", this);
@@ -109,27 +114,36 @@ public class ModifyVendorView extends View{
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text prompt = new Text("MODIFY VENDOR");
-        prompt.setWrappingWidth(400);
-        prompt.setTextAlignment(TextAlignment.CENTER);
-        prompt.setFill(Color.BLACK);
-        grid.add(prompt, 0, 0, 2, 1);
+        TableView tableView = new TableView();
 
-		Text nameLabel = new Text(" Vendor Name : ");
+        TableColumn<String, VendorInventoryItemType> column1 = new TableColumn<>("First Name");
+        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+
+        TableColumn<String, VendorInventoryItemType> column2 = new TableColumn<>("Last Name");
+        column2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        
+        grid.add(tableView, 1, 0);
+        
+        Text vndrName = new Text(" Vendor Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-		nameLabel.setFont(myFont);
-		nameLabel.setWrappingWidth(150);
-		nameLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(nameLabel, 0, 1);
+		vndrName.setFont(myFont);
+		vndrName.setWrappingWidth(150);
+		vndrName.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(vndrName, 0, 1);
 		
 
 		VendorName = new TextField();
-		grid.add(VendorName, 1, 1);
+		grid.add(VendorName, 1, 2);
 		
 		
-		updateButton = new Button("Search");
-		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-		updateButton.setOnAction(new EventHandler<ActionEvent>() {
+		searchButton = new Button("Search");
+		searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
        		     public void handle(ActionEvent e) {
@@ -137,18 +151,7 @@ public class ModifyVendorView extends View{
             	  }
         	});
 		
-		grid.add(updateButton, 2, 1);
-		
-
-		Text result = new Text(" Search Result : ");
-		result.setFont(myFont);
-		result.setWrappingWidth(150);
-		result.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(result, 0, 2);
-
-		SearchResult = new ComboBox<String>();
-		grid.add(SearchResult, 1, 2);
-
+		grid.add(searchButton, 2, 1);
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -163,45 +166,25 @@ public class ModifyVendorView extends View{
             	  }
         	});
 		
-		deleteButton = new Button("Delete");
-		deleteButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		    	clearErrorMessage();
-       		    	
-       		    	Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + SELECTED_ITEM + "?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-       		    	alert.showAndWait();
-
-       		    	if (alert.getResult() == ButtonType.NO) {
-       		    		System.out.println("ModifyVendorView.deleteButton.NO");
-       		    		return;
-       		    	}
-   		    		System.out.println("ModifyVendowView.deleteButton.ELSE");
-   		    		VENDOR_COLLECTION.getAllVendorsWithNameLike(SELECTED_ITEM);
-   		    		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
-   		    		VENDOR_COLLECTION.deleteVendorWithId(v.getField("Id"));
-       		    	myModel.stateChangeRequest("TellerView", null);   
-            	  }
-        	});
-		
-		
-		updateButton = new Button("Update");
-		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-		updateButton.setOnAction(new EventHandler<ActionEvent>() {
+		submitButton = new Button("Submit");
+		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
-  				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-  				myModel.stateChangeRequest("ModifyFieldView", null);
-  		     }
-		});
-	
-		
+  		    	
+  		    	if (InventoryItemTypeName.getText().length() == 0 || VendorPrice.getText().length() == 0 || DateLastUpdated.getText().length() == 0) {
+  		    		displayErrorMessage("Field(s) have been left blank!");
+  		    		return;
+  		    	}
+  		    	Alert a = new Alert(AlertType.INFORMATION);
+  		    	a.setContentText("Vendor Inventory Item Type was added.");
+  		    	a.show();
+       	  }
+   	});
 		doneCont.getChildren().add(cancelButton);
-		doneCont.getChildren().add(updateButton);
+		doneCont.getChildren().add(submitButton);
 	
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(doneCont);
@@ -209,17 +192,25 @@ public class ModifyVendorView extends View{
 		return vbox;
 	}
 	
+	private String fetchVendorId() {
+		String vnderName = SearchResult.getSelectionModel().getSelectedItem();
+	    VENDOR_COLLECTION.getAllVendorsWithNameLike(vnderName);
+		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
+		return v.getField("Id");
+	}
+	
+
 	protected void processAccountSelected()
 	{
-		vndr = VendorName.getText();
+		vndrName = VendorName.getText();
 		
-		if((vndr == null ) || (vndr.length() == 0)) {
-			displayErrorMessage("Please enter a vendor!");
+		if((vndrName == null ) || (vndrName.length() == 0)) {
+			displayErrorMessage("Please enter a name!");
 			VendorName.requestFocus();
 			return;
 		} 
 		displayErrorMessage("");
-		getEntryTableModelValues(vndr);
+		getEntryTableModelValues(vndrName);
 	}
 	
 	protected void getEntryTableModelValues(String _vendor)
@@ -263,7 +254,6 @@ public class ModifyVendorView extends View{
 		}
 	}
 
-	
 	// Create the status log field
 	//-------------------------------------------------------------
 	protected MessageView createStatusLog(String initialMessage)
@@ -272,7 +262,6 @@ public class ModifyVendorView extends View{
 
 		return statusLog;
 	}
-
 
 	/**
 	 * Update method
@@ -285,7 +274,7 @@ public class ModifyVendorView extends View{
 		if (key.equals("ServiceCharge") == true)
 		{
 			String val = (String)value;
-			serviceCharge.setText(val);
+		//	serviceCharge.setText(val);
 			displayMessage("Service Charge Imposed: $ " + val);
 		}
 	}
@@ -316,5 +305,11 @@ public class ModifyVendorView extends View{
 	{
 		statusLog.clearErrorMessage();
 	}
-	
+
 }
+
+//---------------------------------------------------------------
+//	Revision History:
+//
+
+

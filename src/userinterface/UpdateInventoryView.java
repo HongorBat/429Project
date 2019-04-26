@@ -174,6 +174,14 @@ public class UpdateInventoryView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	if(SearchResult.getSelectionModel().getSelectedItem() == null)
+      		    	{
+      		    		Alert a = new Alert(AlertType.NONE);
+      		    		a.setAlertType(AlertType.ERROR);
+      		    		a.setContentText("Please select an item from the dropdown box before updating.");
+      		    		a.show(); 
+      		    	}
+      		    	else {
       				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
       				INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(SELECTED_ITEM);
       				InventoryItemType iit = INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
@@ -181,7 +189,8 @@ public class UpdateInventoryView extends View{
       				Alert r = new Alert(AlertType.INFORMATION);
       				r.setContentText("Item has been deleted.");
       				r.show();
-       		    	myModel.stateChangeRequest("TellerView", null);   
+       		    	myModel.stateChangeRequest("TellerView", null);  
+      		    	}
             	  }
         	});
 		
@@ -193,8 +202,17 @@ public class UpdateInventoryView extends View{
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
+  		    	if(SearchResult.getSelectionModel().getSelectedItem() == null)
+  		    	{
+  		    		Alert a = new Alert(AlertType.NONE);
+  		    		a.setAlertType(AlertType.ERROR);
+  		    		a.setContentText("Please select an item from the dropdown box before updating.");
+  		    		a.show(); 
+  		    	}
+  		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				myModel.stateChangeRequest("UpdateFieldView", null);
+  		    	}
   		     }
 		});
 	

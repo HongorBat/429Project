@@ -11,11 +11,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,27 +26,23 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.InventoryItem;
 import model.InventoryItemCollection;
-import model.InventoryItemType;
-import model.InventoryItemTypeCollection;
 import model.Vendor;
 import model.VendorCollection;
 
-public class ModifyVendorView extends View{
+public class TakeOutInventoryView extends View{
 
 	// GUI components
 	//Restaurant owner provides the Inventory Manager 
 	//with the Item Type Name, Units, Unit Measure, Validity Days, 
 	//Reorder Point, and Notes of the Inventory Item Type
 	// GUI components
-	protected TextField VendorName;
-	
-	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
-	public static String SELECTED_ITEM = "";
+	protected TextField inventoryItemName;
 	protected ComboBox<String> SearchResult;
-
+	public static InventoryItemCollection INVENTORY_ITEM_COLLECTION = new InventoryItemCollection("InventoryItem");
+	public static String SELECTED_ITEM;
 	protected TextField serviceCharge;
 	
-	protected String vndr;
+	protected String invItem;
 
 
 	protected Button cancelButton, updateButton, deleteButton;
@@ -55,9 +51,9 @@ public class ModifyVendorView extends View{
 	protected MessageView statusLog;
 	// constructor for this class -- takes a model object
 	//----------------------------------------------------------
-	public ModifyVendorView(IModel account)
+	public TakeOutInventoryView(IModel account)
 	{
-		super(account, "ModifyVendorView");
+		super(account, "TakeoutInventoryView");
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -87,7 +83,7 @@ public class ModifyVendorView extends View{
 		HBox container = new HBox();
 		container.setAlignment(Pos.CENTER);	
 
-		Text titleText = new Text(" Brockport Restaurant ");
+		Text titleText = new Text(" Take Out Inventory Item ");
 		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		titleText.setWrappingWidth(300);
 		titleText.setTextAlignment(TextAlignment.CENTER);
@@ -109,13 +105,13 @@ public class ModifyVendorView extends View{
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text prompt = new Text("MODIFY VENDOR");
+        Text prompt = new Text("Take Out Inventory Item");
         prompt.setWrappingWidth(400);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-		Text nameLabel = new Text(" Vendor Name : ");
+		Text nameLabel = new Text(" Inventory Item : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		nameLabel.setFont(myFont);
 		nameLabel.setWrappingWidth(150);
@@ -123,19 +119,18 @@ public class ModifyVendorView extends View{
 		grid.add(nameLabel, 0, 1);
 		
 
-		VendorName = new TextField();
-		grid.add(VendorName, 1, 1);
+		inventoryItemName = new TextField();
+		grid.add(inventoryItemName, 1, 1);
 		
 		
 		updateButton = new Button("Search");
 		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		updateButton.setOnAction(new EventHandler<ActionEvent>() {
-
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	processAccountSelected();
-            	  }
-        	});
+       		     }	
+		});
 		
 		grid.add(updateButton, 2, 1);
 		
@@ -170,19 +165,6 @@ public class ModifyVendorView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
-       		    	
-       		    	Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + SELECTED_ITEM + "?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-       		    	alert.showAndWait();
-
-       		    	if (alert.getResult() == ButtonType.NO) {
-       		    		System.out.println("ModifyVendorView.deleteButton.NO");
-       		    		return;
-       		    	}
-   		    		System.out.println("ModifyVendowView.deleteButton.ELSE");
-   		    		VENDOR_COLLECTION.getAllVendorsWithNameLike(SELECTED_ITEM);
-   		    		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
-   		    		VENDOR_COLLECTION.deleteVendorWithId(v.getField("Id"));
-       		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});
 		
@@ -195,7 +177,10 @@ public class ModifyVendorView extends View{
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-  				myModel.stateChangeRequest("ModifyFieldView", null);
+  				INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
+  				Alert a = new Alert(AlertType.INFORMATION);
+  				a.setContentText("SELECTED_ITEM has been taken out.");
+  				a.show();
   		     }
 		});
 	
@@ -211,25 +196,26 @@ public class ModifyVendorView extends View{
 	
 	protected void processAccountSelected()
 	{
-		vndr = VendorName.getText();
+		invItem = inventoryItemName.getText();
 		
-		if((vndr == null ) || (vndr.length() == 0)) {
-			displayErrorMessage("Please enter a vendor!");
-			VendorName.requestFocus();
+		if((invItem == null ) || (invItem.length() == 0)) {
+			displayErrorMessage("Please enter an Inventory Item!");
+			inventoryItemName.requestFocus();
 			return;
 		} 
 		displayErrorMessage("");
-		getEntryTableModelValues(vndr);
+		getEntryTableModelValues(invItem);
 	}
 	
-	protected void getEntryTableModelValues(String _vendor)
+	protected void getEntryTableModelValues(String invItem)
 	{
+		
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
-		Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
+		INVENTORY_ITEM_COLLECTION.getInventoryItemNamesLike(invItem);
+		Vector<InventoryItem> items = INVENTORY_ITEM_COLLECTION.getInventoryItemList();
 		for (int i = 0; i < items.size(); i++) {
-			Vendor vnd = items.get(i);
-			Result.add(vnd.getField("Name"));
+			InventoryItem itm = items.get(i);
+			Result.add(itm.getField("InventoryItemTypeName"));
 		}
 		
 		try

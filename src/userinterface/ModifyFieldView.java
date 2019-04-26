@@ -62,7 +62,7 @@ public class ModifyFieldView extends View{
 
 		getChildren().add(container);
 
-		populateFields();
+		//populateFields();
 
 		myModel.subscribe("ServiceCharge", this);
 		myModel.subscribe("UpdateStatusMessage", this);

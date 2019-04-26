@@ -38,7 +38,7 @@ public class TellerView extends View
 	// GUI stuff
 	private TextField userid;
 	private PasswordField password;
-	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT;
+	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT, deleteVIIT, takeOut, processInv;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -94,7 +94,7 @@ public class TellerView extends View
         	grid.setAlignment(Pos.CENTER);
        		grid.setHgap(10);
         	grid.setVgap(10);
-        	grid.setPadding(new Insets(35, 35, 35, 35));
+        	grid.setPadding(new Insets(50, 50, 50, 50));
 
 		// data entry fields
 
@@ -114,7 +114,7 @@ public class TellerView extends View
 		addIIBtn.getChildren().add(addInventoryItem);
 		grid.add(addIIBtn, 1, 0);
 		
-		updateInventoryItem = new Button("Update Inventory Item");
+		updateInventoryItem = new Button("Update/Delete Inventory Item");
 		updateInventoryItem.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
@@ -178,6 +178,54 @@ public class TellerView extends View
 		addVIITBtn.setAlignment(Pos.CENTER);
 		addVIITBtn.getChildren().add(addVIIT);
 		grid.add(addVIITBtn, 1, 4);
+		
+		deleteVIIT = new Button("Delete Vendor Inventory Item Type");
+		deleteVIIT.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("DeleteVIITView", props);
+            	     }
+        	});
+
+		HBox deleteVIITBtn = new HBox(15);
+		deleteVIITBtn.setAlignment(Pos.CENTER);
+		deleteVIITBtn.getChildren().add(deleteVIIT);
+		grid.add(deleteVIITBtn, 1, 5);
+		
+		takeOut = new Button("Take out Inventory Item");
+		takeOut.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("TakeOutInventoryView", props);
+            	     }
+        	});
+
+		HBox takeOutBtn = new HBox(15);
+		takeOutBtn.setAlignment(Pos.CENTER);
+		takeOutBtn.getChildren().add(takeOut);
+		grid.add(takeOutBtn, 1, 6);
+		
+		processInv = new Button("Process Invoice");
+		processInv.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		     	processAction(e); 
+       		     	Properties props = new Properties();
+       		     	myModel.stateChangeRequest("ProcessInvoiceView", props);
+            	     }
+        	});
+
+		HBox processInvBtn = new HBox(15);
+		processInvBtn.setAlignment(Pos.CENTER);
+		processInvBtn.getChildren().add(processInv);
+		grid.add(processInvBtn, 1, 7);
 
 		return grid;
 	}

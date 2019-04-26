@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Vector;
 
 import database.JDBCBroker;
+import userinterface.UpdateInventoryView;
 
 public class InventoryItemCollection extends EntityBase {
 	
@@ -56,6 +57,23 @@ public class InventoryItemCollection extends EntityBase {
     	}
     }
     
+    public void getAllWithBarcode(String barcode) {
+    	try {
+    		inventoryItemList.removeAllElements();
+    		Integer.parseInt(barcode);
+    		Connection con = JDBCBroker.getInstance().getConnection();
+    		StringBuilder sb = new StringBuilder();
+    		sb.append("SELECT * FROM InventoryItem WHERE Barcode = '" + barcode + "'");
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery(sb.toString());
+        	while (rs.next()) {
+        		inventoryItemList.addElement(new InventoryItem(rs.getString("InventoryItemId")));
+        	}
+    	} catch (Exception ex) {
+    		System.err.println("FAILED to get barcode...");
+    	}
+    }
+    
     /**
      * 
      * @param inventoryItemTypeName Name of the InventoryItem
@@ -68,12 +86,12 @@ public class InventoryItemCollection extends EntityBase {
     		Connection con = JDBCBroker.getInstance().getConnection();
     		StringBuilder sb = new StringBuilder();
     		sb.append("UPDATE InventoryItem SET ");
-    		sb.append(fieldName + " = " + newValue + " ");
+    		sb.append(fieldName + " = '" + newValue + "' ");
     		sb.append("WHERE InventoryItemTypeName = '" + inventoryItemTypeName + "'");
         	Statement stmt = con.createStatement();
         	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
-    		System.err.println("FAILED ...");
+    		System.err.println("Failed to update Inventory Item with name " + inventoryItemTypeName);
     	}
     }
     
