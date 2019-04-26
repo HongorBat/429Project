@@ -74,28 +74,6 @@ public class InventoryItemCollection extends EntityBase {
     	}
     }
     
-    // TODO
-    public void setAsUsed(String barcode, boolean isExpired) {
-    	getAllWithBarcode(barcode);
-    	InventoryItem it = inventoryItemList.get(0);
-    	// no such barcode exists, it this returns here
-    	if (it == null || inventoryItemList.size() == 0) { return; }
-    	String nameOfGivenItem = it.getField("Name");
-    	//UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(nameOfGivenItem);
-    	int validityDays = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.reduceInventoryItemTypeUnits(nameOfGivenItem);
-    	
-    	
-    	
-    	
-    	
-    	
-    	if (isExpired) {
-        	updateInventoryItemWithName(nameOfGivenItem, "Status", "Expired");
-    	} else {
-        	updateInventoryItemWithName(nameOfGivenItem, "Status", "Used");
-    	}
-    }
-    
     /**
      * 
      * @param inventoryItemTypeName Name of the InventoryItem
