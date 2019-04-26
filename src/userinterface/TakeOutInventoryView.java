@@ -24,6 +24,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.InventoryItem;
+import model.InventoryItemCollection;
 import model.Vendor;
 import model.VendorCollection;
 
@@ -34,12 +36,13 @@ public class TakeOutInventoryView extends View{
 	//with the Item Type Name, Units, Unit Measure, Validity Days, 
 	//Reorder Point, and Notes of the Inventory Item Type
 	// GUI components
-	protected TextField VendorName;
+	protected TextField inventoryItemName;
 	protected ComboBox<String> SearchResult;
-
+	public static InventoryItemCollection INVENTORY_ITEM_COLLECTION = new InventoryItemCollection("InventoryItem");
+	public static String SELECTED_ITEM;
 	protected TextField serviceCharge;
 	
-	protected String vndr;
+	protected String invItem;
 
 
 	protected Button cancelButton, updateButton, deleteButton;
@@ -116,19 +119,18 @@ public class TakeOutInventoryView extends View{
 		grid.add(nameLabel, 0, 1);
 		
 
-		VendorName = new TextField();
-		grid.add(VendorName, 1, 1);
+		inventoryItemName = new TextField();
+		grid.add(inventoryItemName, 1, 1);
 		
 		
 		updateButton = new Button("Search");
 		updateButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		updateButton.setOnAction(new EventHandler<ActionEvent>() {
-
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	processAccountSelected();
-            	  }
-        	});
+       		     }	
+		});
 		
 		grid.add(updateButton, 2, 1);
 		
@@ -163,20 +165,6 @@ public class TakeOutInventoryView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
-       		    	
-       		    	/*
-       		    	Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + SELECTED_ITEM + "?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-       		    	alert.showAndWait();
-
-       		    	if (alert.getResult() == ButtonType.NO) {
-       		    		System.out.println("ModifyVendorView.deleteButton.NO");
-       		    		return;
-       		    	}
-   		    		System.out.println("ModifyVendowView.deleteButton.ELSE");
-   		    		VENDOR_COLLECTION.getAllVendorsWithNameLike(SELECTED_ITEM);
-   		    		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
-   		    		VENDOR_COLLECTION.deleteVendorWithId(v.getField("Id"));
-       		    	myModel.stateChangeRequest("TellerView", null);   */
             	  }
         	});
 		
@@ -188,8 +176,11 @@ public class TakeOutInventoryView extends View{
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
-  				//SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-  				myModel.stateChangeRequest("ModifyFieldView", null);
+  				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+  				INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
+  				Alert a = new Alert(AlertType.INFORMATION);
+  				a.setContentText("SELECTED_ITEM has been taken out.");
+  				a.show();
   		     }
 		});
 	
@@ -205,27 +196,27 @@ public class TakeOutInventoryView extends View{
 	
 	protected void processAccountSelected()
 	{
-		vndr = VendorName.getText();
+		invItem = inventoryItemName.getText();
 		
-		if((vndr == null ) || (vndr.length() == 0)) {
-			displayErrorMessage("Please enter a vendor!");
-			VendorName.requestFocus();
+		if((invItem == null ) || (invItem.length() == 0)) {
+			displayErrorMessage("Please enter an Inventory Item!");
+			inventoryItemName.requestFocus();
 			return;
 		} 
 		displayErrorMessage("");
-		getEntryTableModelValues(vndr);
+		getEntryTableModelValues(invItem);
 	}
 	
-	protected void getEntryTableModelValues(String _vendor)
+	protected void getEntryTableModelValues(String invItem)
 	{
-		/*
+		
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
-		Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
+		INVENTORY_ITEM_COLLECTION.getInventoryItemNamesLike(invItem);
+		Vector<InventoryItem> items = INVENTORY_ITEM_COLLECTION.getInventoryItemList();
 		for (int i = 0; i < items.size(); i++) {
-			Vendor vnd = items.get(i);
-			Result.add(vnd.getField("Name"));
-		}*/
+			InventoryItem itm = items.get(i);
+			Result.add(itm.getField("InventoryItemTypeName"));
+		}
 		
 		try
 		{
@@ -251,7 +242,7 @@ public class TakeOutInventoryView extends View{
 				
 			//}
 			
-			//SearchResult.setItems(Result);
+			SearchResult.setItems(Result);
 		}
 		catch (Exception e) {//SQLException e) {
 			// Need to handle this exception

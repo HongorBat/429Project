@@ -74,6 +74,7 @@ public class InventoryItemCollection extends EntityBase {
     	}
     }
     
+    // TODO
     public void setAsUsed(String barcode, boolean isExpired) {
     	getAllWithBarcode(barcode);
     	InventoryItem it = inventoryItemList.get(0);
@@ -107,12 +108,12 @@ public class InventoryItemCollection extends EntityBase {
     		Connection con = JDBCBroker.getInstance().getConnection();
     		StringBuilder sb = new StringBuilder();
     		sb.append("UPDATE InventoryItem SET ");
-    		sb.append(fieldName + " = " + newValue + " ");
+    		sb.append(fieldName + " = '" + newValue + "' ");
     		sb.append("WHERE InventoryItemTypeName = '" + inventoryItemTypeName + "'");
         	Statement stmt = con.createStatement();
         	stmt.executeUpdate(sb.toString());
     	} catch (Exception ex) {
-    		System.err.println("FAILED ...");
+    		System.err.println("Failed to update Inventory Item with name " + inventoryItemTypeName);
     	}
     }
     
