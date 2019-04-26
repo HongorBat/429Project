@@ -23,12 +23,12 @@ import model.InventoryItemType;
 import model.InventoryItemTypeCollection;
 import model.Vendor;
 
-public class UpdateFieldView extends View{
-	
+public class UpdateFieldView extends View {
+
 	// GUI components
-	//Restaurant owner provides the Inventory Manager 
-	//with the Item Type Name, Units, Unit Measure, Validity Days, 
-	//Reorder Point, and Notes of the Inventory Item Type
+	// Restaurant owner provides the Inventory Manager
+	// with the Item Type Name, Units, Unit Measure, Validity Days,
+	// Reorder Point, and Notes of the Inventory Item Type
 	// GUI components
 	protected TextField TypeName;
 	protected TextField Units;
@@ -38,19 +38,18 @@ public class UpdateFieldView extends View{
 	protected TextField Notes;
 	protected TextField ItemType;
 	protected ComboBox Status;
-	
+
 	protected TextField serviceCharge;
 	private InventoryItemTypeCollection iitc = new InventoryItemTypeCollection("InventoryItemType");
-
 
 	protected Button cancelButton, submitButton;
 
 	// For showing error message
 	protected MessageView statusLog;
+
 	// constructor for this class -- takes a model object
-	//----------------------------------------------------------
-	public UpdateFieldView(IModel account)
-	{
+	// ----------------------------------------------------------
+	public UpdateFieldView(IModel account) {
 		super(account, "UpdateFieldView");
 
 		// create a container for showing the contents
@@ -59,7 +58,7 @@ public class UpdateFieldView extends View{
 
 		// Add a title for this panel
 		container.getChildren().add(createTitle());
-		
+
 		// create our GUI components, add them to this Container
 		container.getChildren().add(createFormContent());
 
@@ -73,13 +72,11 @@ public class UpdateFieldView extends View{
 		myModel.subscribe("UpdateStatusMessage", this);
 	}
 
-
 	// Create the title container
-	//-------------------------------------------------------------
-	private Node createTitle()
-	{
+	// -------------------------------------------------------------
+	private Node createTitle() {
 		HBox container = new HBox();
-		container.setAlignment(Pos.CENTER);	
+		container.setAlignment(Pos.CENTER);
 
 		Text titleText = new Text(" Brockport Restaurant ");
 		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -87,27 +84,26 @@ public class UpdateFieldView extends View{
 		titleText.setTextAlignment(TextAlignment.CENTER);
 		titleText.setFill(Color.DARKGREEN);
 		container.getChildren().add(titleText);
-		
+
 		return container;
 	}
 
 	// Create the main form content
-	//-------------------------------------------------------------
-	private VBox createFormContent()
-	{
+	// -------------------------------------------------------------
+	private VBox createFormContent() {
 		VBox vbox = new VBox(10);
 
 		GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-       	grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-        
-        Text prompt = new Text("ITEM INVENTORY INFORMATION");
-        prompt.setWrappingWidth(400);
-        prompt.setTextAlignment(TextAlignment.CENTER);
-        prompt.setFill(Color.BLACK);
-        grid.add(prompt, 0, 0, 2, 1);
+		grid.setAlignment(Pos.CENTER);
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(25, 25, 25, 25));
+
+		Text prompt = new Text("ITEM INVENTORY INFORMATION");
+		prompt.setWrappingWidth(400);
+		prompt.setTextAlignment(TextAlignment.CENTER);
+		prompt.setFill(Color.BLACK);
+		grid.add(prompt, 0, 0, 2, 1);
 
 		Text inventoryUnits = new Text(" Units : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
@@ -127,7 +123,7 @@ public class UpdateFieldView extends View{
 
 		UnitMeasure = new TextField();
 		grid.add(UnitMeasure, 1, 3);
-		
+
 		Text inventoryValidityDay = new Text(" Validity day: ");
 		inventoryValidityDay.setFont(myFont);
 		inventoryValidityDay.setWrappingWidth(150);
@@ -136,7 +132,7 @@ public class UpdateFieldView extends View{
 
 		ValidityDays = new TextField();
 		grid.add(ValidityDays, 1, 4);
-		
+
 		Text inventoryRoerderPoint = new Text(" Roerder point: ");
 		inventoryRoerderPoint.setFont(myFont);
 		inventoryRoerderPoint.setWrappingWidth(150);
@@ -145,7 +141,7 @@ public class UpdateFieldView extends View{
 
 		ReorderPoint = new TextField();
 		grid.add(ReorderPoint, 1, 5);
-		
+
 		Text inventoryNotes = new Text(" Notes: ");
 		inventoryNotes.setFont(myFont);
 		inventoryNotes.setWrappingWidth(150);
@@ -154,14 +150,11 @@ public class UpdateFieldView extends View{
 
 		Notes = new TextField();
 		grid.add(Notes, 1, 6);
-		
+
 		Status = new ComboBox();
-		Status.getItems().addAll(
-				"Active",
-				"Inactive");
+		Status.getItems().addAll("Active", "Inactive");
 		grid.add(Status, 1, 7);
 		Status.getSelectionModel().selectFirst();
-
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -169,71 +162,65 @@ public class UpdateFieldView extends View{
 		cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
-       		     @Override
-       		     public void handle(ActionEvent e) {
-       		    	clearErrorMessage();
-       		    	myModel.stateChangeRequest("TellerView", null);   
-            	  }
-        	});
-		
+			@Override
+			public void handle(ActionEvent e) {
+				clearErrorMessage();
+				myModel.stateChangeRequest("TellerView", null);
+			}
+		});
+
 		submitButton = new Button("Update");
 		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				updateFields();
-   		    	clearErrorMessage();
-   		    	myModel.stateChangeRequest("TellerView", null);   
-				
+				clearErrorMessage();
+				myModel.stateChangeRequest("TellerView", null);
+
 			}
 		});
-		
-		
-		
+
 		doneCont.getChildren().add(cancelButton);
 		doneCont.getChildren().add(submitButton);
-	
+
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
 	}
-	
+
 	private void updateInventory() {
 		// add the properties
 		Properties p2 = new Properties();
-		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
-		/*p2.setProperty("Name", nameField.getText());
-		p2.setProperty("PhoneNumber", phoneNumberField.getText());
-		p2.setProperty("Status", statusBox.getValue().toString());
-		
-		// create item using properties, then add to db
-		InventoryItemType iIT = new InventoryItemType(p2);
-		ve.update();*/
+		// p2.setProperty("Id", ""); // this field is auto incremented, dont touch
+		/*
+		 * p2.setProperty("Name", nameField.getText()); p2.setProperty("PhoneNumber",
+		 * phoneNumberField.getText()); p2.setProperty("Status",
+		 * statusBox.getValue().toString());
+		 * 
+		 * // create item using properties, then add to db InventoryItemType iIT = new
+		 * InventoryItemType(p2); ve.update();
+		 */
 	}
 
-	
 	// Create the status log field
-	//-------------------------------------------------------------
-	protected MessageView createStatusLog(String initialMessage)
-	{
+	// -------------------------------------------------------------
+	protected MessageView createStatusLog(String initialMessage) {
 		statusLog = new MessageView(initialMessage);
 
 		return statusLog;
 	}
 
-
 	/**
 	 * Update method
 	 */
-	//---------------------------------------------------------
-	public void updateState(String key, Object value)
-	{
+	// ---------------------------------------------------------
+	public void updateState(String key, Object value) {
 		clearErrorMessage();
 
-		if (key.equals("ServiceCharge") == true)
-		{
-			String val = (String)value;
+		if (key.equals("ServiceCharge") == true) {
+			String val = (String) value;
 			serviceCharge.setText(val);
 			displayMessage("Service Charge Imposed: $ " + val);
 		}
@@ -242,32 +229,28 @@ public class UpdateFieldView extends View{
 	/**
 	 * Display error message
 	 */
-	//----------------------------------------------------------
-	public void displayErrorMessage(String message)
-	{
+	// ----------------------------------------------------------
+	public void displayErrorMessage(String message) {
 		statusLog.displayErrorMessage(message);
 	}
 
 	/**
 	 * Display info message
 	 */
-	//----------------------------------------------------------
-	public void displayMessage(String message)
-	{
+	// ----------------------------------------------------------
+	public void displayMessage(String message) {
 		statusLog.displayMessage(message);
 	}
 
 	/**
 	 * Clear error message
 	 */
-	//----------------------------------------------------------
-	public void clearErrorMessage()
-	{
+	// ----------------------------------------------------------
+	public void clearErrorMessage() {
 		statusLog.clearErrorMessage();
 	}
-	
-	public void populateFields()
-	{
+
+	public void populateFields() {
 		iitc.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
 		UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
 		InventoryItemType iit = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
@@ -278,7 +261,7 @@ public class UpdateFieldView extends View{
 		Notes.setText(iit.getField("Notes"));
 		Status.getSelectionModel().select(iit.getField("Status"));
 	}
-	
+
 	public void updateFields() {
 		String str = UpdateInventoryView.SELECTED_ITEM;
 		iitc.updateInventoryItemTypeWithName(str, "Units", Units.getText());
@@ -286,6 +269,6 @@ public class UpdateFieldView extends View{
 		iitc.updateInventoryItemTypeWithName(str, "ValidityDays", ValidityDays.getText());
 		iitc.updateInventoryItemTypeWithName(str, "ReorderPoint", ReorderPoint.getText());
 		iitc.updateInventoryItemTypeWithName(str, "Notes", Notes.getText());
-		iitc.updateInventoryItemTypeWithName(str, "Status", (String)Status.getSelectionModel().getSelectedItem());
+		iitc.updateInventoryItemTypeWithName(str, "Status", (String) Status.getSelectionModel().getSelectedItem());
 	}
 }

@@ -51,10 +51,14 @@ public class ViewFactory {
 		{
 			return new TakeOutInventoryView(model);
 		}
-		//else if(viewName.equals("ProcessInvoiceView") == true)
-		//{
-			//return new ProcessInvoiceView(model);
-		//}
+		else if(viewName.equals("ProcessInvoiceView") == true)
+		{
+			return new ProcessInvoiceView(model);
+		}
+		else if(viewName.equals("ModifyInvoiceView") == true)
+		{
+			return new ModifyInvoiceView(model);
+		}
 		else
 			return null;
 	}
