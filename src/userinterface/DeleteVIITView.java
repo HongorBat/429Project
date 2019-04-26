@@ -127,7 +127,7 @@ public class DeleteVIITView extends View
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
         
-        grid.add(tableView, 1, 1);
+        grid.add(tableView, 1, 0);
         
         Text vndrName = new Text(" Vendor Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
@@ -138,7 +138,7 @@ public class DeleteVIITView extends View
 		
 
 		VendorName = new TextField();
-		grid.add(VendorName, 7, 1);
+		grid.add(VendorName, 1, 2);
 		
 		
 		searchButton = new Button("Search");
@@ -151,7 +151,7 @@ public class DeleteVIITView extends View
             	  }
         	});
 		
-		grid.add(searchButton, 7, 2);
+		grid.add(searchButton, 2, 1);
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -178,8 +178,6 @@ public class DeleteVIITView extends View
   		    		displayErrorMessage("Field(s) have been left blank!");
   		    		return;
   		    	}
-
-  		    	addVIIT(fetchVendorId());
   		    	Alert a = new Alert(AlertType.INFORMATION);
   		    	a.setContentText("Vendor Inventory Item Type was added.");
   		    	a.show();
@@ -201,20 +199,6 @@ public class DeleteVIITView extends View
 		return v.getField("Id");
 	}
 	
-	
-	private void addVIIT(String id) {
-		// add the properties
-		Properties p3 = new Properties();
-		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
-		p3.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());
-		p3.setProperty("VendorPrice", VendorPrice.getText());
-		p3.setProperty("DateLastUpdated", DateLastUpdated.getText());   
-		p3.setProperty("VendorsId", id);
-		
-		// create item using properties, then add to db
-		VendorInventoryItemType ve = new VendorInventoryItemType(p3);
-		ve.update();
-	}
 
 	protected void processAccountSelected()
 	{
