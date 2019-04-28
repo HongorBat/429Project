@@ -27,6 +27,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.InventoryItemType;
+import model.InventoryItemTypeCollection;
 import model.Vendor;
 import model.VendorCollection;
 import model.VendorInventoryItemType;
@@ -48,11 +50,13 @@ public class AddVIITView extends View
 	protected TextField DateLastUpdated;
 	protected TextField VendorName;
 	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
+	public static InventoryItemTypeCollection IIVT_COLLECTION = new InventoryItemTypeCollection("InventoryItemType");
 	protected ComboBox<String> SearchResult;
+	protected ComboBox<String> SearchResultIIT;
 	
-	protected String vndrName;
+	protected String vndrName, iitName;
 
-	protected Button cancelButton, submitButton, searchButton;
+	protected Button cancelButton, submitButton, searchButton, searchButtonIIT;
 
 	// For showing error message
 	protected MessageView statusLog;
@@ -154,24 +158,46 @@ public class AddVIITView extends View
 
 		InventoryItemTypeName = new TextField();
 		grid.add(InventoryItemTypeName, 1, 3);
+		
+		searchButtonIIT = new Button("Search");
+		searchButtonIIT.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		searchButtonIIT.setOnAction(new EventHandler<ActionEvent>() {
+
+       		     @Override
+       		     public void handle(ActionEvent e) {
+       		    	processSelected();
+            	  }
+        	});
+		
+		grid.add(searchButtonIIT, 2, 3);
+		
+		Text iit = new Text(" Search Result : ");
+		iit.setFont(myFont);
+		iit.setWrappingWidth(150);
+		iit.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(iit, 0, 4);
+		
+		SearchResultIIT = new ComboBox<String>();
+		SearchResultIIT.getSelectionModel().selectFirst();
+		grid.add(SearchResultIIT, 1, 4);
 
 		Text priceLabel = new Text(" Vendor Price : ");
 		priceLabel.setFont(myFont);
 		priceLabel.setWrappingWidth(150);
 		priceLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(priceLabel, 0, 4);
+		grid.add(priceLabel, 0, 5);
 
 		VendorPrice = new TextField();
-		grid.add(VendorPrice, 1, 4);
+		grid.add(VendorPrice, 1, 5);
 
 		Text dateUpdatedLabel = new Text(" Date Last Updated : ");
 		dateUpdatedLabel.setFont(myFont);
 		dateUpdatedLabel.setWrappingWidth(150);
 		dateUpdatedLabel.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(dateUpdatedLabel, 0, 5);
+		grid.add(dateUpdatedLabel, 0, 6);
 		
 		DateLastUpdated = new TextField();
-		grid.add(DateLastUpdated, 1, 5);
+		grid.add(DateLastUpdated, 1, 6);
 
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -198,8 +224,16 @@ public class AddVIITView extends View
   		    		displayErrorMessage("Field(s) have been left blank!");
   		    		return;
   		    	}
+  		    	if (!(VendorPrice.getText().matches("\\$\\d+(.)?(\\d)*"))) {
+  		    		displayErrorMessage("Please enter $ sign and amount only in numbers");
+  		    		return;
+  		    	}
+  		    	if(!(DateLastUpdated.getText().matches("\\d{4}(\\/)\\d{2}(\\/)\\d{2}"))) {
+  		    		displayErrorMessage("Please enter date using YYYY/MM/DD form");
+  		    		return;
+  		    	}
 
-  		    	addVIIT(fetchVendorId());
+  		    	addVIIT(fetchVendorId(), fetchIITId());
   		    	Alert a = new Alert(AlertType.INFORMATION);
   		    	a.setContentText("Vendor Inventory Item Type was added.");
   		    	a.show();
@@ -221,12 +255,19 @@ public class AddVIITView extends View
 		return v.getField("Id");
 	}
 	
+	private String fetchIITId() {
+		String iitN = SearchResultIIT.getSelectionModel().getSelectedItem();
+	    IIVT_COLLECTION.getInventoryItemTypeName(iitN);
+		InventoryItemType v = IIVT_COLLECTION.getInventoryItemTypeList().get(0);
+		return v.getField("ItemTypeName");
+	}
 	
-	private void addVIIT(String id) {
+	
+	private void addVIIT(String id, String iitName) {
 		// add the properties
 		Properties p3 = new Properties();
 		//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
-		p3.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());
+		p3.setProperty("InventoryItemTypeName", iitName);
 		p3.setProperty("VendorPrice", VendorPrice.getText());
 		p3.setProperty("DateLastUpdated", DateLastUpdated.getText());   
 		p3.setProperty("VendorsId", id);
@@ -248,6 +289,40 @@ public class AddVIITView extends View
 		displayErrorMessage("");
 		getEntryTableModelValues(vndrName);
 	}
+	
+	protected void processSelected()
+	{
+		iitName = InventoryItemTypeName.getText();
+		
+		if((iitName == null ) || (iitName.length() == 0)) {
+			displayErrorMessage("Please enter a name!");
+			InventoryItemTypeName.requestFocus();
+			return;
+		} 
+		displayErrorMessage("");
+		getEntryTableModelValuesIIVT(iitName);
+	}
+	
+	protected void getEntryTableModelValuesIIVT(String _iivt)
+	{
+		ObservableList<String> Result = FXCollections.observableArrayList();
+		IIVT_COLLECTION.getInventoryItemTypeName(_iivt);
+		Vector<InventoryItemType> items = IIVT_COLLECTION.getInventoryItemTypeList();
+		for (int i = 0; i < items.size(); i++) {
+			InventoryItemType ivt = items.get(i);
+			Result.add(ivt.getField("ItemTypeName"));
+		}
+		
+		try
+		{
+			
+			SearchResultIIT.setItems(Result);
+		}
+		catch (Exception e) {//SQLException e) {
+			// Need to handle this exception
+		}
+	}
+	
 	
 	protected void getEntryTableModelValues(String _vendor)
 	{
