@@ -174,15 +174,22 @@ public class UpdateInventoryView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
-      				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-      				INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(SELECTED_ITEM);
-      				InventoryItemType iit = INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
-  					INVENTORY_ITEM_TYPE_COLLECTION.deleteInventoryItemTypes(iit.getField("ItemTypeId"));
-      				Alert r = new Alert(AlertType.INFORMATION);
-      				r.setContentText("Item has been deleted.");
-      				r.show();
-       		    	myModel.stateChangeRequest("TellerView", null);   
-            	  }
+       		    	if(SearchResult.getSelectionModel().getSelectedItem() == null) {
+       		    		Alert a = new Alert(AlertType.NONE);
+       		    		a.setAlertType(AlertType.ERROR);
+       		    		a.setContentText("Please select an item from the dropdown box before deleting.");
+       		    		a.show();
+       		    	} else {
+       		    		SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+       		    		INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(SELECTED_ITEM);
+       		    		InventoryItemType iit = INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
+       		    		INVENTORY_ITEM_TYPE_COLLECTION.deleteInventoryItemTypes(iit.getField("ItemTypeId"));
+       		    		Alert r = new Alert(AlertType.INFORMATION);
+       		    		r.setContentText("Item has been deleted.");
+       		    		r.show();
+       		    		myModel.stateChangeRequest("TellerView", null);   
+       		    	}
+       		    }
         	});
 		
 		
