@@ -34,7 +34,7 @@ public class ProcessInvoiceView extends View{
 	//with the Item Type Name, Units, Unit Measure, Validity Days, 
 	//Reorder Point, and Notes of the Inventory Item Type
 	// GUI components
-	protected TextField InventoryName;
+	protected TextField vendorName;
 	
 	public static InventoryItemTypeCollection INVENTORY_ITEM_TYPE_COLLECTION = new InventoryItemTypeCollection("InventoryItemType");
 	public static String SELECTED_ITEM = "";
@@ -42,7 +42,7 @@ public class ProcessInvoiceView extends View{
 
 	protected TextField serviceCharge;
 	
-	protected String inventory;
+	protected String vndrName;
 	
 	Alert confirmation;
 
@@ -121,8 +121,8 @@ public class ProcessInvoiceView extends View{
 		grid.add(inventoryTypeName, 0, 1);
 		
 
-		InventoryName = new TextField();
-		grid.add(InventoryName, 1, 1);
+		vendorName = new TextField();
+		grid.add(vendorName, 1, 1);
 		
 		
 		processButton = new Button("Search");
@@ -198,15 +198,15 @@ public class ProcessInvoiceView extends View{
 	
 	protected void processAccountSelected()
 	{
-		inventory = InventoryName.getText();
+		vndrName = vendorName.getText();
 		
-		if((inventory == null ) || (inventory.length() == 0)) {
+		if((vndrName == null ) || (vndrName.length() == 0)) {
 			displayErrorMessage("Please enter a name!");
-			InventoryName.requestFocus();
+			vendorName.requestFocus();
 			return;
 		} 
 		displayErrorMessage("");
-		getEntryTableModelValues(inventory);
+		getEntryTableModelValues(vndrName);
 	}
 	
 	protected void getEntryTableModelValues(String _inventory)
