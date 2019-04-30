@@ -31,16 +31,16 @@ public class ModifyInvoiceView extends View{
 		//Reorder Point, and Notes of the Inventory Item Type
 		// GUI components
 		protected Text TypeName;
-		protected TextField Units;
-		protected TextField UnitMeasure;
-		protected TextField ValidityDays;
-		protected TextField ReorderPoint;
+		protected TextField Barcode;
+		protected TextField InventoryItemTypeName;
+		protected TextField VendorId;
+		protected TextField DateReceived;
+		protected TextField DateOfLastUse;
 		protected TextField Notes;
-		protected TextField ItemType;
 		protected ComboBox Status;
 		
 		protected TextField serviceCharge;
-		private InventoryItemTypeCollection iitc = new InventoryItemTypeCollection("InventoryItemType");
+		//private InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 
 
 		protected Button cancelButton, submitButton;
@@ -67,7 +67,7 @@ public class ModifyInvoiceView extends View{
 
 			getChildren().add(container);
 
-			populateFields();
+			//populateFields();
 
 			myModel.subscribe("ServiceCharge", this);
 			myModel.subscribe("UpdateStatusMessage", this);
@@ -109,57 +109,67 @@ public class ModifyInvoiceView extends View{
 	        prompt.setFill(Color.BLACK);
 	        grid.add(prompt, 0, 0, 2, 1);
 
-			Text inventoryUnits = new Text(" Units : ");
+			Text bCode = new Text("Barcode : ");
 			Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-			inventoryUnits.setFont(myFont);
-			inventoryUnits.setWrappingWidth(150);
-			inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
-			grid.add(inventoryUnits, 0, 2);
+			bCode.setFont(myFont);
+			bCode.setWrappingWidth(150);
+			bCode.setTextAlignment(TextAlignment.RIGHT);
+			grid.add(bCode, 0, 2);
 
-			Units = new TextField();
-			grid.add(Units, 1, 2);
+			Barcode = new TextField();
+			grid.add(Barcode, 1, 2);
 
-			Text inventoryUnitMeasure = new Text(" Unit measure : ");
-			inventoryUnitMeasure.setFont(myFont);
-			inventoryUnitMeasure.setWrappingWidth(150);
-			inventoryUnitMeasure.setTextAlignment(TextAlignment.RIGHT);
-			grid.add(inventoryUnitMeasure, 0, 3);
+			Text iITName = new Text(" InventoryItemTypeName : ");
+			iITName.setFont(myFont);
+			iITName.setWrappingWidth(150);
+			iITName.setTextAlignment(TextAlignment.RIGHT);
+			grid.add(iITName, 0, 3);
 
-			UnitMeasure = new TextField();
-			grid.add(UnitMeasure, 1, 3);
+			InventoryItemTypeName = new TextField();
+			InventoryItemTypeName.setEditable(false);
+			grid.add(InventoryItemTypeName, 1, 3);
 			
-			Text inventoryValidityDay = new Text(" Validity day: ");
-			inventoryValidityDay.setFont(myFont);
-			inventoryValidityDay.setWrappingWidth(150);
-			inventoryValidityDay.setTextAlignment(TextAlignment.RIGHT);
-			grid.add(inventoryValidityDay, 0, 4);
+			Text vndrId = new Text(" VendorId: ");
+			vndrId.setFont(myFont);
+			vndrId.setWrappingWidth(150);
+			vndrId.setTextAlignment(TextAlignment.RIGHT);
+			grid.add(vndrId, 0, 4);
 
-			ValidityDays = new TextField();
-			grid.add(ValidityDays, 1, 4);
+			VendorId = new TextField();
+			VendorId.setEditable(false);
+			grid.add(VendorId, 1, 4);
 			
-			Text inventoryRoerderPoint = new Text(" Roerder point: ");
-			inventoryRoerderPoint.setFont(myFont);
-			inventoryRoerderPoint.setWrappingWidth(150);
-			inventoryRoerderPoint.setTextAlignment(TextAlignment.RIGHT);
-			grid.add(inventoryRoerderPoint, 0, 5);
+			Text dteRec = new Text(" Date Received: ");
+			dteRec.setFont(myFont);
+			dteRec.setWrappingWidth(150);
+			dteRec.setTextAlignment(TextAlignment.RIGHT);
+			grid.add(dteRec, 0, 5);
 
-			ReorderPoint = new TextField();
-			grid.add(ReorderPoint, 1, 5);
+			DateReceived = new TextField();
+			grid.add(DateReceived, 1, 5);
 			
-			Text inventoryNotes = new Text(" Notes: ");
-			inventoryNotes.setFont(myFont);
-			inventoryNotes.setWrappingWidth(150);
-			inventoryNotes.setTextAlignment(TextAlignment.RIGHT);
-			grid.add(inventoryNotes, 0, 6);
+			Text dteLastUsed = new Text(" Date of Last Use: ");
+			dteLastUsed.setFont(myFont);
+			dteLastUsed.setWrappingWidth(150);
+			dteLastUsed.setTextAlignment(TextAlignment.RIGHT);
+			grid.add(dteLastUsed, 0, 6);
+
+			DateOfLastUse = new TextField();
+			grid.add(DateOfLastUse, 1, 6);
+			
+			Text notes = new Text(" Date of Last Use: ");
+			notes.setFont(myFont);
+			notes.setWrappingWidth(150);
+			notes.setTextAlignment(TextAlignment.RIGHT);
+			grid.add(notes, 0, 7);
 
 			Notes = new TextField();
-			grid.add(Notes, 1, 6);
+			grid.add(Notes, 1, 7);
 			
 			Status = new ComboBox();
 			Status.getItems().addAll(
-					"Active",
-					"Inactive");
-			grid.add(Status, 1, 7);
+					"Available");
+			grid.add(Status, 1, 8);
 			Status.getSelectionModel().selectFirst();
 
 
@@ -181,7 +191,7 @@ public class ModifyInvoiceView extends View{
 			submitButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					updateFields();
+					//updateFields();
 	   		    	clearErrorMessage();
 	   		    	myModel.stateChangeRequest("TellerView", null);   
 					
@@ -266,7 +276,7 @@ public class ModifyInvoiceView extends View{
 			statusLog.clearErrorMessage();
 		}
 		
-		public void populateFields()
+		/*public void populateFields()
 		{
 			iitc.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
 			UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
@@ -280,14 +290,14 @@ public class ModifyInvoiceView extends View{
 		}
 		
 		public void updateFields() {
-			String str = UpdateInventoryView.SELECTED_ITEM;
+			String str = ProcessInvoiceView.SELECTED_ITEM;
 			iitc.updateInventoryItemTypeWithName(str, "Units", Units.getText());
 			iitc.updateInventoryItemTypeWithName(str, "UnitMeasure", UnitMeasure.getText());
 			iitc.updateInventoryItemTypeWithName(str, "ValidityDays", ValidityDays.getText());
 			iitc.updateInventoryItemTypeWithName(str, "ReorderPoint", ReorderPoint.getText());
 			iitc.updateInventoryItemTypeWithName(str, "Notes", Notes.getText());
 			iitc.updateInventoryItemTypeWithName(str, "Status", (String)Status.getSelectionModel().getSelectedItem());
-		}
+		} */
 }
 
 

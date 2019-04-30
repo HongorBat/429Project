@@ -36,7 +36,7 @@ public class ProcessInvoiceView extends View{
 	//with the Item Type Name, Units, Unit Measure, Validity Days, 
 	//Reorder Point, and Notes of the Inventory Item Type
 	// GUI components
-	protected TextField vendorName;
+	protected TextField vendorName, vendorNumber;
 	
 	public static InventoryItemCollection INVENTORY_ITEM_COLLECTION = new InventoryItemCollection("InventoryItem");
 	public static String SELECTED_ITEM = "";
@@ -44,7 +44,7 @@ public class ProcessInvoiceView extends View{
 
 	protected TextField serviceCharge;
 	
-	protected String vndrName;
+	protected String vndrName, vndrNumber;
 	
 	Alert confirmation;
 
@@ -115,16 +115,26 @@ public class ProcessInvoiceView extends View{
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-		Text inventoryTypeName = new Text(" Vendor Name : ");
+		Text vName = new Text(" Vendor Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-		inventoryTypeName.setFont(myFont);
-		inventoryTypeName.setWrappingWidth(150);
-		inventoryTypeName.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(inventoryTypeName, 0, 1);
+		vName.setFont(myFont);
+		vName.setWrappingWidth(150);
+		vName.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(vName, 0, 1);
 		
 
 		vendorName = new TextField();
 		grid.add(vendorName, 1, 1);
+		
+		Text vNumber = new Text(" Vendor Phone Number : ");
+		vNumber.setFont(myFont);
+		vNumber.setWrappingWidth(150);
+		vNumber.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(vNumber, 0, 2);
+		
+
+		vendorName = new TextField();
+		grid.add(vendorName, 1, 2);
 		
 		
 		processButton = new Button("Search");
@@ -137,18 +147,18 @@ public class ProcessInvoiceView extends View{
             	  }
         	});
 		
-		grid.add(processButton, 2, 1);
+		grid.add(processButton, 1, 3);
 		
 
 		Text inventoryUnits = new Text(" Search Result : ");
 		inventoryUnits.setFont(myFont);
 		inventoryUnits.setWrappingWidth(150);
 		inventoryUnits.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(inventoryUnits, 0, 2);
+		grid.add(inventoryUnits, 0, 4);
 
 		SearchResult = new ComboBox<String>();
 		SearchResult.getSelectionModel().selectFirst();
-		grid.add(SearchResult, 1, 2);
+		grid.add(SearchResult, 1, 4);
 
 
 		HBox doneCont = new HBox(10);
@@ -201,9 +211,15 @@ public class ProcessInvoiceView extends View{
 	protected void processAccountSelected()
 	{
 		vndrName = vendorName.getText();
+		vndrNumber = vendorNumber.getText();
 		
 		if((vndrName == null ) || (vndrName.length() == 0)) {
 			displayErrorMessage("Please enter a name!");
+			vendorName.requestFocus();
+			return;
+		} 
+		if((vndrNumber == null ) || (vndrNumber.length() == 0)) {
+			displayErrorMessage("Please enter a phone number!");
 			vendorName.requestFocus();
 			return;
 		} 
