@@ -30,9 +30,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.SimplifiedVendor;
 import model.Vendor;
 import model.VendorCollection;
 import model.VendorInventoryItemType;
+import model.VendorInventoryItemTypeCollection;
 
 import java.util.Properties;
 import java.util.Vector;
@@ -50,12 +52,14 @@ public class DeleteVIITView extends View
 	protected TextField VendorPrice;
 	protected TextField DateLastUpdated;
 	protected TextField VendorName;
+	//public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
 	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
 	protected ComboBox<String> SearchResult;
 	
 	protected String vndrName;
 
 	protected Button cancelButton, submitButton, searchButton;
+	private TableView view;
 
 	// For showing error message
 	protected MessageView statusLog;
@@ -114,8 +118,24 @@ public class DeleteVIITView extends View
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        TableView tableView = new TableView();
+        TableView tableView = new TableView();/*
+        tableView.setMaxWidth(1000);
+        tableView.setMinWidth(1000);*/
 
+        TableColumn c1 = new TableColumn("Id");
+        c1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        
+        TableColumn c2 = new TableColumn("Name");
+        c2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn c3 = new TableColumn("Phone Number");
+        c3.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        
+        tableView.getColumns().setAll(c1, c2, c3);
+        
+        view = tableView;
+        
+        /*
         TableColumn<String, VendorInventoryItemType> column1 = new TableColumn<>("First Name");
         column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
@@ -123,9 +143,8 @@ public class DeleteVIITView extends View
         TableColumn<String, VendorInventoryItemType> column2 = new TableColumn<>("Last Name");
         column2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
-
         tableView.getColumns().add(column1);
-        tableView.getColumns().add(column2);
+        tableView.getColumns().add(column2);*/
         
         grid.add(tableView, 1, 0);
         
@@ -147,7 +166,7 @@ public class DeleteVIITView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
-       		    	processAccountSelected();
+       		    	processVendorSelected();
             	  }
         	});
 		
@@ -174,10 +193,15 @@ public class DeleteVIITView extends View
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   		    	
+  		    	SimplifiedVendor sv = (SimplifiedVendor)view.getSelectionModel().getSelectedItem();
+  		    	if (sv == null) { return; }
+  		    	
   		    	if (InventoryItemTypeName.getText().length() == 0 || VendorPrice.getText().length() == 0 || DateLastUpdated.getText().length() == 0) {
   		    		displayErrorMessage("Field(s) have been left blank!");
   		    		return;
   		    	}
+  		    	
+  		    	VENDOR_COLLECTION.deleteVendorWithId(sv.getId());
   		    	Alert a = new Alert(AlertType.INFORMATION);
   		    	a.setContentText("Vendor Inventory Item Type was added.");
   		    	a.show();
@@ -200,7 +224,7 @@ public class DeleteVIITView extends View
 	}
 	
 
-	protected void processAccountSelected()
+	protected void processVendorSelected()
 	{
 		vndrName = VendorName.getText();
 		
@@ -221,6 +245,9 @@ public class DeleteVIITView extends View
 		for (int i = 0; i < items.size(); i++) {
 			Vendor vnd = items.get(i);
 			Result.add(vnd.getField("Name"));
+			SimplifiedVendor sv = new SimplifiedVendor(vnd.getField("Id"), 
+					vnd.getField("Name"), vnd.getField("PhoneNumber"), vnd.getField("Status"));
+			view.getItems().add(sv);
 		}
 		
 		try
