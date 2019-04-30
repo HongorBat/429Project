@@ -242,11 +242,12 @@ public class ProcessInvoiceView extends View{
 		//String vid = Integer.valueOf(v.getField("Id"));
 		VIIT_COLLECTION.getAllVendorInventoryItemTypesWithIdLike(v.getField("Id"));
 		
-		
 		ObservableList<String> Result = FXCollections.observableArrayList();
 		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
+		System.out.println(items.size() + " <<");
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType viit = items.get(i);
+			System.out.println(viit.toString() + " <<");
 			Result.add(viit.getField("InventoryItemTypeName"));
 		}
 		

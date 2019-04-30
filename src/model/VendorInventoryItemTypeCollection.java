@@ -53,7 +53,6 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
     }
     
     public void getAllVendorInventoryItemTypesWithIdLike(String id) {
-    	System.out.println(id + " MFMfnjkwjfe");
     	try {
     		viitList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
