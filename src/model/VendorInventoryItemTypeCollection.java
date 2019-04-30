@@ -52,6 +52,22 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
     	}
     }
     
+    public void getAllVendorInventoryItemTypesWithIdLike(String id) {
+    	System.out.println(id + " MFMfnjkwjfe");
+    	try {
+    		viitList.removeAllElements();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+    		String query = "SELECT * FROM VendorInventoryItemType WHERE VendorInventoryItemType.VendorsId = " + id;
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery(query);
+        	while (rs.next()) {
+        		viitList.addElement(new VendorInventoryItemType(rs.getString("VendorsId")));
+        	}
+    	} catch (Exception ex) {
+    		System.err.println("FAILED... VIIT ");
+    	}
+    }
+    
     
     /**
      * JUST FOR DEBUGGING PURPOSES

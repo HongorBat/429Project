@@ -27,6 +27,10 @@ import model.InventoryItem;
 import model.InventoryItemCollection;
 import model.InventoryItemType;
 import model.InventoryItemTypeCollection;
+import model.Vendor;
+import model.VendorCollection;
+import model.VendorInventoryItemType;
+import model.VendorInventoryItemTypeCollection;
 
 
 public class ProcessInvoiceView extends View{
@@ -39,6 +43,8 @@ public class ProcessInvoiceView extends View{
 	protected TextField vendorName, vendorNumber;
 	
 	public static InventoryItemCollection INVENTORY_ITEM_COLLECTION = new InventoryItemCollection("InventoryItem");
+	public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
+	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("VendorCollection");
 	public static String SELECTED_ITEM = "";
 	protected ComboBox<String> SearchResult;
 
@@ -133,8 +139,8 @@ public class ProcessInvoiceView extends View{
 		grid.add(vNumber, 0, 2);
 		
 
-		vendorName = new TextField();
-		grid.add(vendorName, 1, 2);
+		vendorNumber = new TextField();
+		grid.add(vendorNumber, 1, 2);
 		
 		
 		processButton = new Button("Search");
@@ -218,28 +224,35 @@ public class ProcessInvoiceView extends View{
 			vendorName.requestFocus();
 			return;
 		} 
+		
 		if((vndrNumber == null ) || (vndrNumber.length() == 0)) {
 			displayErrorMessage("Please enter a phone number!");
 			vendorName.requestFocus();
 			return;
-		} 
+		}
 		displayErrorMessage("");
 		getEntryTableModelValues(vndrName);
 	}
 	
-	protected void getEntryTableModelValues(String _inventory)
+	protected void getEntryTableModelValues(String _vnderName)
 	{
+		// get item types with name 17....
+		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vnderName);
+		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
+		//String vid = Integer.valueOf(v.getField("Id"));
+		VIIT_COLLECTION.getAllVendorInventoryItemTypesWithIdLike(v.getField("Id"));
+		
+		
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		INVENTORY_ITEM_COLLECTION.getInventoryItemNamesLike(_inventory);
-		Vector<InventoryItem> items = INVENTORY_ITEM_COLLECTION.getInventoryItemList();
+		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
-			InventoryItem invItem = items.get(i);
-			Result.add(invItem.getField("InventoryItemTypeName"));
+			VendorInventoryItemType viit = items.get(i);
+			Result.add(viit.getField("InventoryItemTypeName"));
 		}
 		
 		try
 		{
-			System.out.println(_inventory);
+			System.out.println(_vnderName);
 			//PatronCollection patronCollection = new PatronCollection();
 			//patronCollection.findPatronsAtZipCode(zipcode);
 			//patronCollection.printResults();
