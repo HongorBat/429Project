@@ -23,6 +23,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.InventoryItem;
+import model.InventoryItemCollection;
 import model.InventoryItemType;
 import model.InventoryItemTypeCollection;
 
@@ -36,7 +38,7 @@ public class ProcessInvoiceView extends View{
 	// GUI components
 	protected TextField VendorName, VendorNumber;
 	
-	public static InventoryItemTypeCollection INVENTORY_ITEM_TYPE_COLLECTION = new InventoryItemTypeCollection("InventoryItemType");
+	public static InventoryItemCollection INVENTORY_ITEM_COLLECTION = new InventoryItemCollection("InventoryItem");
 	public static String SELECTED_ITEM = "";
 	protected ComboBox<String> SearchResult;
 
@@ -191,7 +193,7 @@ public class ProcessInvoiceView extends View{
   		    	}
   		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-  				myModel.stateChangeRequest("UpdateFieldView", null);
+  				myModel.stateChangeRequest("ModifyInvoiceView", null);
   		    	}
   		     }
 		});
@@ -228,11 +230,11 @@ public class ProcessInvoiceView extends View{
 	protected void getEntryTableModelValues(String _inventory)
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(_inventory);
-		Vector<InventoryItemType> items = INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList();
+		INVENTORY_ITEM_COLLECTION.getInventoryItemNamesLike(_inventory);
+		Vector<InventoryItem> items = INVENTORY_ITEM_COLLECTION.getInventoryItemList();
 		for (int i = 0; i < items.size(); i++) {
-			InventoryItemType iit = items.get(i);
-			Result.add(iit.getField("ItemTypeName"));
+			InventoryItem invItem = items.get(i);
+			Result.add(invItem.getField("InventoryItemTypeName"));
 		}
 		
 		try
