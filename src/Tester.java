@@ -12,6 +12,7 @@ import database.SQLSelectStatement;
 import database.SQLStatement;
 import model.Book;
 import model.BookCollection;
+import model.Dater;
 import model.InventoryItem;
 import model.InventoryItemCollection;
 import model.InventoryItemType;
@@ -22,6 +23,8 @@ import model.Vendor;
 
 public class Tester {
 	public static void main(String[] args) {
+		// Constructor is in the form day/month/year
+		
 		newTest();
 	}
 	
@@ -33,6 +36,11 @@ public class Tester {
 		//addInventoryItemType();
 		//addInventoryItem();
 		// addVendor();
+		
+		
+		Dater d1 = new Dater(10, 6, 93);
+		Dater d2 = new Dater(12, 6, 92);
+		System.out.println(d1.daysBetween(d2) + " days apart");
 		
 	}
 	

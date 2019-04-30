@@ -1,5 +1,6 @@
 package userinterface;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import impresario.IModel;
@@ -24,8 +25,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.Dater;
 import model.InventoryItem;
 import model.InventoryItemCollection;
+import model.InventoryItemType;
 import model.Vendor;
 import model.VendorCollection;
 
@@ -40,6 +43,7 @@ public class TakeOutInventoryView extends View{
 	protected ComboBox<String> SearchResult;
 	public static InventoryItemCollection INVENTORY_ITEM_COLLECTION = new InventoryItemCollection("InventoryItem");
 	public static String SELECTED_ITEM;
+	private HashMap<String, InventoryItem> map = new HashMap<String, InventoryItem>();
 	protected TextField serviceCharge;
 	
 	protected String invItem;
@@ -177,10 +181,19 @@ public class TakeOutInventoryView extends View{
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-  				INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
-  				Alert a = new Alert(AlertType.INFORMATION);
-  				a.setContentText("SELECTED_ITEM has been taken out.");
-  				a.show();
+  				InventoryItem itm = map.get(SELECTED_ITEM);
+  				if (isExpired(itm)) {
+  					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Expired");
+  					Alert a = new Alert(AlertType.INFORMATION);
+  	  				a.setContentText(SELECTED_ITEM + " is either expired or not available");
+  	  				a.show();
+  				} else {
+  					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
+  	  				Alert a = new Alert(AlertType.INFORMATION);
+  	  				a.setContentText(SELECTED_ITEM + " has been taken out.");
+  	  				a.show();
+  				}
+  				
   		     }
 		});
 	
@@ -207,15 +220,33 @@ public class TakeOutInventoryView extends View{
 		getEntryTableModelValues(invItem);
 	}
 	
+	// this returns true if and only if the item is available and not expired, else it is
+	// not there or it is expired
+	private boolean isExpired(InventoryItem itm1) {
+		String str = itm1.getField("InventoryItemTypeName");
+		UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(str);
+		//System.out.println(str + " = " +  UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().size()); DEBUG
+		if (UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().size() < 1) { return true; } // in case no such entry
+		InventoryItemType iitn = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
+		
+		int validDays = Integer.valueOf(iitn.getField("ValidityDays"));
+		Dater d1 = new Dater("/", itm1.getField("DateReceived"));
+		Dater d2 = new Dater("/", itm1.getField("DateOfLastUse"));
+		return d1.daysBetween(d2) > validDays;
+	}
+	
 	protected void getEntryTableModelValues(String invItem)
 	{
 		
 		ObservableList<String> Result = FXCollections.observableArrayList();
 		INVENTORY_ITEM_COLLECTION.getInventoryItemNamesLike(invItem);
 		Vector<InventoryItem> items = INVENTORY_ITEM_COLLECTION.getInventoryItemList();
+		map.clear();
 		for (int i = 0; i < items.size(); i++) {
 			InventoryItem itm = items.get(i);
+			String name = itm.getField("InventoryItemTypeName");
 			Result.add(itm.getField("InventoryItemTypeName"));
+			map.put(name, itm);
 		}
 		
 		try
