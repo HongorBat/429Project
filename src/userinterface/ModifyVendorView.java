@@ -232,35 +232,7 @@ public class ModifyVendorView extends View{
 			Result.add(vnd.getField("Name"));
 		}
 		
-		try
-		{
-			//System.out.println(_vendor);
-			//PatronCollection patronCollection = new PatronCollection();
-			//patronCollection.findPatronsAtZipCode(zipcode);
-			//patronCollection.printResults();
-			
-			//Vector<Patron> entryList = (Vector<Patron>)patronCollection.getState("Patrons");
-
-			//Enumeration<Patron> entries = entryList.elements();
-			
-			
-
-			//while (entries.hasMoreElements() == true)
-			//{
-				//Patron nextAccount = (Patron)entries.nextElement();
-				//Vector<String> view = nextAccount.getEntryListView();
-
-				// add this list entry to the list
-				//PatronTableModel nextTableRowData = new PatronTableModel(view);
-				//tableData.add(nextTableRowData);
-				
-			//}
-			
-			SearchResult.setItems(Result);
-		}
-		catch (Exception e) {//SQLException e) {
-			// Need to handle this exception
-		}
+		SearchResult.setItems(Result);
 	}
 
 	

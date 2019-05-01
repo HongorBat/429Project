@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -58,7 +59,7 @@ public class DeleteVIITView extends View
 	
 	protected String vndrName;
 
-	protected Button cancelButton, submitButton, searchButton;
+	protected Button cancelButton, deleteButton, searchButton;
 	private TableView view;
 
 	// For showing error message
@@ -177,9 +178,9 @@ public class DeleteVIITView extends View
             	  }
         	});
 		
-		submitButton = new Button("Submit");
-		submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+		deleteButton = new Button(" Delete ");
+		deleteButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 
   		     @Override
   		     public void handle(ActionEvent e) {
@@ -193,14 +194,22 @@ public class DeleteVIITView extends View
   		    		return;
   		    	}
   		    	
-  		    	VIIT_COLLECTION.deleteVendorInventoryItemTypeWithId(sv.getId());
-  		    	Alert a = new Alert(AlertType.INFORMATION);
-  		    	a.setContentText("Vendor Inventory Item Type was deleted.");
-  		    	a.show();
+  		    	Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + sv.getName() + "?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+   		    	alert.showAndWait();
+   		    	
+   		    	if (alert.getResult() == ButtonType.NO) {
+   		    		System.out.println("DeleteVIITView.deleteButton.NO");
+   		    		return;
+   		    	} else {
+   		    		VIIT_COLLECTION.deleteVendorInventoryItemTypeWithId(sv.getId());
+   	  		    	Alert a = new Alert(AlertType.INFORMATION);
+   	  		    	a.setContentText("Vendor Inventory Item Type was deleted.");
+   	  		    	a.show();
+   		    	}
        	  }
    	});
 		doneCont.getChildren().add(cancelButton);
-		doneCont.getChildren().add(submitButton);
+		doneCont.getChildren().add(deleteButton);
 	
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(doneCont);
@@ -232,9 +241,9 @@ public class DeleteVIITView extends View
 	protected void getEntryTableModelValues(String _vendor)
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		//VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
+
 		VIIT_COLLECTION.getAllVendorInventoryItemTypessWithNameLike(_vendor);
-		//Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
+
 		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType vnd = items.get(i);
@@ -244,35 +253,7 @@ public class DeleteVIITView extends View
 			view.getItems().add(sv);
 		}
 		
-		try
-		{
-			//System.out.println(_vendor);
-			//PatronCollection patronCollection = new PatronCollection();
-			//patronCollection.findPatronsAtZipCode(zipcode);
-			//patronCollection.printResults();
-			
-			//Vector<Patron> entryList = (Vector<Patron>)patronCollection.getState("Patrons");
-
-			//Enumeration<Patron> entries = entryList.elements();
-			
-			
-
-			//while (entries.hasMoreElements() == true)
-			//{
-				//Patron nextAccount = (Patron)entries.nextElement();
-				//Vector<String> view = nextAccount.getEntryListView();
-
-				// add this list entry to the list
-				//PatronTableModel nextTableRowData = new PatronTableModel(view);
-				//tableData.add(nextTableRowData);
-				
-			//}
-			
-			SearchResult.setItems(Result);
-		}
-		catch (Exception e) {//SQLException e) {
-			// Need to handle this exception
-		}
+		SearchResult.setItems(Result);
 	}
 
 	// Create the status log field
