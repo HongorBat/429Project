@@ -128,16 +128,19 @@ public class DeleteVIITView extends View
         TableColumn c2 = new TableColumn("Name");
         c2.setCellValueFactory(new PropertyValueFactory<>("name"));
         
-        TableColumn c3 = new TableColumn("Phone Number");
-        c3.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        TableColumn c3 = new TableColumn("Price");
+        c3.setCellValueFactory(new PropertyValueFactory<>("price"));
         
-        tableView.getColumns().setAll(c1, c2, c3);
+        TableColumn c4 = new TableColumn("DateLastUsed");
+        c4.setCellValueFactory(new PropertyValueFactory<>("dlu"));
+        
+        tableView.getColumns().setAll(c1, c2, c3, c4);
         
         view = tableView;
         
         grid.add(tableView, 1, 0);
         
-        Text vndrName = new Text(" Vendor Inventory Item  Name : ");
+        Text vndrName = new Text(" VIIT Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		vndrName.setFont(myFont);
 		vndrName.setWrappingWidth(150);
@@ -148,7 +151,6 @@ public class DeleteVIITView extends View
 		VendorName = new TextField();
 		grid.add(VendorName, 1, 2);
 		
-		
 		searchButton = new Button("Search");
 		searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -156,7 +158,7 @@ public class DeleteVIITView extends View
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	processVendorSelected();
-            	  }
+            	 }
         	});
 		
 		grid.add(searchButton, 2, 1);

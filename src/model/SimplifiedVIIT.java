@@ -4,14 +4,14 @@ public class SimplifiedVIIT {
 	
 	private String id;
 	private String name;
-	private String phoneNumber;
-	private String status;
+	private String price;
+	private String dlu;
 	
 	public SimplifiedVIIT(String i, String n, String p, String s) {
 		id = i;
 		name = n;
-		phoneNumber = p;
-		status = s;
+		price = p;
+		dlu = s;
 	}
 	
 	public String getId() {
@@ -20,10 +20,10 @@ public class SimplifiedVIIT {
 	public String getName() {
 		return name;
 	}
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getPrice() {
+		return price;
 	}
-	public String getStatus() {
-		return status;
+	public String getDlu() {
+		return dlu;
 	}
 }
