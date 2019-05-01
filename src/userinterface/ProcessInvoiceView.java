@@ -23,10 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import model.InventoryItem;
 import model.InventoryItemCollection;
-import model.InventoryItemType;
-import model.InventoryItemTypeCollection;
 import model.Vendor;
 import model.VendorCollection;
 import model.VendorInventoryItemType;
@@ -246,39 +243,10 @@ public class ProcessInvoiceView extends View{
 		
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType viit = items.get(i);
-			System.out.println(viit.getField("VendorPrice"));
 			Result.add(viit.getField("InventoryItemTypeName"));
 		}
 		
-		try
-		{
-			System.out.println(_vnderName);
-			//PatronCollection patronCollection = new PatronCollection();
-			//patronCollection.findPatronsAtZipCode(zipcode);
-			//patronCollection.printResults();
-			
-			//Vector<Patron> entryList = (Vector<Patron>)patronCollection.getState("Patrons");
-
-			//Enumeration<Patron> entries = entryList.elements();
-			
-			
-
-			//while (entries.hasMoreElements() == true)
-			//{
-				//Patron nextAccount = (Patron)entries.nextElement();
-				//Vector<String> view = nextAccount.getEntryListView();
-
-				// add this list entry to the list
-				//PatronTableModel nextTableRowData = new PatronTableModel(view);
-				//tableData.add(nextTableRowData);
-				
-			//}
-			
-			SearchResult.setItems(Result);
-		}
-		catch (Exception e) {//SQLException e) {
-			// Need to handle this exception
-		}
+		SearchResult.setItems(Result);
 	}
 
 	

@@ -19,9 +19,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import model.InventoryItemType;
-import model.InventoryItemTypeCollection;
-
 public class ModifyInvoiceView extends View{
 
 		
@@ -208,19 +205,6 @@ public class ModifyInvoiceView extends View{
 
 			return vbox;
 		}
-		
-		private void updateInventory() {
-			// add the properties
-			Properties p2 = new Properties();
-			//p2.setProperty("Id", ""); // this field is auto incremented, dont touch
-			/*p2.setProperty("Name", nameField.getText());
-			p2.setProperty("PhoneNumber", phoneNumberField.getText());
-			p2.setProperty("Status", statusBox.getValue().toString());
-			
-			// create item using properties, then add to db
-			InventoryItemType iIT = new InventoryItemType(p2);
-			ve.update();*/
-		}
 
 		
 		// Create the status log field
@@ -275,29 +259,6 @@ public class ModifyInvoiceView extends View{
 		{
 			statusLog.clearErrorMessage();
 		}
-		
-		/*public void populateFields()
-		{
-			iitc.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
-			UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(UpdateInventoryView.SELECTED_ITEM);
-			InventoryItemType iit = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
-			Units.setText(iit.getField("Units"));
-			UnitMeasure.setText(iit.getField("UnitMeasure"));
-			ValidityDays.setText(iit.getField("ValidityDays"));
-			ReorderPoint.setText(iit.getField("ReorderPoint"));
-			Notes.setText(iit.getField("Notes"));
-			Status.getSelectionModel().select(iit.getField("Status"));
-		}
-		
-		public void updateFields() {
-			String str = ProcessInvoiceView.SELECTED_ITEM;
-			iitc.updateInventoryItemTypeWithName(str, "Units", Units.getText());
-			iitc.updateInventoryItemTypeWithName(str, "UnitMeasure", UnitMeasure.getText());
-			iitc.updateInventoryItemTypeWithName(str, "ValidityDays", ValidityDays.getText());
-			iitc.updateInventoryItemTypeWithName(str, "ReorderPoint", ReorderPoint.getText());
-			iitc.updateInventoryItemTypeWithName(str, "Notes", Notes.getText());
-			iitc.updateInventoryItemTypeWithName(str, "Status", (String)Status.getSelectionModel().getSelectedItem());
-		} */
 }
 
 
