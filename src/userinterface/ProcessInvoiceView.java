@@ -1,5 +1,6 @@
 package userinterface;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import impresario.IModel;
@@ -43,6 +44,8 @@ public class ProcessInvoiceView extends View{
 	public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
 	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("VendorCollection");
 	public static String SELECTED_ITEM = "";
+	public static VendorInventoryItemType SELECTED_ITEM_OBJECT;
+	public static HashMap<String, VendorInventoryItemType> map = new HashMap<String, VendorInventoryItemType>();
 	protected ComboBox<String> SearchResult;
 
 	protected TextField serviceCharge;
@@ -196,6 +199,7 @@ public class ProcessInvoiceView extends View{
   		    	}
   		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+  				SELECTED_ITEM_OBJECT = map.get(SELECTED_ITEM);
   				myModel.stateChangeRequest("ModifyInvoiceView", null);
   		    	}
   		     }
@@ -244,6 +248,7 @@ public class ProcessInvoiceView extends View{
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType viit = items.get(i);
 			Result.add(viit.getField("InventoryItemTypeName"));
+			map.put(viit.getField("InventoryItemTypeName"), viit);
 		}
 		
 		SearchResult.setItems(Result);

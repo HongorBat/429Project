@@ -19,6 +19,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.InventoryItem;
+import model.InventoryItemType;
+import model.VendorInventoryItemType;
 public class ModifyInvoiceView extends View{
 
 		
@@ -37,6 +40,7 @@ public class ModifyInvoiceView extends View{
 		protected ComboBox Status;
 		
 		protected TextField serviceCharge;
+		
 		//private InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 
 
@@ -64,7 +68,7 @@ public class ModifyInvoiceView extends View{
 
 			getChildren().add(container);
 
-			//populateFields();
+			populateFields();
 
 			myModel.subscribe("ServiceCharge", this);
 			myModel.subscribe("UpdateStatusMessage", this);
@@ -154,7 +158,7 @@ public class ModifyInvoiceView extends View{
 			DateOfLastUse = new TextField();
 			grid.add(DateOfLastUse, 1, 6);
 			
-			Text notes = new Text(" Date of Last Use: ");
+			Text notes = new Text(" Notes: ");
 			notes.setFont(myFont);
 			notes.setWrappingWidth(150);
 			notes.setTextAlignment(TextAlignment.RIGHT);
@@ -188,7 +192,7 @@ public class ModifyInvoiceView extends View{
 			submitButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					//updateFields();
+					createInventoryItem();
 	   		    	clearErrorMessage();
 	   		    	myModel.stateChangeRequest("TellerView", null);   
 					
@@ -258,6 +262,27 @@ public class ModifyInvoiceView extends View{
 		public void clearErrorMessage()
 		{
 			statusLog.clearErrorMessage();
+		}
+		public void populateFields()
+		{
+			VendorInventoryItemType iitn = ProcessInvoiceView.SELECTED_ITEM_OBJECT;
+			InventoryItemTypeName.setText(ProcessInvoiceView.SELECTED_ITEM);
+			VendorId.setText(iitn.getField("VendorsId"));
+		}
+		public void createInventoryItem() {
+			
+			Properties p1 = new Properties();
+			p1.setProperty("Barcode", Barcode.getText());
+			p1.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());
+			p1.setProperty("VendorId", VendorId.getText());
+			p1.setProperty("DateReceived", DateReceived.getText());
+			p1.setProperty("DateOfLastUse", DateOfLastUse.getText());
+			p1.setProperty("Notes", Notes.getText());
+			p1.setProperty("Status", "Available");
+			// Create the Inventory Item object with the properties we made
+			InventoryItem it = new InventoryItem(p1);
+			// add it to the db
+			it.update();
 		}
 }
 
