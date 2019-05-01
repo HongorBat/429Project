@@ -213,6 +213,10 @@ public class ModifyInvoiceView extends View{
 		
 		// Create the status log field
 		//-------------------------------------------------------------
+		
+		public void populateFields() {
+			
+		}
 		protected MessageView createStatusLog(String initialMessage)
 		{
 			statusLog = new MessageView(initialMessage);
