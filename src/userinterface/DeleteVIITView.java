@@ -131,7 +131,7 @@ public class DeleteVIITView extends View
         TableColumn c3 = new TableColumn("Price");
         c3.setCellValueFactory(new PropertyValueFactory<>("price"));
         
-        TableColumn c4 = new TableColumn("DateLastUsed");
+        TableColumn c4 = new TableColumn("DateLastUpdated");
         c4.setCellValueFactory(new PropertyValueFactory<>("dlu"));
         
         tableView.getColumns().setAll(c1, c2, c3, c4);
@@ -240,7 +240,7 @@ public class DeleteVIITView extends View
 			VendorInventoryItemType vnd = items.get(i);
 			Result.add(vnd.getField("Name"));
 			SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
-					vnd.getField("Name"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));
+					vnd.getField("InventoryItemTypeName"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));
 			view.getItems().add(sv);
 		}
 		

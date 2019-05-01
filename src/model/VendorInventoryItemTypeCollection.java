@@ -34,19 +34,6 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
     	}
     }
     
-    /**
-     * THE ONLY ONE TO QUERY WITH
-     * @param id
-     *
-    public void getAllVendorInventoryItemTypesWithVendorsIdLike(int id) {
-    	getAllVendorInventoryItemTypes();
-    	for (int i = 0; i < viitList.size(); i++) {
-    		VendorInventoryItemType viit = viitList.get(i);
-    		int vid = Integer.valueOf(viit.getField("Id"));
-    		System.out.println(vid + " <<");
-    	}
-    }*/
-    
     public void getAllVendorInventoryItemTypessWithNameLike(String name) {
     	try {
     		viitList.removeAllElements();
@@ -55,7 +42,7 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
 					"JOIN Vendor ON VendorInventoryItemType.VendorsId = Vendor.Id " +
 					"WHERE VendorInventoryItemType.Name LIKE '%" + name + "%'";*/
         	
-    		String query = " SELECT * FROM VendorInventoryItemType WHERE Name LIKE '%" + name + "%'";
+    		String query = " SELECT * FROM VendorInventoryItemType WHERE InventoryItemTypeName LIKE '%" + name + "%'";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
