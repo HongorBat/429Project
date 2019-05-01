@@ -81,6 +81,19 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
     		System.err.println("FAILED...");
     	}
     }
+
+    public void deleteVendorInventoryItemTypeWithId(String id) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			viitList.removeAllElements();
+			Connection con = JDBCBroker.getInstance().getConnection();
+			sb.append("DELETE FROM VendorInventoryItemType WHERE Id ='" + id + "'");
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(sb.toString());
+		} catch (Exception ex) {
+			System.err.println("Failed delete for " + sb.toString());
+		}
+	}
     
     
     /**
