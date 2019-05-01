@@ -8,9 +8,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.InventoryItem;
 import model.InventoryItemType;
+import model.InventoryItemTypeCollection;
 import model.VendorInventoryItemType;
 public class ModifyInvoiceView extends View{
 
@@ -41,7 +44,7 @@ public class ModifyInvoiceView extends View{
 		
 		protected TextField serviceCharge;
 		
-		//private InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
+		private InventoryItemTypeCollection iitc = new InventoryItemTypeCollection("InventoryItemType");
 
 
 		protected Button cancelButton, submitButton;
@@ -192,8 +195,18 @@ public class ModifyInvoiceView extends View{
 			submitButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
+					if (iitDoesntExist(ProcessInvoiceView.SELECTED_ITEM)) {
+						Alert a = new Alert(AlertType.INFORMATION);
+						a.setContentText("No such InventoryItemType exists with name " + ProcessInvoiceView.SELECTED_ITEM + ".");
+						a.show();
+						return;
+					}
 					createInventoryItem();
+					Alert a = new Alert(AlertType.INFORMATION);
+					a.setContentText(ProcessInvoiceView.SELECTED_ITEM + " has been created.");
+					a.show();
 	   		    	clearErrorMessage();
+	   		    	
 	   		    	myModel.stateChangeRequest("TellerView", null);   
 					
 				}
@@ -213,10 +226,6 @@ public class ModifyInvoiceView extends View{
 		
 		// Create the status log field
 		//-------------------------------------------------------------
-		
-		public void populateFields() {
-			
-		}
 		protected MessageView createStatusLog(String initialMessage)
 		{
 			statusLog = new MessageView(initialMessage);
@@ -273,8 +282,13 @@ public class ModifyInvoiceView extends View{
 			InventoryItemTypeName.setText(ProcessInvoiceView.SELECTED_ITEM);
 			VendorId.setText(iitn.getField("VendorsId"));
 		}
+		
+		public boolean iitDoesntExist(String str) {
+			iitc.getInventoryItemTypeName(str);
+			return iitc.getInventoryItemTypeList().size() < 1;
+		}
+		
 		public void createInventoryItem() {
-			
 			Properties p1 = new Properties();
 			p1.setProperty("Barcode", Barcode.getText());
 			p1.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());

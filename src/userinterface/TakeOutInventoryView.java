@@ -182,10 +182,14 @@ public class TakeOutInventoryView extends View{
   		    	clearErrorMessage();
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				InventoryItem itm = map.get(SELECTED_ITEM);
-  				if (isExpired(itm)) {
+  				if (isExpired(itm) == 2) {
+  					Alert a = new Alert(AlertType.INFORMATION);
+  	  				a.setContentText(SELECTED_ITEM + " doesnt exist.");
+  	  				a.show();
+  				} else if (isExpired(itm) == 1) {
   					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Expired");
   					Alert a = new Alert(AlertType.INFORMATION);
-  	  				a.setContentText(SELECTED_ITEM + " is either expired or not available");
+  	  				a.setContentText(SELECTED_ITEM + " is expired.");
   	  				a.show();
   				} else {
   					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
@@ -193,7 +197,6 @@ public class TakeOutInventoryView extends View{
   	  				a.setContentText(SELECTED_ITEM + " has been taken out.");
   	  				a.show();
   				}
-  				
   		     }
 		});
 	
@@ -222,17 +225,26 @@ public class TakeOutInventoryView extends View{
 	
 	// this returns true if and only if the item is available and not expired, else it is
 	// not there or it is expired
-	private boolean isExpired(InventoryItem itm1) {
+	// 0 is false 1 is true
+	private int isExpired(InventoryItem itm1) {
 		String str = itm1.getField("InventoryItemTypeName");
 		UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeName(str);
 		//System.out.println(str + " = " +  UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().size()); DEBUG
-		if (UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().size() < 1) { return true; } // in case no such entry
+		// sets to used
+		// sets to expired
+		// cant find inv item type
+		
+		if (UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().size() < 1) { return 2; } // in case no such entry
 		InventoryItemType iitn = UpdateInventoryView.INVENTORY_ITEM_TYPE_COLLECTION.getInventoryItemTypeList().get(0);
 		
 		int validDays = Integer.valueOf(iitn.getField("ValidityDays"));
 		Dater d1 = new Dater("/", itm1.getField("DateReceived"));
 		Dater d2 = new Dater("/", itm1.getField("DateOfLastUse"));
-		return d1.daysBetween(d2) > validDays;
+		if (d1.daysBetween(d2) > validDays) {
+			return 0;
+		} else { 
+			return 1;
+		}
 	}
 	
 	protected void getEntryTableModelValues(String invItem)

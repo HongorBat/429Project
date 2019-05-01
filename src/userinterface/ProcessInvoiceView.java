@@ -190,6 +190,10 @@ public class ProcessInvoiceView extends View{
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
+  		    	
+  		    	
+  		    	// Check that name and phone number match a single vendor
+  		    	
   		    	if(SearchResult.getSelectionModel().getSelectedItem() == null)
   		    	{
   		    		Alert a = new Alert(AlertType.NONE);
