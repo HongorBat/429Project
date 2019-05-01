@@ -23,47 +23,62 @@ public class VendorInventoryItemTypeCollection extends EntityBase {
     	try {
     		viitList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-        	String query = "SELECT * FROM VendorInventoryItem";
+        	String query = "SELECT * FROM VendorInventoryItemType";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		viitList.addElement(new VendorInventoryItemType(rs.getString("VendorId")));
+        		viitList.addElement(new VendorInventoryItemType(rs.getString("Id")));
         	}
     	} catch (Exception ex) {
     		System.err.println("FAILED... ");
     	}
     }
+    
+    /**
+     * THE ONLY ONE TO QUERY WITH
+     * @param id
+     *
+    public void getAllVendorInventoryItemTypesWithVendorsIdLike(int id) {
+    	getAllVendorInventoryItemTypes();
+    	for (int i = 0; i < viitList.size(); i++) {
+    		VendorInventoryItemType viit = viitList.get(i);
+    		int vid = Integer.valueOf(viit.getField("Id"));
+    		System.out.println(vid + " <<");
+    	}
+    }*/
     
     public void getAllVendorInventoryItemTypessWithNameLike(String name) {
     	try {
     		viitList.removeAllElements();
-    		Connection con = JDBCBroker.getInstance().getConnection();
-    		String query = "SELECT VendorId, InventoryItemTypeName, Vendor.Name FROM VendorInventoryItemType " +
+    		Connection con = JDBCBroker.getInstance().getConnection();/*
+    		String query = "SELECT VendorsId, InventoryItemTypeName, Vendor.Name FROM VendorInventoryItemType " +
 					"JOIN Vendor ON VendorInventoryItemType.VendorsId = Vendor.Id " +
-					"WHERE VendorInventoryItemType.Name LIKE '%" + name + "%'";
-        	//String query = " SELECT * FROM VendorInventoryItemTypes WHERE Name LIKE '%" + name + "%'";
+					"WHERE VendorInventoryItemType.Name LIKE '%" + name + "%'";*/
+        	
+    		String query = " SELECT * FROM VendorInventoryItemType WHERE Name LIKE '%" + name + "%'";
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		viitList.addElement(new VendorInventoryItemType(rs.getString("VendorId")));
+        		viitList.addElement(new VendorInventoryItemType(rs.getString("Id")));
         	}
     	} catch (Exception ex) {
     		System.err.println("FAILED... ");
     	}
     }
     
-    public void getAllVendorInventoryItemTypesWithIdLike(String id) {
+    public void getAllVendorInventoryItemTypesWithVendorsIdLike(String id) {
     	try {
     		viitList.removeAllElements();
     		Connection con = JDBCBroker.getInstance().getConnection();
-    		String query = "SELECT * FROM VendorInventoryItemType WHERE VendorInventoryItemType.VendorsId = " + id;
+    		String query = "SELECT * FROM VendorInventoryItemType WHERE VendorsId = " + id;
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery(query);
         	while (rs.next()) {
-        		viitList.addElement(new VendorInventoryItemType(rs.getString("VendorsId")));
+        		viitList.addElement(new VendorInventoryItemType(rs.getString("Id")));
         	}
+        	
     	} catch (Exception ex) {
-    		System.err.println("FAILED... VIIT ");
+    		System.err.println("FAILED...");
     	}
     }
     

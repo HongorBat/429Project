@@ -236,18 +236,17 @@ public class ProcessInvoiceView extends View{
 	
 	protected void getEntryTableModelValues(String _vnderName)
 	{
-		// get item types with name 17....
 		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vnderName);
 		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
-		//String vid = Integer.valueOf(v.getField("Id"));
-		VIIT_COLLECTION.getAllVendorInventoryItemTypesWithIdLike(v.getField("Id"));
+		
+		VIIT_COLLECTION.getAllVendorInventoryItemTypesWithVendorsIdLike(v.getField("Id"));
 		
 		ObservableList<String> Result = FXCollections.observableArrayList();
 		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
-		System.out.println(items.size() + " <<");
+		
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType viit = items.get(i);
-			System.out.println(viit.toString() + " <<");
+			System.out.println(viit.getField("VendorPrice"));
 			Result.add(viit.getField("InventoryItemTypeName"));
 		}
 		

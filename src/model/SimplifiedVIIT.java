@@ -1,13 +1,13 @@
 package model;
 
-public class SimplifiedVendor {
+public class SimplifiedVIIT {
 	
 	private String id;
 	private String name;
 	private String phoneNumber;
 	private String status;
 	
-	public SimplifiedVendor(String i, String n, String p, String s) {
+	public SimplifiedVIIT(String i, String n, String p, String s) {
 		id = i;
 		name = n;
 		phoneNumber = p;

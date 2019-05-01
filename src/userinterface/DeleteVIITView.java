@@ -30,7 +30,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import model.SimplifiedVendor;
+import model.SimplifiedVIIT;
 import model.Vendor;
 import model.VendorCollection;
 import model.VendorInventoryItemType;
@@ -135,20 +135,9 @@ public class DeleteVIITView extends View
         
         view = tableView;
         
-        /*
-        TableColumn<String, VendorInventoryItemType> column1 = new TableColumn<>("First Name");
-        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-
-
-        TableColumn<String, VendorInventoryItemType> column2 = new TableColumn<>("Last Name");
-        column2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-
-        tableView.getColumns().add(column1);
-        tableView.getColumns().add(column2);*/
-        
         grid.add(tableView, 1, 0);
         
-        Text vndrName = new Text(" Vendor Name : ");
+        Text vndrName = new Text(" Vendor Inventory Item  Name : ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		vndrName.setFont(myFont);
 		vndrName.setWrappingWidth(150);
@@ -193,7 +182,7 @@ public class DeleteVIITView extends View
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   		    	
-  		    	SimplifiedVendor sv = (SimplifiedVendor)view.getSelectionModel().getSelectedItem();
+  		    	SimplifiedVIIT sv = (SimplifiedVIIT)view.getSelectionModel().getSelectedItem();
   		    	if (sv == null) { return; }
   		    	
   		    	if (InventoryItemTypeName.getText().length() == 0 || VendorPrice.getText().length() == 0 || DateLastUpdated.getText().length() == 0) {
@@ -245,7 +234,7 @@ public class DeleteVIITView extends View
 		for (int i = 0; i < items.size(); i++) {
 			Vendor vnd = items.get(i);
 			Result.add(vnd.getField("Name"));
-			SimplifiedVendor sv = new SimplifiedVendor(vnd.getField("Id"), 
+			SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
 					vnd.getField("Name"), vnd.getField("PhoneNumber"), vnd.getField("Status"));
 			view.getItems().add(sv);
 		}

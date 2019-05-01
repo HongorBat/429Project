@@ -125,5 +125,8 @@ public class VendorInventoryItemType extends EntityBase {
 		}
 		return "EMPTY FIELD";
 	}
+	public void setField(String fieldName, String value) {
+		persistentState.setProperty(fieldName, value);
+	}
 
 }

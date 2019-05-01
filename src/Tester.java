@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Vector;
 
 import database.JDBCBroker;
 import database.SQLQueryStatement;
@@ -20,12 +21,20 @@ import model.Patron;
 import model.PatronCollection;
 import model.Teller;
 import model.Vendor;
+import model.VendorInventoryItemType;
+import model.VendorInventoryItemTypeCollection;
 
 public class Tester {
 	public static void main(String[] args) {
 		// Constructor is in the form day/month/year
+		/*VendorInventoryItemTypeCollection viitc = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
+		viitc.getAllVendorInventoryItemTypesWithVendorsIdLike(23);
+		Vector<VendorInventoryItemType> items = viitc.getVendorInventoryItemTypeList();
+		for (int i = 0; i < items.size(); i++) {
+			System.out.println(items.get(i).getField("VendorPrice"));
+		}*/
 		
-		newTest();
+		//newTest();
 	}
 	
 	private static void newTest() {

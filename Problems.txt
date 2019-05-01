@@ -1,6 +1,6 @@
 PROBLEMS
 
-processInvoiceView combo box not populating correctly.
+processInvoiceView combo box not populating correctly.[x]
 modifyInvoiceView needs to be completed.
 constraints for takeoutitem
 deleteVIIT needs to delete VIIT not vendor................!!!!!!
