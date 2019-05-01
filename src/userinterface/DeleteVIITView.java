@@ -52,7 +52,7 @@ public class DeleteVIITView extends View
 	protected TextField VendorPrice;
 	protected TextField DateLastUpdated;
 	protected TextField VendorName;
-	//public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
+	public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
 	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
 	protected ComboBox<String> SearchResult;
 	
@@ -231,13 +231,15 @@ public class DeleteVIITView extends View
 	protected void getEntryTableModelValues(String _vendor)
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
-		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
-		Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
+		//VENDOR_COLLECTION.getAllVendorsWithNameLike(_vendor);
+		VIIT_COLLECTION.getAllVendorInventoryItemTypessWithNameLike(_vendor);
+		//Vector<Vendor> items = VENDOR_COLLECTION.getVendorList();
+		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
-			Vendor vnd = items.get(i);
+			VendorInventoryItemType vnd = items.get(i);
 			Result.add(vnd.getField("Name"));
 			SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
-					vnd.getField("Name"), vnd.getField("PhoneNumber"), vnd.getField("Status"));
+					vnd.getField("Name"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));
 			view.getItems().add(sv);
 		}
 		
