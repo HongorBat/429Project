@@ -125,7 +125,7 @@ public class DeleteVIITView extends View
         TableColumn c1 = new TableColumn("Id");
         c1.setCellValueFactory(new PropertyValueFactory<>("id"));
         
-        TableColumn c2 = new TableColumn("Name");
+        TableColumn c2 = new TableColumn("VIIT");
         c2.setCellValueFactory(new PropertyValueFactory<>("name"));
         
         TableColumn c3 = new TableColumn("Price");
@@ -188,14 +188,14 @@ public class DeleteVIITView extends View
   		    	SimplifiedVIIT sv = (SimplifiedVIIT)view.getSelectionModel().getSelectedItem();
   		    	if (sv == null) { return; }
   		    	
-  		    	if (InventoryItemTypeName.getText().length() == 0 || VendorPrice.getText().length() == 0 || DateLastUpdated.getText().length() == 0) {
+  		    	if (VendorName.getText() == null || VendorName.getText().length() == 0) {
   		    		displayErrorMessage("Field(s) have been left blank!");
   		    		return;
   		    	}
   		    	
-  		    	VENDOR_COLLECTION.deleteVendorWithId(sv.getId());
+  		    	VIIT_COLLECTION.deleteVendorInventoryItemTypeWithId(sv.getId());
   		    	Alert a = new Alert(AlertType.INFORMATION);
-  		    	a.setContentText("Vendor Inventory Item Type was added.");
+  		    	a.setContentText("Vendor Inventory Item Type was deleted.");
   		    	a.show();
        	  }
    	});
