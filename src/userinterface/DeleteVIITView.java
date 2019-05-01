@@ -41,7 +41,7 @@ import java.util.Vector;
 
 // project imports
 import impresario.IModel;
-//justus sucks
+
 /** The class containing the Account View  for the ATM application */
 //==============================================================
 public class DeleteVIITView extends View
