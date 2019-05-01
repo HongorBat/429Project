@@ -157,6 +157,7 @@ public class DeleteVIITView extends View
 
        		     @Override
        		     public void handle(ActionEvent e) {
+       		     	view.getItems().clear();
        		    	processVendorSelected();
             	 }
         	});
