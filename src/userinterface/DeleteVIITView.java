@@ -139,18 +139,18 @@ public class DeleteVIITView extends View
         
         view = tableView;
         
-        grid.add(tableView, 1, 0);
+        grid.add(tableView, 0, 0);
         
-        Text vndrName = new Text(" VIIT Name : ");
+        Text vndrName = new Text("VIIT Name: ");
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		vndrName.setFont(myFont);
 		vndrName.setWrappingWidth(150);
 		vndrName.setTextAlignment(TextAlignment.RIGHT);
-		grid.add(vndrName, 0, 1);
+		//grid.add(vndrName, 0, 5);
 		
 
 		VendorName = new TextField();
-		grid.add(VendorName, 1, 2);
+		//grid.add(VendorName, 1, 5);
 		
 		searchButton = new Button("Search");
 		searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
@@ -163,8 +163,14 @@ public class DeleteVIITView extends View
             	 }
         	});
 		
-		grid.add(searchButton, 2, 1);
+		//grid.add(searchButton, 0, 6);
 
+		
+
+		HBox hb = new HBox();
+		hb.getChildren().addAll(vndrName, VendorName, searchButton);
+		//grid.add(hb, 0, 5);
+		
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
 		cancelButton = new Button("Back");
@@ -214,6 +220,7 @@ public class DeleteVIITView extends View
 		doneCont.getChildren().add(deleteButton);
 	
 		vbox.getChildren().add(grid);
+		vbox.getChildren().add(hb);
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
