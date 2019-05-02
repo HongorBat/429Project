@@ -37,6 +37,21 @@ public class VendorCollection extends EntityBase {
     	}
     }
     
+    public void getAllVendorsWithNameLikeAndPhoneNumberLike(String name, String phoneNumber) {
+    	// SELECT * FROM Vendor WHERE Name LIKE '%chi%' AND PhoneNumber Like '%5%';
+    	try {
+    		vendorList.removeAllElements();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+        	String query = "SELECT * FROM Vendor WHERE Name LIKE '%" + name + "%' AND PhoneNumber Like '%" + phoneNumber + "%'";
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery(query);
+        	while (rs.next()) {
+        		vendorList.addElement(new Vendor(rs.getString("Id")));
+        	}
+    	} catch (Exception ex) {
+    		System.err.println("FAILED... ");
+    	}
+    }
     public void getAllVendorsWithNameLike(String name) {
     	try {
     		vendorList.removeAllElements();
