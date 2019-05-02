@@ -187,7 +187,9 @@ public class DeleteVIITView extends View
   		    	clearErrorMessage();
   		    	
   		    	SimplifiedVIIT sv = (SimplifiedVIIT)view.getSelectionModel().getSelectedItem();
-  		    	if (sv == null) { return; }
+  		    	if (sv == null) { 
+  		    		displayErrorMessage("Please select an item from the table.");
+  		    		return; }
   		    	
   		    	if (VendorName.getText() == null || VendorName.getText().length() == 0) {
   		    		displayErrorMessage("Field(s) have been left blank!");
@@ -254,6 +256,7 @@ public class DeleteVIITView extends View
 		}
 		
 		SearchResult.setItems(Result);
+		
 	}
 
 	// Create the status log field
