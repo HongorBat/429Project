@@ -22,6 +22,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.InventoryItem;
+import model.InventoryItemCollection;
 import model.InventoryItemType;
 import model.InventoryItemTypeCollection;
 import model.VendorInventoryItemType;
@@ -44,6 +45,7 @@ public class ModifyInvoiceView extends View{
 		
 		protected TextField serviceCharge;
 		
+		private InventoryItemCollection iic = new InventoryItemCollection("InventoryItem");
 		private InventoryItemTypeCollection iitc = new InventoryItemTypeCollection("InventoryItemType");
 
 
@@ -288,7 +290,35 @@ public class ModifyInvoiceView extends View{
 			return iitc.getInventoryItemTypeList().size() < 1;
 		}
 		
+		public boolean containsError() {
+			iic.getAllWithBarcode(Barcode.getText());
+			int barcodes = iic.getInventoryItemList().size();
+			if (Barcode.getText().length() < 1 || Integer.valueOf(Barcode.getText()).intValue() < 1 || barcodes > 0) {
+				displayMessage("Please enter a Barcode");
+				Barcode.requestFocus();
+				return true;
+			} else if (DateReceived.getText().length() < 1) {
+				displayMessage("Please enter a received date.");
+				DateReceived.requestFocus();
+				return true;
+			} else if (DateOfLastUse.getText().length() < 1) {
+				displayMessage("Please enter the last usage date.");
+				DateOfLastUse.requestFocus();
+				return true;
+			} else if (Notes.getText().length() < 1) {
+				displayMessage("Please enter in notes.");
+				Notes.requestFocus();
+				return true;
+			}
+			
+			return false;
+		}
+		// barcode must be unique and positive number
+		// 
 		public void createInventoryItem() {
+			
+			if (containsError()) { return; }
+			
 			Properties p1 = new Properties();
 			p1.setProperty("Barcode", Barcode.getText());
 			p1.setProperty("InventoryItemTypeName", InventoryItemTypeName.getText());
