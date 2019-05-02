@@ -15,6 +15,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -205,6 +207,9 @@ public class AddInventoryView extends View{
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   		    	addInventoryItem();
+  		    	Alert a = new Alert(AlertType.INFORMATION);
+  		    	a.setContentText("An InventoryItemType has been created.");
+  		    	a.show();
   		     }
        	  });
 
