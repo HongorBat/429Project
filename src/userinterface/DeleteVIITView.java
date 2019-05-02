@@ -55,7 +55,7 @@ public class DeleteVIITView extends View
 	protected TextField VendorName;
 	public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
 	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
-	protected ComboBox<String> SearchResult;
+	protected ComboBox<String> SearchResult = new ComboBox<String>();
 	
 	protected String vndrName;
 
@@ -255,6 +255,7 @@ public class DeleteVIITView extends View
 			view.getItems().add(sv);
 		}
 		
+		System.out.println( SearchResult.toString());
 		SearchResult.setItems(Result);
 		
 	}
