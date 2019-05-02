@@ -125,7 +125,7 @@ public class ModifyInvoiceView extends View{
 			Barcode = new TextField();
 			grid.add(Barcode, 1, 2);
 
-			Text iITName = new Text(" InventoryItemTypeName : ");
+			Text iITName = new Text("InventoryItemTypeName :");
 			iITName.setFont(myFont);
 			iITName.setWrappingWidth(150);
 			iITName.setTextAlignment(TextAlignment.RIGHT);
@@ -173,8 +173,7 @@ public class ModifyInvoiceView extends View{
 			grid.add(Notes, 1, 7);
 			
 			Status = new ComboBox();
-			Status.getItems().addAll(
-					"Available");
+			Status.getItems().addAll("Available");
 			grid.add(Status, 1, 8);
 			Status.getSelectionModel().selectFirst();
 
@@ -203,14 +202,14 @@ public class ModifyInvoiceView extends View{
 						a.show();
 						return;
 					}
-					createInventoryItem();
-					Alert a = new Alert(AlertType.INFORMATION);
-					a.setContentText(ProcessInvoiceView.SELECTED_ITEM + " has been created.");
-					a.show();
-	   		    	clearErrorMessage();
-	   		    	
-	   		    	myModel.stateChangeRequest("TellerView", null);   
-					
+					if (createInventoryItem()) {
+						Alert a = new Alert(AlertType.INFORMATION);
+						a.setContentText(ProcessInvoiceView.SELECTED_ITEM + " has been created.");
+						a.show();
+
+		   		    	clearErrorMessage();
+		   		    	myModel.stateChangeRequest("TellerView", null); 
+					}  
 				}
 			});
 			
@@ -293,20 +292,29 @@ public class ModifyInvoiceView extends View{
 		public boolean containsError() {
 			iic.getAllWithBarcode(Barcode.getText());
 			int barcodes = iic.getInventoryItemList().size();
-			if (Barcode.getText().length() < 1 || Integer.valueOf(Barcode.getText()).intValue() < 1 || barcodes > 0) {
-				displayMessage("Please enter a Barcode");
+			
+			if (Barcode.getText().length() < 1) {
+				displayErrorMessage("Please enter a Barcode.");
+				Barcode.requestFocus();
+				return true;
+			} else if (Integer.valueOf(Barcode.getText()).intValue() < 1) {
+				displayErrorMessage("Please enter a positive barcode.");
+				Barcode.requestFocus();
+				return true;
+			} else if (barcodes > 0) {
+				displayErrorMessage("Please enter a unique barcode.");
 				Barcode.requestFocus();
 				return true;
 			} else if (DateReceived.getText().length() < 1) {
-				displayMessage("Please enter a received date.");
+				displayErrorMessage("Please enter a received date.");
 				DateReceived.requestFocus();
 				return true;
 			} else if (DateOfLastUse.getText().length() < 1) {
-				displayMessage("Please enter the last usage date.");
+				displayErrorMessage("Please enter the last usage date.");
 				DateOfLastUse.requestFocus();
 				return true;
 			} else if (Notes.getText().length() < 1) {
-				displayMessage("Please enter in notes.");
+				displayErrorMessage("Please enter in notes.");
 				Notes.requestFocus();
 				return true;
 			}
@@ -315,9 +323,9 @@ public class ModifyInvoiceView extends View{
 		}
 		// barcode must be unique and positive number
 		// 
-		public void createInventoryItem() {
+		public boolean createInventoryItem() {
 			
-			if (containsError()) { return; }
+			if (containsError()) { return false; }
 			
 			Properties p1 = new Properties();
 			p1.setProperty("Barcode", Barcode.getText());
@@ -331,6 +339,7 @@ public class ModifyInvoiceView extends View{
 			InventoryItem it = new InventoryItem(p1);
 			// add it to the db
 			it.update();
+			return true;
 		}
 }
 

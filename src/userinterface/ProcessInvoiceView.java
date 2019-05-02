@@ -236,12 +236,12 @@ public class ProcessInvoiceView extends View{
 			return;
 		}
 		displayErrorMessage("");
-		getEntryTableModelValues(vndrName);
+		getEntryTableModelValues(vndrName, vndrNumber);
 	}
 	
-	protected void getEntryTableModelValues(String _vnderName)
+	protected void getEntryTableModelValues(String _vnderName, String _vnderNmbr)
 	{
-		VENDOR_COLLECTION.getAllVendorsWithNameLike(_vnderName);
+		VENDOR_COLLECTION.getAllVendorsWithNameLikeAndPhoneNumberLike(_vnderName, _vnderNmbr);
 		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
 		
 		VIIT_COLLECTION.getAllVendorInventoryItemTypesWithVendorsIdLike(v.getField("Id"));
