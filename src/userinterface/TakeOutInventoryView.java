@@ -180,23 +180,30 @@ public class TakeOutInventoryView extends View{
   		     @Override
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
-  				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
-  				InventoryItem itm = map.get(SELECTED_ITEM);
-  				if (isExpired(itm) == 2) {
-  					Alert a = new Alert(AlertType.INFORMATION);
-  	  				a.setContentText(SELECTED_ITEM + " doesnt exist.");
-  	  				a.show();
-  				} else if (isExpired(itm) == 1) {
-  					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Expired");
-  					Alert a = new Alert(AlertType.INFORMATION);
-  	  				a.setContentText(SELECTED_ITEM + " is expired.");
-  	  				a.show();
-  				} else {
-  					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
-  	  				Alert a = new Alert(AlertType.INFORMATION);
-  	  				a.setContentText(SELECTED_ITEM + " has been taken out.");
+  		    	if(SearchResult.getSelectionModel().getSelectedItem() == null) {
+  					Alert a = new Alert(AlertType.ERROR);
+  	  				a.setContentText("Please select an item from the dropdown box.");
   	  				a.show();
   				}
+  				else {
+  					SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+  	  				InventoryItem itm = map.get(SELECTED_ITEM);
+	  				if (isExpired(itm) == 2) {
+	  					Alert a = new Alert(AlertType.INFORMATION);
+	  	  				a.setContentText(SELECTED_ITEM + " doesnt exist.");
+	  	  				a.show();
+	  				} else if (isExpired(itm) == 1) {
+	  					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Expired");
+	  					Alert a = new Alert(AlertType.INFORMATION);
+	  	  				a.setContentText(SELECTED_ITEM + " is expired.");
+	  	  				a.show();
+	  				} else {
+	  					INVENTORY_ITEM_COLLECTION.updateInventoryItemWithName(SELECTED_ITEM, "Status", "Used");
+	  	  				Alert a = new Alert(AlertType.INFORMATION);
+	  	  				a.setContentText(SELECTED_ITEM + " has been taken out.");
+	  	  				a.show();
+	  				}
+	  		     }
   		     }
 		});
 	
