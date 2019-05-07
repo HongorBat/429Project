@@ -31,6 +31,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.InventoryItemCollection;
+import model.InventoryItemType;
+import model.InventoryItemTypeCollection;
 import model.SimplifiedVIIT;
 import model.Vendor;
 import model.VendorCollection;
@@ -50,12 +53,9 @@ public class ReorderView extends View
 {
 
 	// GUI components
-	protected TextField InventoryItemTypeName;
-	protected TextField VendorPrice;
-	protected TextField DateLastUpdated;
-	protected TextField VendorName;
-	public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
-	public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
+	//public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
+	//public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
+	public static InventoryItemTypeCollection IIT_COLLECTION  = new InventoryItemTypeCollection("InventoryItemTypeCollection");
 	protected ComboBox<String> SearchResult = new ComboBox<String>();
 	
 	protected String vndrName;
@@ -176,11 +176,9 @@ public class ReorderView extends View
 
 	protected void processItemTypeSelected()
 	{
-		vndrName = VendorName.getText();
 		
 		if((vndrName == null ) || (vndrName.length() == 0)) {
 			displayErrorMessage("Please enter a name!");
-			VendorName.requestFocus();
 			return;
 		} 
 		displayErrorMessage("");
@@ -191,14 +189,16 @@ public class ReorderView extends View
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
 
-		VIIT_COLLECTION.getAllVendorInventoryItemTypessWithNameLike(_vendor);
+		//VIIT_COLLECTION.getAllVendorInventoryItemTypessWithNameLike(_vendor);
+		IIT_COLLECTION.getActiveInventoryItemsWhereUnitsLessThanReorderPoint();
 
-		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
+		Vector<InventoryItemType> items = IIT_COLLECTION.getInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
-			VendorInventoryItemType vnd = items.get(i);
-			Result.add(vnd.getField("Name"));
-			SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
-					vnd.getField("InventoryItemTypeName"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));
+			InventoryItemType iit = items.get(i);
+			//Result.add(vnd.getField("Name"));
+			SimplifiedIIT siit = new SimplifiedIIT(iit.getField(""));
+			/*SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
+					vnd.getField("InventoryItemTypeName"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));*/
 			view.getItems().add(sv);
 		}
 		

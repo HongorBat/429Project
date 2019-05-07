@@ -2,49 +2,44 @@ package model;
 
 public class SimplifiedIIT {
 	
-	private String id;
-	private String barcode;
-	private String iitn;
-	private String vid;
-	private String dateReceived;
-	private String dateOfLastUse;
+	private String itid;
+	private String units;
+	private String unitMeasure;
+	private String validityDays;
+	private String reorderPoint;
 	private String notes;
 	private String status;
+	private String itn;
 	
-	public SimplifiedIIT(String id, String barcode, String iitn, String vid, String dateReceived, String dateOfLastUse, String notes, String status) {
-		this.id = id;
-		this.barcode = barcode;
-		this.iitn = iitn;
-		this.vid = vid;
-		this.dateReceived = dateReceived;
-		this.dateOfLastUse = dateOfLastUse;
-		this.notes = notes;
-		this.status = status;
-	}
-	
-
-	public String getId() {
-		return id;
+	public SimplifiedIIT(String id, String un, String um, String vd, String rp, String n, String st, String itna) {
+		itid = id;
+		units = un;
+		unitMeasure = um;
+		validityDays = vd;
+		reorderPoint = rp;
+		notes = n;
+		status = st;
+		itn = itna;
 	}
 
-	public String getBarcode() {
-		return barcode;
+	public String getItid() {
+		return itid;
 	}
 
-	public String getIitn() {
-		return iitn;
+	public String getUnits() {
+		return units;
 	}
 
-	public String getVid() {
-		return vid;
+	public String getUnitMeasure() {
+		return unitMeasure;
 	}
 
-	public String getDateReceived() {
-		return dateReceived;
+	public String getValidityDays() {
+		return validityDays;
 	}
 
-	public String getDateOfLastUse() {
-		return dateOfLastUse;
+	public String getReorderPoint() {
+		return reorderPoint;
 	}
 
 	public String getNotes() {
@@ -54,4 +49,10 @@ public class SimplifiedIIT {
 	public String getStatus() {
 		return status;
 	}
+
+	public String getItn() {
+		return itn;
+	}
+	
+	
 }
