@@ -72,6 +72,30 @@ public class InventoryItemTypeCollection extends EntityBase {
     	}
     }
     
+    ///
+    public void getActiveInventoryItemsWhereUnitsLessThanReorderPoint() {
+    	try {
+    		inventoryItemTypeList.removeAllElements();
+    		Vector<InventoryItemType> temp = new Vector<InventoryItemType>();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+        	String query = "SELECT * FROM InventoryItemType WHERE STATUS = 'Active';";
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery(query);
+        	while (rs.next()) {
+        		temp.addElement(new InventoryItemType(rs.getString("ItemTypeId")));
+        	}
+        	
+        	for (int i = 0; i < temp.size(); i++) {
+        		InventoryItemType t = temp.get(i);
+        		int units = Integer.valueOf(t.getField("Units"));
+        		int reorderPoint = Integer.valueOf(t.getField("ReorderPoint"));
+        		if (units <= reorderPoint) { inventoryItemTypeList.add(t); }
+        	}
+    	} catch (Exception ex) {
+    		System.err.println("FAILED ... retreiving active iiit for reordering.");
+    	}
+    }
+    
     /**
      * 
      * @param inventoryItemTypeName Name of the InventoryItem

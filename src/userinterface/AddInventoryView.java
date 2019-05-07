@@ -179,9 +179,7 @@ public class AddInventoryView extends View{
 		grid.add(Notes, 1, 6);
 
 		Status = new ComboBox();
-		Status.getItems().addAll(
-				"Active",
-				"Inactive");
+		Status.getItems().addAll("Active","Inactive");
 		grid.add(Status, 1, 7);
 		Status.getSelectionModel().selectFirst();
 

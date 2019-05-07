@@ -38,6 +38,20 @@ public class InventoryItemCollection extends EntityBase {
     	}
     }
     
+    public void getAvailableInventoryItems() {
+    	try {
+    		inventoryItemList.removeAllElements();
+    		Connection con = JDBCBroker.getInstance().getConnection();
+        	String query = "SELECT * FROM InventoryItem WHERE Status = 'Available'";
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery(query);
+        	while (rs.next()) {
+        		inventoryItemList.addElement(new InventoryItem(rs.getString("InventoryItemId")));
+        	}
+    	} catch (Exception ex) {
+    		System.err.println("FAILED");
+    	}
+    }
     /**
      * Gets particular inventory items with a name like the given name
      * @param name inventory items like this name
