@@ -59,6 +59,10 @@ public class ViewFactory {
 		{
 			return new ModifyInvoiceView(model);
 		}
+		else if(viewName.equals("ReorderView") == true)
+		{
+			return new ReorderView(model);
+		}
 		else
 			return null;
 	}

@@ -171,11 +171,15 @@ public class Teller implements IView, IModel
 		else if (key.equals("ProcessInvoiceView") == true) {
 			createAndShowProcessInvoiceView();
 		}
+		else if (key.equals("ReorderView") == true) {
+			createAndShowReorderView();
+		}
 		else
 		if (key.equals("CancelTransaction") == true)
 		{
 			createAndShowTransactionChoiceView();
 		}
+		
 		else
 		if ((key.equals("Deposit") == true) || (key.equals("Withdraw") == true) ||
 			(key.equals("Transfer") == true) || (key.equals("BalanceInquiry") == true) ||
@@ -466,6 +470,22 @@ public class Teller implements IView, IModel
 			View newView = ViewFactory.createView("ModifyInvoiceView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("ModifyInvoiceView", currentScene);
+		}
+				
+		swapToView(currentScene);
+		
+	}
+	
+	private void createAndShowReorderView()
+	{
+		Scene currentScene = (Scene)myViews.get("ReorderView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("ReorderView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("ReorderView", currentScene);
 		}
 				
 		swapToView(currentScene);
