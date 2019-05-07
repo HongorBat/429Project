@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import model.InventoryItemCollection;
 import model.InventoryItemType;
 import model.InventoryItemTypeCollection;
+import model.SimplifiedIIT;
 import model.SimplifiedVIIT;
 import model.Vendor;
 import model.VendorCollection;
@@ -125,32 +126,34 @@ public class ReorderView extends View
         tableView.setMinWidth(1000);*/
 
         TableColumn c1 = new TableColumn("ItemTypeId");
-        c1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        c1.setCellValueFactory(new PropertyValueFactory<>("itid"));
         
         TableColumn c2 = new TableColumn("Units");
-        c2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("units"));
         
         TableColumn c3 = new TableColumn("UnitMeasure");
-        c3.setCellValueFactory(new PropertyValueFactory<>("price"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("unitMeasure"));
         
         TableColumn c4 = new TableColumn("ValidityDays");
-        c4.setCellValueFactory(new PropertyValueFactory<>("dlu"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("validityDays"));
         
         TableColumn c5 = new TableColumn("ReorderPoint");
-        c4.setCellValueFactory(new PropertyValueFactory<>("dlu"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("reorderPoint"));
         
         TableColumn c6 = new TableColumn("Notes");
-        c4.setCellValueFactory(new PropertyValueFactory<>("dlu"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("notes"));
         
         TableColumn c7 = new TableColumn("Status");
-        c4.setCellValueFactory(new PropertyValueFactory<>("dlu"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("status"));
         
-        tableView.getColumns().setAll(c1, c2, c3, c4, c5, c6, c7);
+        TableColumn c8 = new TableColumn("ItemTypeName");
+        c4.setCellValueFactory(new PropertyValueFactory<>("itn"));
+        
+        tableView.getColumns().setAll(c1, c2, c3, c4, c5, c6, c7, c8);
         
         view = tableView;
         
         grid.add(tableView, 0, 0);
-        processItemTypeSelected();
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 		HBox doneCont = new HBox(10);
 		doneCont.setAlignment(Pos.CENTER);
@@ -169,23 +172,17 @@ public class ReorderView extends View
 	
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(doneCont);
-
+        processItemTypeSelected();
 		return vbox;
 	}
 	
 
 	protected void processItemTypeSelected()
 	{
-		
-		if((vndrName == null ) || (vndrName.length() == 0)) {
-			displayErrorMessage("Please enter a name!");
-			return;
-		} 
-		displayErrorMessage("");
-		getEntryTableModelValues(vndrName);
+		getEntryTableModelValues();
 	}
 	
-	protected void getEntryTableModelValues(String _vendor)
+	protected void getEntryTableModelValues()
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
 
@@ -196,10 +193,13 @@ public class ReorderView extends View
 		for (int i = 0; i < items.size(); i++) {
 			InventoryItemType iit = items.get(i);
 			//Result.add(vnd.getField("Name"));
-			SimplifiedIIT siit = new SimplifiedIIT(iit.getField(""));
+			SimplifiedIIT siit = new SimplifiedIIT(iit.getField("ItemTypeId"), 
+					iit.getField("Units"), iit.getField("UnitMeasure"), 
+					iit.getField("ValidityDays"), iit.getField("ReorderPoint"), 
+					iit.getField("Notes"), iit.getField("Status"), iit.getField("ItemTypeName"));
 			/*SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
 					vnd.getField("InventoryItemTypeName"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));*/
-			view.getItems().add(sv);
+			view.getItems().add(siit);
 		}
 		
 		System.out.println( SearchResult.toString());
