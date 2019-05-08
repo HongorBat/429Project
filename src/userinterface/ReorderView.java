@@ -54,8 +54,6 @@ public class ReorderView extends View
 {
 
 	// GUI components
-	//public static VendorInventoryItemTypeCollection VIIT_COLLECTION = new VendorInventoryItemTypeCollection("VendorInventoryItemType");
-	//public static VendorCollection VENDOR_COLLECTION = new VendorCollection("Vendor");
 	public static InventoryItemTypeCollection IIT_COLLECTION  = new InventoryItemTypeCollection("InventoryItemTypeCollection");
 	protected ComboBox<String> SearchResult = new ComboBox<String>();
 	
@@ -121,9 +119,7 @@ public class ReorderView extends View
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        TableView tableView = new TableView();/*
-        tableView.setMaxWidth(1000);
-        tableView.setMinWidth(1000);*/
+        TableView tableView = new TableView();
 
         TableColumn c1 = new TableColumn("ItemTypeId");
         c1.setCellValueFactory(new PropertyValueFactory<>("itid"));
@@ -138,16 +134,16 @@ public class ReorderView extends View
         c4.setCellValueFactory(new PropertyValueFactory<>("validityDays"));
         
         TableColumn c5 = new TableColumn("ReorderPoint");
-        c4.setCellValueFactory(new PropertyValueFactory<>("reorderPoint"));
+        c5.setCellValueFactory(new PropertyValueFactory<>("reorderPoint"));
         
         TableColumn c6 = new TableColumn("Notes");
-        c4.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        c6.setCellValueFactory(new PropertyValueFactory<>("notes"));
         
         TableColumn c7 = new TableColumn("Status");
-        c4.setCellValueFactory(new PropertyValueFactory<>("status"));
+        c7.setCellValueFactory(new PropertyValueFactory<>("status"));
         
         TableColumn c8 = new TableColumn("ItemTypeName");
-        c4.setCellValueFactory(new PropertyValueFactory<>("itn"));
+        c8.setCellValueFactory(new PropertyValueFactory<>("itn"));
         
         tableView.getColumns().setAll(c1, c2, c3, c4, c5, c6, c7, c8);
         
@@ -192,11 +188,8 @@ public class ReorderView extends View
 		Vector<InventoryItemType> items = IIT_COLLECTION.getInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
 			InventoryItemType iit = items.get(i);
-			//Result.add(vnd.getField("Name"));
-			SimplifiedIIT siit = new SimplifiedIIT(iit.getField("ItemTypeId"), 
-					iit.getField("Units"), iit.getField("UnitMeasure"), 
-					iit.getField("ValidityDays"), iit.getField("ReorderPoint"), 
-					iit.getField("Notes"), iit.getField("Status"), iit.getField("ItemTypeName"));
+			SimplifiedIIT siit = new SimplifiedIIT(iit.getField("ItemTypeId"), iit.getField("Units"), iit.getField("UnitMeasure"), 
+					iit.getField("ValidityDays"), iit.getField("ReorderPoint"), iit.getField("Notes"), iit.getField("Status"), iit.getField("ItemTypeName"));
 			/*SimplifiedVIIT sv = new SimplifiedVIIT(vnd.getField("Id"), 
 					vnd.getField("InventoryItemTypeName"), vnd.getField("VendorPrice"), vnd.getField("DateLastUpdated"));*/
 			view.getItems().add(siit);

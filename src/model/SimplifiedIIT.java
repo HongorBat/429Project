@@ -20,6 +20,7 @@ public class SimplifiedIIT {
 		notes = n;
 		status = st;
 		itn = itna;
+		System.out.println(itna + " >> " + notes + " >> " + reorderPoint);
 	}
 
 	public String getItid() {
@@ -53,6 +54,4 @@ public class SimplifiedIIT {
 	public String getItn() {
 		return itn;
 	}
-	
-	
 }
