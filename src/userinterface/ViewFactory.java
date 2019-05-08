@@ -63,6 +63,10 @@ public class ViewFactory {
 		{
 			return new ReorderView(model);
 		}
+		else if(viewName.equals("FullInventoryView") == true)
+		{
+			return new FullInventoryView(model);
+		}
 		else
 			return null;
 	}

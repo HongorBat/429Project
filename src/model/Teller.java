@@ -174,6 +174,9 @@ public class Teller implements IView, IModel
 		else if (key.equals("ReorderView") == true) {
 			createAndShowReorderView();
 		}
+		else if (key.equals("FullInventoryView") == true) {
+			createAndShowFullInventoryView();
+		}
 		else
 		if (key.equals("CancelTransaction") == true)
 		{
@@ -486,6 +489,21 @@ public class Teller implements IView, IModel
 			View newView = ViewFactory.createView("ReorderView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("ReorderView", currentScene);
+		}
+				
+		swapToView(currentScene);
+		
+	}
+	private void createAndShowFullInventoryView()
+	{
+		Scene currentScene = (Scene)myViews.get("FullInventoryView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("FullInventoryView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("FullInventoryView", currentScene);
 		}
 				
 		swapToView(currentScene);

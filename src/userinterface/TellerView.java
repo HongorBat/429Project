@@ -38,7 +38,7 @@ public class TellerView extends View {
 	private TextField userid;
 	private PasswordField password;
 	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT, deleteVIIT, takeOut,
-			processInv, Reorder;
+			processInv, Reorder, FullInv;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -237,6 +237,22 @@ public class TellerView extends View {
 		ReorderBtn.setAlignment(Pos.CENTER);
 		ReorderBtn.getChildren().add(Reorder);
 		grid.add(ReorderBtn, 1, 8);
+		
+		FullInv = new Button("Obtain Full Current Inventory");
+		FullInv.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				processAction(e);
+				Properties props = new Properties();
+				myModel.stateChangeRequest("FullInventoryView", props);
+			}
+		});
+
+		HBox FullInvBtn = new HBox(15);
+		FullInvBtn.setAlignment(Pos.CENTER);
+		FullInvBtn.getChildren().add(FullInv);
+		grid.add(FullInvBtn, 1, 9);
 
 		return grid;
 	}
