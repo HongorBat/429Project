@@ -38,7 +38,7 @@ public class TellerView extends View {
 	private TextField userid;
 	private PasswordField password;
 	private Button addInventoryItem, updateInventoryItem, addVendor, modifyVendor, addVIIT, deleteVIIT, takeOut,
-			processInv, Reorder, FullInv;
+			processInv, Reorder, FullInv, ModifyII;
 
 	// For showing error message
 	private MessageView statusLog;
@@ -216,11 +216,27 @@ public class TellerView extends View {
 				myModel.stateChangeRequest("ProcessInvoiceView", props);
 			}
 		});
-
+		
 		HBox processInvBtn = new HBox(15);
 		processInvBtn.setAlignment(Pos.CENTER);
 		processInvBtn.getChildren().add(processInv);
 		grid.add(processInvBtn, 1, 7);
+
+		ModifyII = new Button("Modify Inventory Item Status");
+		ModifyII.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				processAction(e);
+				Properties props = new Properties();
+				myModel.stateChangeRequest("ModifyIIView", props);
+			}
+		});
+
+		HBox ModifyIIBtn = new HBox(15);
+		ModifyIIBtn.setAlignment(Pos.CENTER);
+		ModifyIIBtn.getChildren().add(ModifyII);
+		grid.add(ModifyIIBtn, 1, 8);
 
 		Reorder = new Button("Obtain Re-Order List");
 		Reorder.setOnAction(new EventHandler<ActionEvent>() {
@@ -236,7 +252,7 @@ public class TellerView extends View {
 		HBox ReorderBtn = new HBox(15);
 		ReorderBtn.setAlignment(Pos.CENTER);
 		ReorderBtn.getChildren().add(Reorder);
-		grid.add(ReorderBtn, 1, 8);
+		grid.add(ReorderBtn, 1, 9);
 		
 		FullInv = new Button("Obtain Full Current Inventory");
 		FullInv.setOnAction(new EventHandler<ActionEvent>() {
@@ -252,7 +268,7 @@ public class TellerView extends View {
 		HBox FullInvBtn = new HBox(15);
 		FullInvBtn.setAlignment(Pos.CENTER);
 		FullInvBtn.getChildren().add(FullInv);
-		grid.add(FullInvBtn, 1, 9);
+		grid.add(FullInvBtn, 1, 10);
 
 		return grid;
 	}

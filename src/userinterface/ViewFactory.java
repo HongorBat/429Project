@@ -67,6 +67,14 @@ public class ViewFactory {
 		{
 			return new FullInventoryView(model);
 		}
+		else if(viewName.equals("ModifyIIView") == true)
+		{
+			return new ModifyIIView(model);
+		}
+		else if(viewName.equals("ModifyIIField") == true)
+		{
+			return new ModifyIIField(model);
+		}
 		else
 			return null;
 	}
