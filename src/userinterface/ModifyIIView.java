@@ -163,6 +163,7 @@ public class ModifyIIView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	clearFields();
        		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});
@@ -183,6 +184,7 @@ public class ModifyIIView extends View{
   		    	}
   		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
+  				clearFields();
   				myModel.stateChangeRequest("ModifyIIField", null);
   		    	}
   		     }
@@ -220,6 +222,7 @@ public class ModifyIIView extends View{
 		for (int i = 0; i < items.size(); i++) {
 			InventoryItem ii = items.get(i);
 			Result.add(ii.getField("InventoryItemTypeName"));
+			
 		}
 		
 		try
@@ -278,6 +281,11 @@ public class ModifyIIView extends View{
 			serviceCharge.setText(val);
 			displayMessage("Service Charge Imposed: $ " + val);
 		}
+	}
+	
+	public void clearFields() {
+		InventoryName.clear();
+		SearchResult.getItems().clear();
 	}
 
 	/**

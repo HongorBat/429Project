@@ -109,9 +109,16 @@ public class ModifyIIField extends View {
 		Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
 
 
+		
+		Text statusTxt = new Text(" Status: ");
+		statusTxt.setFont(myFont);
+		statusTxt.setWrappingWidth(150);
+		statusTxt.setTextAlignment(TextAlignment.RIGHT);
+		grid.add(statusTxt, 0, 1);
+		
 		Status = new ComboBox();
 		Status.getItems().addAll("Returned", "Expired", "Damaged", "Lost");
-		grid.add(Status, 1, 7);
+		grid.add(Status, 1, 1);
 		Status.getSelectionModel().selectFirst();
 
 		HBox doneCont = new HBox(10);
@@ -123,6 +130,7 @@ public class ModifyIIField extends View {
 			@Override
 			public void handle(ActionEvent e) {
 				clearErrorMessage();
+				clearFields();
 				myModel.stateChangeRequest("TellerView", null);
 			}
 		});
@@ -134,6 +142,7 @@ public class ModifyIIField extends View {
 			public void handle(ActionEvent arg0) {
 				updateFields();
 				clearErrorMessage();
+				clearFields();
 				myModel.stateChangeRequest("TellerView", null);
 
 			}
@@ -207,6 +216,11 @@ public class ModifyIIField extends View {
 	public void clearErrorMessage() {
 		statusLog.clearErrorMessage();
 	}
+	
+	public void clearFields() {
+		Status.getSelectionModel().selectFirst();
+	}
+	
 
 	public void populateFields() {
 		iitc.getInventoryItemNamesLike(ModifyIIView.SELECTED_ITEM);
