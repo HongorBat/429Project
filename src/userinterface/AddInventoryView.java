@@ -254,9 +254,9 @@ public class AddInventoryView extends View{
 				UnitMeasure.requestFocus();
 				return;
 		}
-		else if (Integer.parseInt(UnitMeasure.getText()) < 0)
+		else if (UnitMeasure.getText().length() <= 0)
 		{
-			displayErrorMessage("You can't put a negativ Unit Measure!");
+			displayErrorMessage("Please enter a Unit Measure!");
 			UnitMeasure.requestFocus();
 		}
 		else if ((ValidityDay == null) || (ValidityDay.getLength() == 0))
