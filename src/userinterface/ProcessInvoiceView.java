@@ -176,6 +176,7 @@ public class ProcessInvoiceView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	clearFields();
        		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});
@@ -204,6 +205,7 @@ public class ProcessInvoiceView extends View{
   		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				SELECTED_ITEM_OBJECT = map.get(SELECTED_ITEM);
+  				clearFields();
   				myModel.stateChangeRequest("ModifyInvoiceView", null);
   		    	}
   		     }
@@ -217,6 +219,12 @@ public class ProcessInvoiceView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		vendorName.clear();
+		vendorNumber.clear();
+		SearchResult.getItems().clear();
 	}
 	
 	protected void processAccountSelected()

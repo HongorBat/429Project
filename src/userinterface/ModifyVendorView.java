@@ -159,6 +159,7 @@ public class ModifyVendorView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	clearFields();
        		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});

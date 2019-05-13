@@ -187,6 +187,7 @@ public class ModifyInvoiceView extends View{
 	       		     @Override
 	       		     public void handle(ActionEvent e) {
 	       		    	clearErrorMessage();
+	       		    	clearFields();
 	       		    	myModel.stateChangeRequest("TellerView", null);   
 	            	  }
 	        	});
@@ -208,12 +209,11 @@ public class ModifyInvoiceView extends View{
 						a.show();
 
 		   		    	clearErrorMessage();
+		   		    	clearFields();
 		   		    	myModel.stateChangeRequest("TellerView", null); 
 					}  
 				}
 			});
-			
-			
 			
 			doneCont.getChildren().add(cancelButton);
 			doneCont.getChildren().add(submitButton);
@@ -222,6 +222,16 @@ public class ModifyInvoiceView extends View{
 			vbox.getChildren().add(doneCont);
 
 			return vbox;
+		}
+		
+		private void clearFields() {
+			Barcode.clear();
+			InventoryItemTypeName.clear();
+			VendorId.clear();
+			DateReceived.clear();
+			DateOfLastUse.clear();
+			Notes.clear();
+			Status.getItems().clear();
 		}
 
 		

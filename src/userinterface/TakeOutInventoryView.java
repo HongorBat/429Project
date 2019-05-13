@@ -158,6 +158,7 @@ public class TakeOutInventoryView extends View{
        		     @Override
        		     public void handle(ActionEvent e) {
        		    	clearErrorMessage();
+       		    	clearFields();
        		    	myModel.stateChangeRequest("TellerView", null);   
             	  }
         	});
@@ -204,6 +205,7 @@ public class TakeOutInventoryView extends View{
 	  	  				a.show();
 	  				}
 	  		     }
+  		    	clearFields();
   		     }
 		});
 	
@@ -215,6 +217,11 @@ public class TakeOutInventoryView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		inventoryItemName.clear();
+		SearchResult.getItems().clear();
 	}
 	
 	protected void processAccountSelected()
