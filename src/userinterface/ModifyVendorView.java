@@ -196,6 +196,7 @@ public class ModifyVendorView extends View{
   		    	clearErrorMessage();
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				myModel.stateChangeRequest("ModifyFieldView", null);
+  				clearFields();
   		     }
 		});
 	
@@ -207,6 +208,11 @@ public class ModifyVendorView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		VendorName.clear();
+		SearchResult.getItems().clear();
 	}
 	
 	protected void processAccountSelected()

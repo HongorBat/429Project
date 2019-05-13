@@ -3,6 +3,7 @@ package userinterface;
 import java.util.Optional;
 import java.util.Vector;
 
+
 import impresario.IModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -212,6 +213,7 @@ public class UpdateInventoryView extends View{
   		    	else {
   				SELECTED_ITEM = SearchResult.getSelectionModel().getSelectedItem().toString();
   				myModel.stateChangeRequest("UpdateFieldView", null);
+  				clearFields();
   		    	}
   		     }
 		});
@@ -225,6 +227,11 @@ public class UpdateInventoryView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		InventoryName.clear();
+		this.SearchResult.getItems().clear();
 	}
 	
 	protected void processAccountSelected()

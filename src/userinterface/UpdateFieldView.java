@@ -189,6 +189,10 @@ public class UpdateFieldView extends View {
 
 		return vbox;
 	}
+	
+	private void clearFields() {
+		
+	}
 
 	private void updateInventory() {
 		// add the properties

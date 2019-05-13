@@ -208,6 +208,7 @@ public class AddInventoryView extends View{
   		    	Alert a = new Alert(AlertType.INFORMATION);
   		    	a.setContentText("An InventoryItemType has been created.");
   		    	a.show();
+  		    	clearFields();
   		     }
        	  });
 
@@ -218,6 +219,15 @@ public class AddInventoryView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		TypeName.clear();
+		Units.clear();
+		UnitMeasure.clear();
+		ValidityDay.clear();
+		RoerderPoint.clear();
+		Notes.clear();
 	}
 
 	private void addInventoryItem() {

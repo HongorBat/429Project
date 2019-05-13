@@ -173,6 +173,7 @@ public class AddVendorView extends View
 					Alert a = new Alert(AlertType.INFORMATION);
 					a.setContentText("Vendor has been added.");
 					a.show();
+					clearFields();
 				}
    	  }
 	});
@@ -183,6 +184,12 @@ public class AddVendorView extends View
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		nameField.clear();
+		phoneNumberField.clear();
+		statusBox.getSelectionModel().selectFirst();
 	}
 	
 	private void addVendor() {

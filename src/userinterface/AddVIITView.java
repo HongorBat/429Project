@@ -203,6 +203,7 @@ public class AddVIITView extends View
   		    	Alert a = new Alert(AlertType.INFORMATION);
   		    	a.setContentText("Vendor Inventory Item Type was added.");
   		    	a.show();
+  		    	clearFields();
        	  }
    	});
 		doneCont.getChildren().add(cancelButton);
@@ -212,6 +213,14 @@ public class AddVIITView extends View
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		InventoryItemTypeName.clear();;
+		VendorPrice.clear();
+		DateLastUpdated.clear();
+		VendorName.clear();
+		SearchResult.getItems().clear();
 	}
 	
 	private String fetchVendorId() {

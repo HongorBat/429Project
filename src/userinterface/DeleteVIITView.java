@@ -213,6 +213,7 @@ public class DeleteVIITView extends View
    	  		    	Alert a = new Alert(AlertType.INFORMATION);
    	  		    	a.setContentText("Vendor Inventory Item Type was deleted.");
    	  		    	a.show();
+   	  		    	clearFields();
    		    	}
        	  }
    	});
@@ -224,6 +225,14 @@ public class DeleteVIITView extends View
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		InventoryItemTypeName.clear();
+		VendorPrice.clear();
+		DateLastUpdated.clear();
+		VendorName.clear();
+		view.getItems().clear();
 	}
 	
 	private String fetchVendorId() {

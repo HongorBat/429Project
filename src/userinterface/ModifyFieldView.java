@@ -146,6 +146,7 @@ public class ModifyFieldView extends View{
 				} else {
 					updateFields();
 					clearErrorMessage();
+					clearFields();
 					myModel.stateChangeRequest("TellerView", null);
 				}
 			}
@@ -160,6 +161,11 @@ public class ModifyFieldView extends View{
 		vbox.getChildren().add(doneCont);
 
 		return vbox;
+	}
+	
+	private void clearFields() {
+		PhoneNumber.clear();
+		Status.getSelectionModel().selectFirst();
 	}
 	
 	private void updateInventory() {

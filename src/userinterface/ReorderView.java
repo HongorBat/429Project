@@ -172,7 +172,6 @@ public class ReorderView extends View
 		return vbox;
 	}
 	
-
 	protected void processItemTypeSelected()
 	{
 		getEntryTableModelValues();
@@ -182,7 +181,6 @@ public class ReorderView extends View
 	{
 		ObservableList<String> Result = FXCollections.observableArrayList();
 
-		//VIIT_COLLECTION.getAllVendorInventoryItemTypessWithNameLike(_vendor);
 		IIT_COLLECTION.getActiveInventoryItemsWhereUnitsLessThanReorderPoint();
 
 		Vector<InventoryItemType> items = IIT_COLLECTION.getInventoryItemTypeList();
