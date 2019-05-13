@@ -250,12 +250,22 @@ public class ProcessInvoiceView extends View{
 	protected void getEntryTableModelValues(String _vnderName, String _vnderNmbr)
 	{
 		VENDOR_COLLECTION.getAllVendorsWithNameLikeAndPhoneNumberLike(_vnderName, _vnderNmbr);
-		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);
+		
+		if(VENDOR_COLLECTION.getVendorList().size() < 1) {
+			displayErrorMessage("No such Vendor Exists!");
+			return;
+		}
+		
+		Vendor v = VENDOR_COLLECTION.getVendorList().get(0);			
+		
+		
 		
 		VIIT_COLLECTION.getAllVendorInventoryItemTypesWithVendorsIdLike(v.getField("Id"));
 		
 		ObservableList<String> Result = FXCollections.observableArrayList();
 		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
+		
+		
 		
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType viit = items.get(i);
