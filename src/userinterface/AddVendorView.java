@@ -168,6 +168,11 @@ public class AddVendorView extends View
 						displayErrorMessage("Please enter a valid phone number.");
 						return;
 					}
+			 		if (!nameField.getText().matches("[\\sa-zA-Z]+")) {
+			 			displayErrorMessage("Please use letters for vendor name");
+			 			return;
+			 		}
+			 		
 					clearErrorMessage();
 					addVendor();
 					

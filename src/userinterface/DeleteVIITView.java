@@ -229,6 +229,10 @@ public class DeleteVIITView extends View
 	}
 	
 	private void clearFields() {
+		if (InventoryItemTypeName == null || VendorPrice == null ||
+				DateLastUpdated == null || VendorName == null || view == null) { 
+			return;
+		}
 		InventoryItemTypeName.clear();
 		VendorPrice.clear();
 		DateLastUpdated.clear();
@@ -262,7 +266,7 @@ public class DeleteVIITView extends View
 		ObservableList<String> Result = FXCollections.observableArrayList();
 
 		VIIT_COLLECTION.getAllVendorInventoryItemTypessWithNameLike(_vendor);
-
+		
 		Vector<VendorInventoryItemType> items = VIIT_COLLECTION.getVendorInventoryItemTypeList();
 		for (int i = 0; i < items.size(); i++) {
 			VendorInventoryItemType vnd = items.get(i);
