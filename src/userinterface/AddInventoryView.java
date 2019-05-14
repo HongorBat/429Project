@@ -206,9 +206,6 @@ public class AddInventoryView extends View{
   		     public void handle(ActionEvent e) {
   		    	clearErrorMessage();
   		    	addInventoryItem();
-  		    	Alert a = new Alert(AlertType.INFORMATION);
-  		    	a.setContentText("An InventoryItemType has been created.");
-  		    	a.show();
   		    	clearFields();
   		     }
        	  });
@@ -301,6 +298,9 @@ public class AddInventoryView extends View{
 			InventoryItemType it = new InventoryItemType(p1);
 			// add it to the db
 			it.update();
+			Alert a = new Alert(AlertType.INFORMATION);
+		    	a.setContentText("An InventoryItemType has been created.");
+		    	a.show();
 		}
 	}
 
